@@ -5,6 +5,7 @@ import { xpProgress } from "@/lib/game";
 import { PROGRAM_INFO, scheduleForDay, type ProgramType } from "@/lib/programs";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
 import { StatBar } from "@/components/StatBar";
+import { CoachAvatar } from "@/components/CoachAvatar";
 
 export default async function DashboardPage() {
   const profile = await requireOnboarded();
@@ -53,9 +54,9 @@ export default async function DashboardPage() {
         </div>
 
         {profile.coach && (
-          <div className="flex min-w-[220px] flex-col justify-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
-            <div className="text-3xl">{profile.coach.icon}</div>
-            <p className="mt-1 font-bold text-white">{profile.coach.name}</p>
+          <div className="flex min-w-[220px] flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+            <CoachAvatar src={profile.coach.icon} alt={profile.coach.name} className="h-16 w-16" />
+            <p className="mt-2 font-bold text-white">{profile.coach.name}</p>
             <p className="text-xs text-amber-400">{profile.coach.title}</p>
           </div>
         )}

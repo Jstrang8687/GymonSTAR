@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { changeCoach } from "./actions";
+import { CoachAvatar } from "@/components/CoachAvatar";
 import type { Coach } from "@prisma/client";
 
 export function ChangeCoachPicker({ coaches, currentCoachId }: { coaches: Coach[]; currentCoachId: string | null }) {
@@ -55,7 +56,7 @@ export function ChangeCoachPicker({ coaches, currentCoachId }: { coaches: Coach[
                 : "border-white/10 bg-white/5 hover:border-white/30"
             }`}
           >
-            <div className="text-xl">{coach.icon}</div>
+            <CoachAvatar src={coach.icon} alt={coach.name} className="h-12 w-12" />
             <div className="mt-1 font-bold text-white">{coach.name}</div>
             <div className="text-amber-400">{coach.title}</div>
           </button>

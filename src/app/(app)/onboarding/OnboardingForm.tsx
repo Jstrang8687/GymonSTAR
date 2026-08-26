@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { completeOnboarding } from "./actions";
 import { PROGRAM_INFO, PROGRAM_TYPES, type ProgramType } from "@/lib/programs";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { CoachAvatar } from "@/components/CoachAvatar";
 import type { Coach } from "@prisma/client";
 
 const DAY_LABELS = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"];
@@ -58,7 +59,7 @@ export function OnboardingForm({ coaches }: { coaches: Coach[] }) {
                   : "border-white/10 bg-white/5 hover:border-white/30"
               }`}
             >
-              <div className="text-2xl">{coach.icon}</div>
+              <CoachAvatar src={coach.icon} alt={coach.name} className="h-20 w-20" />
               <div className="mt-2 font-bold text-white">{coach.name}</div>
               <div className="text-xs font-semibold uppercase tracking-wide text-amber-400">
                 {coach.title}

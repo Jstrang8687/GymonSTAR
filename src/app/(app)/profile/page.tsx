@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { xpProgress } from "@/lib/game";
 import { StatBar } from "@/components/StatBar";
+import { CoachAvatar } from "@/components/CoachAvatar";
 import { ChangeCoachPicker } from "./ChangeCoachPicker";
 
 export default async function ProfilePage() {
@@ -52,7 +53,7 @@ export default async function ProfilePage() {
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
         {profile.coach && (
           <div className="mb-4 flex items-center gap-4">
-            <div className="text-3xl">{profile.coach.icon}</div>
+            <CoachAvatar src={profile.coach.icon} alt={profile.coach.name} className="h-16 w-16" />
             <div>
               <p className="font-bold text-white">{profile.coach.name}</p>
               <p className="text-xs text-amber-400">{profile.coach.title}</p>
