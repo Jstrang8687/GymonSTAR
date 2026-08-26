@@ -16,3 +16,33 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Holo-foil sweep for legendary-tier monSTAR cards. */
+@keyframes holo-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.holo-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  opacity: 0.35;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    #ff7ac6 10%,
+    #7affe0 20%,
+    #ffe97a 30%,
+    #7ab8ff 40%,
+    transparent 50%,
+    transparent 100%
+  );
+  background-size: 250% 250%;
+  animation: holo-sweep 3.5s linear infinite;
+}

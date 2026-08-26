@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, type LogWorkoutResult } from "./actions";
-import { MUSCLE_TYPES, MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
 import type { ExerciseInput } from "@/lib/game";
 
 interface ExerciseRow extends ExerciseInput {
@@ -90,7 +90,7 @@ export function LogWorkoutForm() {
           </p>
           {result.caughtNewMonster && result.caughtType && (
             <p className="mt-1 text-lg font-black text-white">
-              🎉 New monSTAR! You caught {MUSCLE_TYPE_META[result.caughtType].monsterName}{" "}
+              🎉 New monSTAR! You caught {monsterNameForLevel(MUSCLE_TYPE_META[result.caughtType], 1)}{" "}
               {MUSCLE_TYPE_META[result.caughtType].icon}
             </p>
           )}
