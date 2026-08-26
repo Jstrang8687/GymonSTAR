@@ -55,7 +55,7 @@ export default async function DashboardPage() {
 
         {profile.coach && (
           <div className="flex min-w-[220px] flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
-            <CoachAvatar src={profile.coach.icon} alt={profile.coach.name} className="h-16 w-16" />
+            <CoachAvatar src={profile.coach.icon} alt={profile.coach.name} width="4rem" />
             <p className="mt-2 font-bold text-white">{profile.coach.name}</p>
             <p className="text-xs text-amber-400">{profile.coach.title}</p>
           </div>

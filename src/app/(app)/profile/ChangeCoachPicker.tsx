@@ -56,9 +56,9 @@ export function ChangeCoachPicker({ coaches, currentCoachId }: { coaches: Coach[
                 : "border-white/10 bg-white/5 hover:border-white/30"
             }`}
           >
-            <CoachAvatar src={coach.icon} alt={coach.name} className="h-12 w-12" />
-            <div className="mt-1 font-bold text-white">{coach.name}</div>
-            <div className="text-amber-400">{coach.title}</div>
+            <CoachAvatar src={coach.icon} alt={coach.name} width="3rem" />
+            <div className="mt-1 text-center font-bold text-white">{coach.name}</div>
+            <div className="text-center text-amber-400">{coach.title}</div>
           </button>
         ))}
       </div>

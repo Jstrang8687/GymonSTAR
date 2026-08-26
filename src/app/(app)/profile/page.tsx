@@ -53,7 +53,7 @@ export default async function ProfilePage() {
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
         {profile.coach && (
           <div className="mb-4 flex items-center gap-4">
-            <CoachAvatar src={profile.coach.icon} alt={profile.coach.name} className="h-16 w-16" />
+            <CoachAvatar src={profile.coach.icon} alt={profile.coach.name} width="4rem" />
             <div>
               <p className="font-bold text-white">{profile.coach.name}</p>
               <p className="text-xs text-amber-400">{profile.coach.title}</p>

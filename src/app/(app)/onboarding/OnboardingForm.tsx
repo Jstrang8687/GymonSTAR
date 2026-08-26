@@ -59,9 +59,9 @@ export function OnboardingForm({ coaches }: { coaches: Coach[] }) {
                   : "border-white/10 bg-white/5 hover:border-white/30"
               }`}
             >
-              <CoachAvatar src={coach.icon} alt={coach.name} className="h-20 w-20" />
-              <div className="mt-2 font-bold text-white">{coach.name}</div>
-              <div className="text-xs font-semibold uppercase tracking-wide text-amber-400">
+              <CoachAvatar src={coach.icon} alt={coach.name} width="5rem" />
+              <div className="mt-2 text-center font-bold text-white">{coach.name}</div>
+              <div className="text-center text-xs font-semibold uppercase tracking-wide text-amber-400">
                 {coach.title}
               </div>
               <p className="mt-2 text-sm text-slate-400">{coach.description}</p>
