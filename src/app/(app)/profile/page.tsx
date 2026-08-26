@@ -2,13 +2,17 @@ import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { xpProgress } from "@/lib/game";
 import { StatBar } from "@/components/StatBar";
+import { ChangeCoachPicker } from "./ChangeCoachPicker";
 
 export default async function ProfilePage() {
   const profile = await requireOnboarded();
   const userId = await getUserId();
-  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
-  const monsterCount = await prisma.monSTAR.count({ where: { userId } });
-  const workoutCount = await prisma.workoutLog.count({ where: { userId } });
+  const [user, monsterCount, workoutCount, coaches] = await Promise.all([
+    prisma.user.findUniqueOrThrow({ where: { id: userId } }),
+    prisma.monSTAR.count({ where: { userId } }),
+    prisma.workoutLog.count({ where: { userId } }),
+    prisma.coach.findMany({ orderBy: { name: "asc" } }),
+  ]);
 
   const progress = xpProgress(profile.trainerXp);
 
@@ -45,16 +49,19 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      {profile.coach && (
-        <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-3xl">{profile.coach.icon}</div>
-          <div>
-            <p className="font-bold text-white">{profile.coach.name}</p>
-            <p className="text-xs text-amber-400">{profile.coach.title}</p>
-            <p className="mt-1 text-sm text-slate-400">{profile.coach.description}</p>
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        {profile.coach && (
+          <div className="mb-4 flex items-center gap-4">
+            <div className="text-3xl">{profile.coach.icon}</div>
+            <div>
+              <p className="font-bold text-white">{profile.coach.name}</p>
+              <p className="text-xs text-amber-400">{profile.coach.title}</p>
+              <p className="mt-1 text-sm text-slate-400">{profile.coach.description}</p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+        <ChangeCoachPicker coaches={coaches} currentCoachId={profile.coachId} />
+      </div>
     </div>
   );
 }

@@ -46,7 +46,7 @@ export function OnboardingForm({ coaches }: { coaches: Coach[] }) {
         <p className="mt-1 text-sm text-slate-400">
           Your gym rat trainer guides your programs. Flavor only — pick who you vibe with.
         </p>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {coaches.map((coach) => (
             <button
               key={coach.id}

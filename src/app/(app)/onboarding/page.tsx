@@ -10,7 +10,7 @@ export default async function OnboardingPage() {
   const coaches = await prisma.coach.findMany({ orderBy: { name: "asc" } });
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-3xl">
       <OnboardingForm coaches={coaches} />
     </div>
   );
