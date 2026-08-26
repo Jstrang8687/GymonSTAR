@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  createdAt     DateTime  @default(now())
+
+  profile       UserProfile?
+  monsters      MonSTAR[]
+  programs      TrainingProgram[]
+  workoutLogs   WorkoutLog[]
+}
+
+model Coach {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  title       String
+  focus       String
+  description String
+  icon        String
+
+  profiles    UserProfile[]
+}
+
+model UserProfile {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coachId       String?
+  coach         Coach?    @relation(fields: [coachId], references: [id])
+  trainerLevel  Int       @default(1)
+  trainerXp     Int       @default(0)
+  loginStreak   Int       @default(0)
+  lastLoginDate String?
+  onboarded     Boolean   @default(false)
+}
+
+enum MuscleType {
+  CHEST
+  BACK
+  SHOULDERS
+  BICEPS
+  TRICEPS
+  QUADS
+  HAMSTRINGS_GLUTES
+  CORE
+  CARDIO
+}
+
+model MonSTAR {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  muscleType   MuscleType
+  nickname     String?
+  level        Int        @default(1)
+  xp           Int        @default(0)
+  strengthXp   Int        @default(0)
+  enduranceXp  Int        @default(0)
+  caughtAt     DateTime   @default(now())
+
+  @@unique([userId, muscleType])
+}
+
+enum ProgramType {
+  UPPER_LOWER
+  BRO_SPLIT
+  PUSH_PULL_LEGS
+  CUSTOM
+}
+
+model TrainingProgram {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      ProgramType
+  schedule  String
+  startDate DateTime    @default(now())
+  active    Boolean     @default(true)
+}
+
+model WorkoutLog {
+  id              String     @id @default(cuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date            String
+  durationMinutes Int        @default(0)
+  exercises       String
+  xpAwarded       Int        @default(0)
+  caughtNewMonster Boolean   @default(false)
+  muscleTypes     String
+  createdAt       DateTime   @default(now())
+}
