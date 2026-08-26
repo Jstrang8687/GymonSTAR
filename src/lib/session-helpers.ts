@@ -7,6 +7,18 @@ import { computeLoginXp, nextStreak, todayStr, xpForLevel } from "@/lib/game";
 export const getUserId = cache(async (): Promise<string> => {
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
+
+  const exists = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { id: true },
+  });
+  if (!exists) {
+    // Session cookie outlived its user (e.g. account was deleted). Cookies
+    // can only be cleared from a Server Action or Route Handler, not here,
+    // so hand off to one that clears it and redirects to /login.
+    redirect("/api/force-signout");
+  }
+
   return session.user.id;
 });
 
