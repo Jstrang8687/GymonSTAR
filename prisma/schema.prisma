@@ -100,4 +100,8 @@ model WorkoutLog {
   caughtNewMonster Boolean   @default(false)
   muscleTypes     String
   createdAt       DateTime   @default(now())
+
+  videoFilename   String?
+  videoMimeType   String?
+  videoVerifiedAt DateTime?
 }

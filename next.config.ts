@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   // Dev server blocks cross-origin requests (JS chunks, HMR) by default.
   // Wildcarded so it survives ngrok handing out a new random subdomain.
   allowedDevOrigins: ["*.ngrok-free.dev", "*.ngrok-free.app", "*.ngrok.app", "*.ngrok.io"],
+  experimental: {
+    serverActions: {
+      // Default 1MB is way too small for workout-verification video uploads.
+      bodySizeLimit: "100mb",
+    },
+  },
 };
 
 export default nextConfig;

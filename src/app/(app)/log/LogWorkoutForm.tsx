@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, type LogWorkoutResult } from "./actions";
+import { VideoUpload } from "./VideoUpload";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
 import { EXERCISE_LIBRARY, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput } from "@/lib/game";
@@ -109,6 +110,7 @@ export function LogWorkoutForm() {
               {MUSCLE_TYPE_META[result.caughtType].icon}
             </p>
           )}
+          <VideoUpload workoutLogId={result.workoutLogId} />
         </div>
       )}
 
@@ -250,24 +252,17 @@ export function LogWorkoutForm() {
 
       {error && <p className="text-sm text-red-400">{error}</p>}
 
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <button
-          type="button"
-          disabled={pending}
-          onClick={submit}
-          className="flex-1 rounded-lg bg-amber-400 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-amber-300 disabled:opacity-60"
-        >
-          {pending ? "Logging..." : "Log Workout"}
-        </button>
-        <button
-          type="button"
-          disabled
-          title="Coming soon"
-          className="cursor-not-allowed rounded-lg border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-500"
-        >
-          📹 Verify with video (coming soon)
-        </button>
-      </div>
+      <button
+        type="button"
+        disabled={pending}
+        onClick={submit}
+        className="w-full rounded-lg bg-amber-400 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-amber-300 disabled:opacity-60"
+      >
+        {pending ? "Logging..." : "Log Workout"}
+      </button>
+      <p className="text-center text-xs text-slate-500">
+        You can attach a verification video right after logging.
+      </p>
     </div>
   );
 }

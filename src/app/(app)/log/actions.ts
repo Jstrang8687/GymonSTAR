@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getUserId, getProfile } from "@/lib/session-helpers";
-import { computeWorkoutXp, levelFromXp, type ExerciseInput } from "@/lib/game";
+import { computeWorkoutXp, levelFromXp, xpForLevel, type ExerciseInput } from "@/lib/game";
+import { saveWorkoutVideo, deleteWorkoutVideo } from "@/lib/videoStorage";
 import type { MuscleType } from "@/lib/muscleTypes";
 
 export interface LogWorkoutInput {
@@ -13,6 +14,7 @@ export interface LogWorkoutInput {
 }
 
 export interface LogWorkoutResult {
+  workoutLogId: string;
   totalXp: number;
   caughtNewMonster: boolean;
   caughtType: MuscleType | null;
@@ -74,7 +76,7 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
     }
   }
 
-  await prisma.workoutLog.create({
+  const workoutLog = await prisma.workoutLog.create({
     data: {
       userId,
       date: today,
@@ -91,9 +93,74 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
   revalidatePath("/log");
 
   return {
+    workoutLogId: workoutLog.id,
     totalXp: xpResult.totalXp,
     caughtNewMonster: caughtType !== null,
     caughtType,
     multiplier: xpResult.multiplier,
   };
+}
+
+const VIDEO_VERIFY_BONUS_XP = 15;
+
+export interface AttachVideoResult {
+  bonusXp: number;
+}
+
+export async function attachWorkoutVideo(workoutLogId: string, formData: FormData): Promise<AttachVideoResult> {
+  const userId = await getUserId();
+
+  const log = await prisma.workoutLog.findUnique({ where: { id: workoutLogId } });
+  if (!log || log.userId !== userId) throw new Error("Workout not found.");
+
+  const file = formData.get("video");
+  if (!(file instanceof File) || file.size === 0) throw new Error("No video selected.");
+
+  const saved = await saveWorkoutVideo(file);
+
+  if (log.videoFilename) {
+    await deleteWorkoutVideo(log.videoFilename);
+  }
+
+  const alreadyVerified = log.videoVerifiedAt !== null;
+  const bonusXp = alreadyVerified ? 0 : VIDEO_VERIFY_BONUS_XP;
+
+  await prisma.$transaction([
+    prisma.workoutLog.update({
+      where: { id: workoutLogId },
+      data: {
+        videoFilename: saved.filename,
+        videoMimeType: saved.mimeType,
+        videoVerifiedAt: log.videoVerifiedAt ?? new Date(),
+      },
+    }),
+    ...(bonusXp > 0
+      ? [
+          prisma.userProfile.update({
+            where: { userId },
+            data: { trainerXp: { increment: bonusXp } },
+          }),
+        ]
+      : []),
+  ]);
+
+  if (bonusXp > 0) {
+    // Re-check for a trainer level-up now that trainerXp increased.
+    const profile = await prisma.userProfile.findUniqueOrThrow({ where: { userId } });
+    let trainerXp = profile.trainerXp;
+    let trainerLevel = profile.trainerLevel;
+    while (trainerXp >= xpForLevel(trainerLevel)) {
+      trainerXp -= xpForLevel(trainerLevel);
+      trainerLevel += 1;
+    }
+    if (trainerLevel !== profile.trainerLevel) {
+      await prisma.userProfile.update({ where: { userId }, data: { trainerXp, trainerLevel } });
+    }
+  }
+
+  revalidatePath("/log");
+  revalidatePath("/");
+  revalidatePath("/monstars");
+
+  return { bonusXp };
 }

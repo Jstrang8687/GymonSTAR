@@ -43,3 +43,6 @@ next-env.d.ts
 # sqlite
 prisma/dev.db
 prisma/dev.db-journal
+
+# user-uploaded workout verification videos
+/uploads

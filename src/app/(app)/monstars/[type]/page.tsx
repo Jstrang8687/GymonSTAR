@@ -99,7 +99,19 @@ export default async function MonsterDetailPage({ params }: PageProps<"/monstars
                     key={log.id}
                     className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm"
                   >
-                    <span className="text-slate-300">{log.date}</span>
+                    <span className="flex items-center gap-2 text-slate-300">
+                      {log.date}
+                      {log.videoFilename && (
+                        <a
+                          href={`/api/workout-video/${log.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 rounded-full bg-emerald-400/10 px-2 py-0.5 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/20"
+                        >
+                          ✅ ▶ Watch
+                        </a>
+                      )}
+                    </span>
                     <span className="font-semibold text-amber-400">+{log.xpAwarded} XP</span>
                   </li>
                 ))}
