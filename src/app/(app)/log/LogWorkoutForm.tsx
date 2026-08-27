@@ -367,11 +367,11 @@ export function LogWorkoutForm() {
                     )
                   )}
                   {!multiSet && (
-                    <Field label={timeBased ? "Weight (lbs, optional)" : "Weight (lbs)"}>
+                    <Field label="Weight">
                       <input
                         type="number"
                         min={0}
-                        placeholder={timeBased ? "e.g. weighted vest" : "e.g. 45, or 0"}
+                        placeholder={timeBased ? "optional, lbs" : "e.g. 45, or 0"}
                         value={row.weight ?? ""}
                         onChange={(e) =>
                           updateRow(row.key, { weight: e.target.value === "" ? undefined : Number(e.target.value) })
