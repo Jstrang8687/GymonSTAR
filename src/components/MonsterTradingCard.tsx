@@ -59,8 +59,13 @@ export function MonsterTradingCard({ type, monster, linkToDetail = true }: Monst
 
       <h3 className="mt-1.5 truncate text-sm font-black text-white sm:text-base">{name}</h3>
 
-      <div className={`relative mt-1.5 flex flex-1 items-center justify-center rounded-lg bg-gradient-to-br ${meta.bg}`}>
-        <span className="text-5xl drop-shadow-lg sm:text-6xl">{meta.icon}</span>
+      <div className={`relative mt-1.5 flex flex-1 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${meta.bg}`}>
+        {meta.artUrl && tier === 1 ? (
+          // eslint-disable-next-line @next/next/no-img-element -- small local pixel-art sprite, no need for next/image optimization
+          <img src={meta.artUrl} alt={name} className="h-full w-full object-cover [image-rendering:pixelated]" />
+        ) : (
+          <span className="text-5xl drop-shadow-lg sm:text-6xl">{meta.icon}</span>
+        )}
         <span className="absolute bottom-1 right-1.5 rounded bg-black/30 px-1.5 py-0.5 text-[10px] font-bold text-white">
           Lv.{monster.level}
         </span>

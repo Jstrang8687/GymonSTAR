@@ -20,6 +20,8 @@ interface MuscleTypeMeta {
   bg: string;
   /** Evolution-stage names, base -> evolved -> ultimate. See stageForLevel(). */
   stageNames: readonly [string, string, string];
+  /** Real character art for the base form, if we have it yet. Falls back to icon. */
+  artUrl?: string;
 }
 
 export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
@@ -30,6 +32,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-orange-400",
     bg: "from-orange-500 to-orange-700",
     stageNames: ["Pecsaur", "Pecsaurus", "Pecs Rex"],
+    artUrl: "/monstars/chest.png",
   },
   BACK: {
     label: "Back",
@@ -38,6 +41,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-green-400",
     bg: "from-green-500 to-green-700",
     stageNames: ["Latragon", "Wyverack", "Latitan"],
+    artUrl: "/monstars/back.png",
   },
   SHOULDERS: {
     label: "Shoulders",
