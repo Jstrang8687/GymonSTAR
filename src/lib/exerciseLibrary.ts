@@ -23,3 +23,11 @@ export function searchExercises(query: string, muscleType?: MuscleType, limit = 
   if (!q) return pool.slice(0, limit);
   return pool.filter((e) => e.name.toLowerCase().includes(q)).slice(0, limit);
 }
+
+// The CARDIO muscle type is exclusively populated from the source dataset's
+// "cardio" category (treadmill, bike, rower, etc.) — genuinely time-based
+// machines with no sets/reps/weight, unlike everything else in the library
+// (including plyometrics, which are rep-based despite being "endurance" XP).
+export function isTimeBasedExercise(muscleType: MuscleType): boolean {
+  return muscleType === "CARDIO";
+}

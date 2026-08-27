@@ -5,17 +5,30 @@ import { useRouter } from "next/navigation";
 import { logWorkout, type LogWorkoutResult } from "./actions";
 import { VideoUpload } from "./VideoUpload";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
-import { EXERCISE_LIBRARY, type LibraryExercise } from "@/lib/exerciseLibrary";
+import { EXERCISE_LIBRARY, isTimeBasedExercise, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput } from "@/lib/game";
 
 interface ExerciseRow extends ExerciseInput {
   key: number;
+  /** Set when picked from the library, so we know whether to show sets/reps/weight. */
+  pickedMuscleType?: MuscleType;
 }
 
 let nextKey = 1;
 
 function emptyRow(): ExerciseRow {
-  return { key: nextKey++, name: "", category: "strength", sets: 3, reps: 10, weight: 0 };
+  return { key: nextKey++, name: "", category: "strength" };
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
 }
 
 export function LogWorkoutForm() {
@@ -41,14 +54,25 @@ export function LogWorkoutForm() {
   function suggestionsFor(query: string): LibraryExercise[] {
     const q = query.trim().toLowerCase();
     if (q.length < 2) return [];
-    return EXERCISE_LIBRARY.filter(
-      (e) => (muscleTypes.length === 0 || muscleTypes.includes(e.muscleType)) && e.name.toLowerCase().includes(q)
-    ).slice(0, 8);
+    // Search the whole library, not just already-selected muscle groups — picking
+    // an exercise is what selects its muscle group now, not the other way around.
+    return EXERCISE_LIBRARY.filter((e) => e.name.toLowerCase().includes(q)).slice(0, 8);
   }
 
   function pickSuggestion(key: number, exercise: LibraryExercise) {
-    updateRow(key, { name: exercise.name, category: exercise.category });
+    updateRow(key, {
+      name: exercise.name,
+      category: exercise.category,
+      pickedMuscleType: exercise.muscleType,
+      // Time-based cardio doesn't use sets/reps, but weight still applies
+      // (weighted vest, weighted incline walk, etc.), so leave it.
+      sets: isTimeBasedExercise(exercise.muscleType) ? undefined : 3,
+      reps: isTimeBasedExercise(exercise.muscleType) ? undefined : 10,
+      weight: 0,
+    });
     setSuggestKey(null);
+    // Auto-select the matching muscle group so you don't have to pick it separately.
+    setMuscleTypes((prev) => (prev.includes(exercise.muscleType) ? prev : [...prev, exercise.muscleType]));
   }
 
   function removeRow(key: number) {
@@ -116,6 +140,7 @@ export function LogWorkoutForm() {
 
       <section>
         <h2 className="mb-2 text-sm font-bold text-white">Muscle groups trained</h2>
+        <p className="mb-2 text-xs text-slate-500">Picking an exercise below selects this automatically.</p>
         <div className="flex flex-wrap gap-2">
           {MUSCLE_TYPES.map((type) => {
             const meta = MUSCLE_TYPE_META[type];
@@ -149,90 +174,114 @@ export function LogWorkoutForm() {
             + Add exercise
           </button>
         </div>
-        <div className="space-y-2">
-          {exercises.map((row) => (
-            <div
-              key={row.key}
-              className="grid grid-cols-2 gap-2 rounded-lg border border-white/10 bg-white/5 p-3 sm:grid-cols-6"
-            >
-              <div className="relative col-span-2 sm:col-span-2">
-                <input
-                  placeholder="Exercise name"
-                  value={row.name}
-                  onChange={(e) => updateRow(row.key, { name: e.target.value })}
-                  onFocus={() => setSuggestKey(row.key)}
-                  onBlur={() => setSuggestKey(null)}
-                  autoComplete="off"
-                  className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-                />
-                {suggestKey === row.key && suggestionsFor(row.name).length > 0 && (
-                  <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-white/10 bg-slate-800 shadow-lg">
-                    {suggestionsFor(row.name).map((ex) => (
-                      <li key={ex.name}>
-                        <button
-                          type="button"
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                            pickSuggestion(row.key, ex);
-                          }}
-                          className="flex w-full items-center justify-between px-2 py-1.5 text-left text-sm text-slate-200 hover:bg-amber-400/20 hover:text-amber-200"
-                        >
-                          <span>{ex.name}</span>
-                          <span className="text-[10px] uppercase tracking-wide text-slate-500">
-                            {MUSCLE_TYPE_META[ex.muscleType].icon}
-                          </span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <select
-                value={row.category}
-                onChange={(e) =>
-                  updateRow(row.key, { category: e.target.value as ExerciseInput["category"] })
-                }
-                className="rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-              >
-                <option value="strength">Strength</option>
-                <option value="endurance">Endurance</option>
-              </select>
-              <input
-                type="number"
-                min={0}
-                placeholder="Sets"
-                value={row.sets ?? ""}
-                onChange={(e) => updateRow(row.key, { sets: Number(e.target.value) || 0 })}
-                className="rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-              />
-              <input
-                type="number"
-                min={0}
-                placeholder="Reps"
-                value={row.reps ?? ""}
-                onChange={(e) => updateRow(row.key, { reps: Number(e.target.value) || 0 })}
-                className="rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-              />
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  min={0}
-                  placeholder="Weight"
-                  value={row.weight ?? ""}
-                  onChange={(e) => updateRow(row.key, { weight: Number(e.target.value) || 0 })}
-                  className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-                />
+        <div className="space-y-3">
+          {exercises.map((row) => {
+            const timeBased = row.pickedMuscleType ? isTimeBasedExercise(row.pickedMuscleType) : false;
+            return (
+              <div key={row.key} className="rounded-lg border border-white/10 bg-white/5 p-3">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-6">
+                  <div className="relative col-span-2 sm:col-span-2">
+                    <Field label="Exercise">
+                      <input
+                        placeholder="e.g. Barbell Bench Press"
+                        value={row.name}
+                        onChange={(e) => updateRow(row.key, { name: e.target.value, pickedMuscleType: undefined })}
+                        onFocus={() => setSuggestKey(row.key)}
+                        onBlur={() => setSuggestKey(null)}
+                        autoComplete="off"
+                        className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                      />
+                    </Field>
+                    {suggestKey === row.key && suggestionsFor(row.name).length > 0 && (
+                      <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-white/10 bg-slate-800 shadow-lg">
+                        {suggestionsFor(row.name).map((ex) => (
+                          <li key={ex.name}>
+                            <button
+                              type="button"
+                              onMouseDown={(e) => {
+                                e.preventDefault();
+                                pickSuggestion(row.key, ex);
+                              }}
+                              className="flex w-full items-center justify-between px-2 py-1.5 text-left text-sm text-slate-200 hover:bg-amber-400/20 hover:text-amber-200"
+                            >
+                              <span>{ex.name}</span>
+                              <span className="text-[10px] uppercase tracking-wide text-slate-500">
+                                {MUSCLE_TYPE_META[ex.muscleType].icon} {MUSCLE_TYPE_META[ex.muscleType].label}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <Field label="Type">
+                    <select
+                      value={row.category}
+                      onChange={(e) =>
+                        updateRow(row.key, { category: e.target.value as ExerciseInput["category"] })
+                      }
+                      className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                    >
+                      <option value="strength">Strength</option>
+                      <option value="endurance">Endurance</option>
+                    </select>
+                  </Field>
+
+                  {timeBased ? (
+                    <div className="col-span-2 flex items-end sm:col-span-1">
+                      <p className="pb-1.5 text-xs text-slate-500">⏱️ Time-based, tracked below</p>
+                    </div>
+                  ) : (
+                    <>
+                      <Field label="Sets">
+                        <input
+                          type="number"
+                          min={0}
+                          placeholder="e.g. 3"
+                          value={row.sets ?? ""}
+                          onChange={(e) =>
+                            updateRow(row.key, { sets: e.target.value === "" ? undefined : Number(e.target.value) })
+                          }
+                          className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                        />
+                      </Field>
+                      <Field label="Reps">
+                        <input
+                          type="number"
+                          min={0}
+                          placeholder="e.g. 10"
+                          value={row.reps ?? ""}
+                          onChange={(e) =>
+                            updateRow(row.key, { reps: e.target.value === "" ? undefined : Number(e.target.value) })
+                          }
+                          className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                        />
+                      </Field>
+                    </>
+                  )}
+                  <Field label={timeBased ? "Weight (lbs, optional)" : "Weight (lbs)"}>
+                    <input
+                      type="number"
+                      min={0}
+                      placeholder={timeBased ? "e.g. weighted vest" : "e.g. 45, or 0"}
+                      value={row.weight ?? ""}
+                      onChange={(e) =>
+                        updateRow(row.key, { weight: e.target.value === "" ? undefined : Number(e.target.value) })
+                      }
+                      className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                    />
+                  </Field>
+                </div>
                 <button
                   type="button"
                   onClick={() => removeRow(row.key)}
-                  className="text-slate-500 hover:text-red-400"
-                  aria-label="Remove exercise"
+                  className="mt-2 text-xs font-semibold text-slate-500 hover:text-red-400"
                 >
-                  ✕
+                  ✕ Remove
                 </button>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
