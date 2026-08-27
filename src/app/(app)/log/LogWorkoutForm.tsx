@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
-import { VideoUpload } from "./VideoUpload";
+import { ProofUpload } from "./ProofUpload";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
 import { EXERCISE_LIBRARY, isTimeBasedExercise, hasMileage, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput, SetDetail } from "@/lib/game";
@@ -266,7 +266,7 @@ export function LogWorkoutForm() {
               {MUSCLE_TYPE_META[result.caughtType].icon}
             </p>
           )}
-          <VideoUpload workoutLogId={result.workoutLogId} />
+          <ProofUpload workoutLogId={result.workoutLogId} />
         </div>
       )}
 
@@ -546,7 +546,7 @@ export function LogWorkoutForm() {
         {pending ? "Logging..." : "Log Workout"}
       </button>
       <p className="text-center text-xs text-slate-500">
-        You can attach a verification video right after logging.
+        You can attach a verification video or screenshot right after logging.
       </p>
     </div>
   );

@@ -103,12 +103,12 @@ export default async function MonsterDetailPage({ params }: PageProps<"/monstars
                       {log.date}
                       {log.videoFilename && (
                         <a
-                          href={`/api/workout-video/${log.id}`}
+                          href={`/api/workout-proof/${log.id}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1 rounded-full bg-emerald-400/10 px-2 py-0.5 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/20"
                         >
-                          ✅ ▶ Watch
+                          {log.videoMimeType?.startsWith("image/") ? "✅ 📸 View" : "✅ ▶ Watch"}
                         </a>
                       )}
                     </span>

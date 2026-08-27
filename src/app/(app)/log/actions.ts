@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getUserId, getProfile } from "@/lib/session-helpers";
 import { computeWorkoutXp, levelFromXp, xpForLevel, type ExerciseInput, type SetDetail } from "@/lib/game";
-import { saveWorkoutVideo, deleteWorkoutVideo } from "@/lib/videoStorage";
+import { saveWorkoutProof, deleteWorkoutProof } from "@/lib/proofStorage";
 import type { MuscleType } from "@/lib/muscleTypes";
 
 export interface LogWorkoutInput {
@@ -131,29 +131,29 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
   };
 }
 
-const VIDEO_VERIFY_BONUS_XP = 15;
+const PROOF_VERIFY_BONUS_XP = 15;
 
-export interface AttachVideoResult {
+export interface AttachProofResult {
   bonusXp: number;
 }
 
-export async function attachWorkoutVideo(workoutLogId: string, formData: FormData): Promise<AttachVideoResult> {
+export async function attachWorkoutProof(workoutLogId: string, formData: FormData): Promise<AttachProofResult> {
   const userId = await getUserId();
 
   const log = await prisma.workoutLog.findUnique({ where: { id: workoutLogId } });
   if (!log || log.userId !== userId) throw new Error("Workout not found.");
 
-  const file = formData.get("video");
-  if (!(file instanceof File) || file.size === 0) throw new Error("No video selected.");
+  const file = formData.get("proof");
+  if (!(file instanceof File) || file.size === 0) throw new Error("No file selected.");
 
-  const saved = await saveWorkoutVideo(file);
+  const saved = await saveWorkoutProof(file);
 
   if (log.videoFilename) {
-    await deleteWorkoutVideo(log.videoFilename);
+    await deleteWorkoutProof(log.videoFilename);
   }
 
   const alreadyVerified = log.videoVerifiedAt !== null;
-  const bonusXp = alreadyVerified ? 0 : VIDEO_VERIFY_BONUS_XP;
+  const bonusXp = alreadyVerified ? 0 : PROOF_VERIFY_BONUS_XP;
 
   await prisma.$transaction([
     prisma.workoutLog.update({

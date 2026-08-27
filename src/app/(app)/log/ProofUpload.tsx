@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { attachWorkoutVideo } from "./actions";
+import { attachWorkoutProof } from "./actions";
 
-export function VideoUpload({ workoutLogId }: { workoutLogId: string }) {
+export function ProofUpload({ workoutLogId }: { workoutLogId: string }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
   const [status, setStatus] = useState<"idle" | "done">("idle");
@@ -16,11 +16,11 @@ export function VideoUpload({ workoutLogId }: { workoutLogId: string }) {
     setError(null);
     setFileName(file.name);
     const formData = new FormData();
-    formData.set("video", file);
+    formData.set("proof", file);
 
     startTransition(async () => {
       try {
-        const res = await attachWorkoutVideo(workoutLogId, formData);
+        const res = await attachWorkoutProof(workoutLogId, formData);
         setBonusXp(res.bonusXp);
         setStatus("done");
       } catch (e) {
@@ -32,7 +32,7 @@ export function VideoUpload({ workoutLogId }: { workoutLogId: string }) {
   if (status === "done") {
     return (
       <p className="mt-3 text-sm font-semibold text-emerald-400">
-        ✅ Video verified{bonusXp > 0 ? ` — +${bonusXp} bonus Trainer XP` : ""}
+        ✅ Verified{bonusXp > 0 ? ` — +${bonusXp} bonus Trainer XP` : ""}
       </p>
     );
   }
@@ -42,7 +42,7 @@ export function VideoUpload({ workoutLogId }: { workoutLogId: string }) {
       <input
         ref={inputRef}
         type="file"
-        accept="video/mp4,video/webm,video/quicktime,video/x-m4v"
+        accept="video/mp4,video/webm,video/quicktime,video/x-m4v,image/png,image/jpeg,image/webp"
         className="hidden"
         onChange={(e) => handleFile(e.target.files?.[0])}
       />
@@ -52,7 +52,7 @@ export function VideoUpload({ workoutLogId }: { workoutLogId: string }) {
         onClick={() => inputRef.current?.click()}
         className="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-amber-400 hover:text-amber-300 disabled:opacity-60"
       >
-        {pending ? `Uploading ${fileName ?? "video"}...` : "📹 Verify with video"}
+        {pending ? `Uploading ${fileName ?? "file"}...` : "📹📸 Verify with video or screenshot"}
       </button>
       {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
     </div>
