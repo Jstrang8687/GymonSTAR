@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, type LogWorkoutResult } from "./actions";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
+import { EXERCISE_LIBRARY, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput } from "@/lib/game";
 
 interface ExerciseRow extends ExerciseInput {
@@ -24,6 +25,7 @@ export function LogWorkoutForm() {
   const [pending, startTransition] = useTransition();
   const [result, setResult] = useState<LogWorkoutResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [suggestKey, setSuggestKey] = useState<number | null>(null);
 
   function toggleType(type: MuscleType) {
     setMuscleTypes((prev) =>
@@ -33,6 +35,19 @@ export function LogWorkoutForm() {
 
   function updateRow(key: number, patch: Partial<ExerciseRow>) {
     setExercises((prev) => prev.map((row) => (row.key === key ? { ...row, ...patch } : row)));
+  }
+
+  function suggestionsFor(query: string): LibraryExercise[] {
+    const q = query.trim().toLowerCase();
+    if (q.length < 2) return [];
+    return EXERCISE_LIBRARY.filter(
+      (e) => (muscleTypes.length === 0 || muscleTypes.includes(e.muscleType)) && e.name.toLowerCase().includes(q)
+    ).slice(0, 8);
+  }
+
+  function pickSuggestion(key: number, exercise: LibraryExercise) {
+    updateRow(key, { name: exercise.name, category: exercise.category });
+    setSuggestKey(null);
   }
 
   function removeRow(key: number) {
@@ -138,12 +153,38 @@ export function LogWorkoutForm() {
               key={row.key}
               className="grid grid-cols-2 gap-2 rounded-lg border border-white/10 bg-white/5 p-3 sm:grid-cols-6"
             >
-              <input
-                placeholder="Exercise name"
-                value={row.name}
-                onChange={(e) => updateRow(row.key, { name: e.target.value })}
-                className="col-span-2 rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400 sm:col-span-2"
-              />
+              <div className="relative col-span-2 sm:col-span-2">
+                <input
+                  placeholder="Exercise name"
+                  value={row.name}
+                  onChange={(e) => updateRow(row.key, { name: e.target.value })}
+                  onFocus={() => setSuggestKey(row.key)}
+                  onBlur={() => setSuggestKey(null)}
+                  autoComplete="off"
+                  className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                />
+                {suggestKey === row.key && suggestionsFor(row.name).length > 0 && (
+                  <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-white/10 bg-slate-800 shadow-lg">
+                    {suggestionsFor(row.name).map((ex) => (
+                      <li key={ex.name}>
+                        <button
+                          type="button"
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            pickSuggestion(row.key, ex);
+                          }}
+                          className="flex w-full items-center justify-between px-2 py-1.5 text-left text-sm text-slate-200 hover:bg-amber-400/20 hover:text-amber-200"
+                        >
+                          <span>{ex.name}</span>
+                          <span className="text-[10px] uppercase tracking-wide text-slate-500">
+                            {MUSCLE_TYPE_META[ex.muscleType].icon}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
               <select
                 value={row.category}
                 onChange={(e) =>

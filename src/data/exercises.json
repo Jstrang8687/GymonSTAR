@@ -1,0 +1,5252 @@
+[
+  {
+    "name": "3/4 Sit-Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Ab Crunch Machine",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Ab Roller",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Advanced Kettlebell Windmill",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Air Bike",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternate Hammer Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternate Heel Touchers",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternate Incline Dumbbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternate Leg Diagonal Bound",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Alternating Cable Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternating Deltoid Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternating Floor Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "beginner"
+  },
+  {
+    "name": "Alternating Hang Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Alternating Kettlebell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Alternating Kettlebell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Alternating Renegade Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "Anti-Gravity Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Arnold Dumbbell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Around The Worlds",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Atlas Stone Trainer",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Atlas Stones",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "expert"
+  },
+  {
+    "name": "Axle Deadlift",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Back Flyes - With Bands",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Backward Drag",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Backward Medicine Ball Throw",
+    "muscleType": "SHOULDERS",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Balance Board",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Ball Leg Curl",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Assisted Pull-Up",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Good Morning",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Good Morning (Pull Through)",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Hip Adductions",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Pull Apart",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Skull Crusher",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Ab Rollout",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Ab Rollout - On Knees",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Barbell Bench Press - Medium Grip",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Curls Lying Against An Incline",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Deadlift",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Full Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Glute Bridge",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Guillotine Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Hack Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Hip Thrust",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Incline Bench Press - Medium Grip",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Incline Shoulder Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Lunge",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Rear Delt Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Rollout from Bench",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Seated Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Shrug Behind The Back",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Side Bend",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Side Split Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Barbell Squat To A Bench",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Barbell Step Ups",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Barbell Walking Lunge",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Battling Ropes",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Bear Crawl Sled Drags",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Bench Dips",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Bench Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bench Press - Powerlifting",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bench Press - With Bands",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Bench Press with Chains",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Bench Sprint",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Over Barbell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Over Dumbbell Rear Delt Raise With Head On Bench",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Over Low-Pulley Side Lateral",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Over One-Arm Long Bar Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Over Two-Arm Long Bar Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bent Over Two-Dumbbell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Over Two-Dumbbell Row With Palms In",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent Press",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "Bent-Arm Barbell Pullover",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bent-Arm Dumbbell Pullover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bent-Knee Hip Raise",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Bicycling",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Bicycling, Stationary",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Board Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Body Tricep Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Body-Up",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bodyweight Flyes",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bodyweight Mid Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bodyweight Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Bodyweight Walking Lunge",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Bosu Ball Cable Crunch With Side Bends",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Bottoms Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Bottoms-Up Clean From The Hang Position",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Box Jump (Multiple Response)",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Box Skip",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Box Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Box Squat with Bands",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Box Squat with Chains",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Bradford/Rocky Presses",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Butt Lift (Bridge)",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Butt-Ups",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Butterfly",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Chest Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Crossover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Deadlifts",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Hammer Curls - Rope Attachment",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Hip Adduction",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Incline Pushdown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Incline Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Internal Rotation",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Iron Cross",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Judo Flip",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Lying Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable One Arm Tricep Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Preacher Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Rear Delt Fly",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Reverse Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Rope Overhead Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Rope Rear-Delt Rows",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Russian Twists",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Seated Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Seated Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Shrugs",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Calf Press",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Calf Press On The Leg Press Machine",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Calf Raise On A Dumbbell",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Calf Raises - With Bands",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Calf-Machine Shoulder Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Car Deadlift",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Car Drivers",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Carioca Quick Step",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Catch and Overhead Throw",
+    "muscleType": "BACK",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Chain Handle Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Chain Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Chair Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Chest Push (multiple response)",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Chest Push (single response)",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Chest Push from 3 point stance",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Chest Push with Run Release",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Chin-Up",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Circus Bell",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "expert"
+  },
+  {
+    "name": "Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Clean and Jerk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Clean and Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Clean Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Clean from Blocks",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Clean Pull",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Clean Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Clock Push-Up",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Close-Grip Barbell Bench Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Close-Grip Dumbbell Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Close-Grip EZ Bar Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Close-Grip EZ-Bar Curl with Band",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "beginner"
+  },
+  {
+    "name": "Close-Grip EZ-Bar Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "beginner"
+  },
+  {
+    "name": "Close-Grip Front Lat Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Close-Grip Push-Up off of a Dumbbell",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Close-Grip Standing Barbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Cocoons",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Conan's Wheel",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Concentration Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Cross Body Hammer Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Cross Over - With Bands",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Cross-Body Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Crucifix",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Crunch - Hands Overhead",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Crunch - Legs On Exercise Ball",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Crunches",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Cuban Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dead Bug",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Deadlift with Bands",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Deadlift with Chains",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Decline Barbell Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Close-Grip Bench To Skull Crusher",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Decline Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Decline Dumbbell Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Dumbbell Flyes",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline EZ Bar Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Oblique Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Push-Up",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Reverse Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Decline Smith Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Deficit Deadlift",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Depth Jump Leap",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Dip Machine",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Dips - Chest Version",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dips - Triceps Version",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Donkey Calf Raises",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Double Kettlebell Alternating Hang Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Double Kettlebell Jerk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Double Kettlebell Push Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Double Kettlebell Snatch",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "Double Kettlebell Windmill",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Double Leg Butt Kick",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Downward Facing Balance",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "intermediate"
+  },
+  {
+    "name": "Drag Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Drop Push",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Alternate Bicep Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Bench Press with Neutral Grip",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Bicep Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Floor Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Flyes",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Incline Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Incline Shoulder Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Lunges",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Lying One-Arm Rear Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Lying Pronation",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Lying Rear Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Lying Supination",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell One-Arm Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell One-Arm Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell One-Arm Upright Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Prone Incline Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Rear Lunge",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Scaption",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Seated Box Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Seated One-Leg Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Side Bend",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Dumbbell Squat To A Bench",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Step Ups",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Dumbbell Tricep Extension -Pronated Grip",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Elbow to Knee",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Elevated Back Lunge",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Elevated Cable Rows",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Elliptical Trainer",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Exercise Ball Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Exercise Ball Pull-In",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Extended Range One-Arm Kettlebell Floor Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "beginner"
+  },
+  {
+    "name": "External Rotation",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "External Rotation with Band",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "External Rotation with Cable",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "EZ-Bar Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "beginner"
+  },
+  {
+    "name": "EZ-Bar Skullcrusher",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "beginner"
+  },
+  {
+    "name": "Face Pull",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Farmer's Walk",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Fast Skipping",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Finger Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Flat Bench Cable Flyes",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Flat Bench Leg Pull-In",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Flat Bench Lying Leg Raise",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Flexor Incline Dumbbell Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Floor Glute-Ham Raise",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": null,
+    "level": "intermediate"
+  },
+  {
+    "name": "Floor Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Floor Press with Chains",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Flutter Kicks",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Forward Drag with Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Frankenstein Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Freehand Jump Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Frog Sit-Ups",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Front Barbell Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Front Barbell Squat To A Bench",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Front Box Jump",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Front Cable Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Front Cone Hops (or hurdle hops)",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Front Dumbbell Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Front Incline Dumbbell Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Front Plate Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Front Raise And Pullover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Front Squat (Clean Grip)",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Front Squats With Two Kettlebells",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Front Two-Dumbbell Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Full Range-Of-Motion Lat Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Gironda Sternum Chins",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Glute Ham Raise",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Glute Kickback",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Goblet Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "beginner"
+  },
+  {
+    "name": "Good Morning",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Good Morning off Pins",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Gorilla Chin/Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Hack Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Hammer Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Hammer Grip Incline DB Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Handstand Push-Ups",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Hang Clean",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Hang Clean - Below the Knees",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Hang Snatch",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Hang Snatch - Below Knees",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Hanging Bar Good Morning",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Hanging Pike",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Heaving Snatch Balance",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Heavy Bag Thrust",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "High Cable Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Hip Extension with Bands",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Hip Flexion with Band",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Hip Lift with Band",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Hurdle Hops",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Hyperextensions (Back Extensions)",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Hyperextensions With No Hyperextension Bench",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Incline Barbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Incline Bench Pull",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Cable Chest Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Cable Flye",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Incline Dumbbell Bench With Palms Facing In",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Dumbbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Dumbbell Flyes",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Dumbbell Flyes - With A Twist",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Dumbbell Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Hammer Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Inner Biceps Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Push-Up",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Push-Up Close-Grip",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Push-Up Depth Jump",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Push-Up Medium",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Push-Up Reverse Grip",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Incline Push-Up Wide",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Internal Rotation with Band",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Inverted Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Inverted Row with Straps",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Iron Cross",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Isometric Chest Squeezes",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Isometric Neck Exercise - Front And Back",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Isometric Neck Exercise - Sides",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Isometric Wipers",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Jackknife Sit-Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Janda Sit-Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Jefferson Squats",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Jerk Balance",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Jerk Dip Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "JM Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Jogging, Treadmill",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Keg Load",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Arnold Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Dead Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Figure 8",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Hang Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell One-Legged Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Pass Between The Legs",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Pirate Ships",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "beginner"
+  },
+  {
+    "name": "Kettlebell Pistol Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "Kettlebell Seated Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Seesaw Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Sumo High Pull",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Thruster",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Turkish Get-Up (Lunge style)",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Turkish Get-Up (Squat style)",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kettlebell Windmill",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kipping Muscle Up",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Knee Tuck Jump",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Knee/Hip Raise On Parallel Bars",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Kneeling Arm Drill",
+    "muscleType": "SHOULDERS",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Kneeling Cable Crunch With Alternating Oblique Twists",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Kneeling Cable Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Kneeling High Pulley Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Kneeling Jump Squat",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Kneeling Single-Arm High Pulley Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Kneeling Squat",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Landmine 180's",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Landmine Linear Jammer",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lateral Bound",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Lateral Box Jump",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Lateral Cone Hops",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Lateral Raise - With Bands",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Leg Extensions",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leg Lift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Leg Press",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leg Pull-In",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Leg-Over Floor Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Leverage Chest Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage Deadlift",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage Decline Chest Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage High Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage Incline Chest Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage Iso Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Leverage Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Linear 3-Part Start Technique",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Linear Acceleration Wall Drill",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Linear Depth Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Log Lift",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "London Bridges",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Low Cable Crossover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Low Cable Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Low Pulley Row To Neck",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Lunge Pass Through",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lunge Sprint",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Cable Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Cambered Barbell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Lying Close-Grip Bar Curl On High Pulley",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Lying Close-Grip Barbell Triceps Extension Behind The Head",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Close-Grip Barbell Triceps Press To Chin",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Dumbbell Tricep Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Face Down Plate Neck Resistance",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Face Up Plate Neck Resistance",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying High Bench Barbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Leg Curls",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Lying Machine Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying One-Arm Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Rear Delt Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Supine Dumbbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Lying T-Bar Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Lying Triceps Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "intermediate"
+  },
+  {
+    "name": "Machine Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Machine Bicep Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Machine Preacher Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Machine Shoulder (Military) Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Machine Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Medicine Ball Chest Pass",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Medicine Ball Full Twist",
+    "muscleType": "CORE",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Medicine Ball Scoop Throw",
+    "muscleType": "SHOULDERS",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Middle Back Shrug",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Mixed Grip Chin",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "expert"
+  },
+  {
+    "name": "Monster Walk",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Mountain Climbers",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Moving Claw Series",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Muscle Snatch",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Muscle Up",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Narrow Stance Hack Squats",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Narrow Stance Leg Press",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Narrow Stance Squats",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Natural Glute Ham Raise",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Neck Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Oblique Crunches",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Oblique Crunches - On The Floor",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Olympic Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "One Arm Chin-Up",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "expert"
+  },
+  {
+    "name": "One Arm Dumbbell Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One Arm Dumbbell Preacher Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One Arm Floor Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "One Arm Lat Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "One Arm Pronated Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One Arm Supinated Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One Leg Barbell Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "One-Arm Dumbbell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Arm Flat Bench Dumbbell Flye",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Arm High-Pulley Cable Side Bends",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Arm Incline Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Arm Kettlebell Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Clean and Jerk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Floor Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Jerk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Military Press To The Side",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Para Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Push Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Snatch",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "One-Arm Kettlebell Split Jerk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Kettlebell Split Snatch",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "One-Arm Kettlebell Swings",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Long Bar Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Arm Medicine Ball Slam",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Arm Open Palm Kettlebell Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "One-Arm Overhead Kettlebell Squats",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "One-Arm Side Deadlift",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "One-Arm Side Laterals",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "One-Legged Cable Kickback",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Open Palm Kettlebell Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "Otis-Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Overhead Cable Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Overhead Slam",
+    "muscleType": "BACK",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Overhead Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Pallof Press",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Pallof Press With Rotation",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Palms-Down Dumbbell Wrist Curl Over A Bench",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Palms-Down Wrist Curl Over A Bench",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Palms-Up Barbell Wrist Curl Over A Bench",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Palms-Up Dumbbell Wrist Curl Over A Bench",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Parallel Bar Dip",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Physioball Hip Bridge",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Pin Presses",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Plank",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Plate Pinch",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Plate Twist",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Platform Hamstring Slides",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Plie Dumbbell Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Plyo Kettlebell Pushups",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "expert"
+  },
+  {
+    "name": "Plyo Push-up",
+    "muscleType": "CHEST",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Power Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Power Clean from Blocks",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Power Jerk",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Power Partials",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Power Snatch",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Power Snatch from Blocks",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Power Stairs",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Preacher Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Preacher Hammer Dumbbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Press Sit-Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Prone Manual Hamstring",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Prowler Sprint",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Pull Through",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Pullups",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Push Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Push Press - Behind the Neck",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Push Up to Side Plank",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Push-Up Wide",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Push-Ups - Close Triceps Position",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Push-Ups With Feet Elevated",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Push-Ups With Feet On An Exercise Ball",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "intermediate"
+  },
+  {
+    "name": "Pushups",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Pushups (Close and Wide Hand Positions)",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Quick Leap",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Rack Delivery",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rack Pull with Bands",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rack Pulls",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Recumbent Bike",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Return Push from Stance",
+    "muscleType": "SHOULDERS",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Band Bench Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Reverse Band Box Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Reverse Band Deadlift",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Reverse Band Power Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Reverse Band Sumo Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Reverse Barbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Barbell Preacher Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "intermediate"
+  },
+  {
+    "name": "Reverse Cable Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Flyes",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Flyes With External Rotation",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Reverse Grip Bent-Over Rows",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Reverse Grip Triceps Pushdown",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Hyperextension",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Reverse Machine Flyes",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Plate Curls",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Triceps Bench Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rickshaw Carry",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rickshaw Deadlift",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Ring Dips",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rocket Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Rocking Standing Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Rocky Pull-Ups/Pulldowns",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Romanian Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Romanian Deadlift from Deficit",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rope Climb",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rope Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Rope Jumping",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Rope Straight-Arm Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Rowing, Stationary",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Running, Treadmill",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Russian Twist",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Sandbag Load",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Scapular Pull-Up",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Scissors Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Band Hamstring Curl",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Barbell Military Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Barbell Twist",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Bent-Over One-Arm Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Bent-Over Rear Delt Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Bent-Over Two-Arm Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Cable Rows",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Cable Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Close-Grip Concentration Barbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Dumbbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Dumbbell Inner Biceps Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Dumbbell Palms-Down Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Dumbbell Palms-Up Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Dumbbell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Flat Bench Leg Pull-In",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Good Mornings",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Head Harness Neck Resistance",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Leg Curl",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Leg Tucks",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated One-arm Cable Pulley Rows",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated One-Arm Dumbbell Palms-Down Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated One-Arm Dumbbell Palms-Up Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Palm-Up Barbell Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Palms-Down Barbell Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Side Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Triceps Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Two-Arm Palms-Up Low-Pulley Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "See-Saw Press (Alternating Side Press)",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Shotgun Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Shoulder Press - With Bands",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Bridge",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Hop-Sprint",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Jackknife",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Lateral Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Laterals to Front Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Standing Long Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Side to Side Box Shuffle",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Side To Side Chins",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Single Dumbbell Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Single Leg Butt Kick",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Single Leg Glute Bridge",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Single Leg Push-off",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Arm Cable Crossover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Arm Linear Jammer",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Single-Arm Push-Up",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Single-Cone Sprint Drill",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Leg High Box Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Leg Hop Progression",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Leg Lateral Hop",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Leg Leg Extension",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Leg Stride Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sit-Up",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Skating",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Sled Drag - Harness",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sled Overhead Backward Walk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sled Overhead Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sled Push",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sled Reverse Flye",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sled Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sledgehammer Swings",
+    "muscleType": "CORE",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Incline Shoulder Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Behind the Back Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Bent Over Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Close-Grip Bench Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Decline Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Hang Power Clean",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Smith Machine Hip Raise",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Incline Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Leg Press",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Smith Machine One-Arm Upright Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Overhead Shoulder Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Pistol Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Smith Machine Reverse Calf Raises",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Stiff-Legged Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Upright Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Single-Leg Split Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Snatch",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Snatch Balance",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Snatch Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Snatch from Blocks",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Snatch Pull",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Snatch Shrug",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Speed Band Overhead Triceps",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Speed Box Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Speed Squats",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Spell Caster",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Spider Crawl",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Spider Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "e-z curl bar",
+    "level": "beginner"
+  },
+  {
+    "name": "Split Clean",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Split Jerk",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Split Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Split Snatch",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Split Squat with Dumbbells",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Squat Jerk",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Squat with Bands",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Squat with Chains",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Squat with Plate Movers",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Squats - With Bands",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Stairmaster",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Alternating Dumbbell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Barbell Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Barbell Press Behind Neck",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Bent-Over One-Arm Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Bent-Over Two-Arm Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Biceps Cable Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Bradford Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Cable Chest Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Cable Lift",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Cable Wood Chop",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Calf Raises",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Concentration Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Dumbbell Calf Raise",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Dumbbell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Dumbbell Reverse Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Dumbbell Straight-Arm Front Delt Raise Above Head",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Dumbbell Upright Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Front Barbell Raise Over Head",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Inner-Biceps Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Leg Curl",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Long Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Low-Pulley Deltoid Raise",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Low-Pulley One-Arm Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Military Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Olympic Plate Hand Squeeze",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing One-Arm Cable Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing One-Arm Dumbbell Curl Over Incline Bench",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing One-Arm Dumbbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Overhead Barbell Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Palm-In One-Arm Dumbbell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Palms-In Dumbbell Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Palms-Up Barbell Behind The Back Wrist Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Rope Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Towel Triceps Extension",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Two-Arm Overhead Throw",
+    "muscleType": "SHOULDERS",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Star Jump",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Step Mill",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Step-up with Knee Raise",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Stiff Leg Barbell Good Morning",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Stiff-Legged Barbell Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Stiff-Legged Dumbbell Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Straight Bar Bench Mid Rows",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Straight Raises on Incline Bench",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Straight-Arm Dumbbell Pullover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Straight-Arm Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Stride Jump Crossover",
+    "muscleType": "QUADS",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Sumo Deadlift",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Sumo Deadlift with Bands",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Sumo Deadlift with Chains",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Supine Chest Throw",
+    "muscleType": "TRICEPS",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Supine One-Arm Overhead Throw",
+    "muscleType": "CORE",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Supine Two-Arm Overhead Throw",
+    "muscleType": "CORE",
+    "category": "endurance",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Suspended Fallout",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Suspended Push-Up",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Suspended Reverse Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Suspended Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Suspended Split Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Svend Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "T-Bar Row with Handle",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Tate Press",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Thigh Abductor",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Thigh Adductor",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Tire Flip",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Trail Running/Walking",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": null,
+    "level": "beginner"
+  },
+  {
+    "name": "Trap Bar Deadlift",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Tricep Dumbbell Kickback",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Triceps Overhead Extension with Rope",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Triceps Pushdown",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Triceps Pushdown - Rope Attachment",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Triceps Pushdown - V-Bar Attachment",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Tuck Crunch",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Two-Arm Dumbbell Preacher Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Two-Arm Kettlebell Clean",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Two-Arm Kettlebell Jerk",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Two-Arm Kettlebell Military Press",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Two-Arm Kettlebell Row",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "kettlebells",
+    "level": "intermediate"
+  },
+  {
+    "name": "Underhand Cable Pulldowns",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Upright Barbell Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Upright Cable Row",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Upright Row - With Bands",
+    "muscleType": "SHOULDERS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "V-Bar Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "V-Bar Pullup",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Vertical Swing",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "endurance",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Walking, Treadmill",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Weighted Ball Hyperextension",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "intermediate"
+  },
+  {
+    "name": "Weighted Ball Side Bend",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "exercise ball",
+    "level": "intermediate"
+  },
+  {
+    "name": "Weighted Bench Dip",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Weighted Crunches",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "medicine ball",
+    "level": "beginner"
+  },
+  {
+    "name": "Weighted Jump Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Weighted Pull Ups",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Weighted Sissy Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Weighted Sit-Ups - With Bands",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Weighted Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide Stance Barbell Squat",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide Stance Stiff Legs",
+    "muscleType": "HAMSTRINGS_GLUTES",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide-Grip Barbell Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide-Grip Decline Barbell Bench Press",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide-Grip Decline Barbell Pullover",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide-Grip Lat Pulldown",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Wide-Grip Pulldown Behind The Neck",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide-Grip Rear Pull-Up",
+    "muscleType": "BACK",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wide-Grip Standing Barbell Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Wind Sprints",
+    "muscleType": "CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Wrist Roller",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "beginner"
+  },
+  {
+    "name": "Wrist Rotations with Straight Bar",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Yoke Walk",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Zercher Squats",
+    "muscleType": "QUADS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "expert"
+  },
+  {
+    "name": "Zottman Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Zottman Preacher Curl",
+    "muscleType": "BICEPS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  }
+]
