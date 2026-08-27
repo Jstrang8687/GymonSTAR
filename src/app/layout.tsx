@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GymmonSTARS",
+  title: "GymonSTAR",
   description: "Gamified Strength Tracking & Anatomy Regimen System — gotta stack them all.",
 };
 

@@ -5,7 +5,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="mb-8 text-center">
           <div className="text-4xl">🏋️‍♂️⭐</div>
           <h1 className="mt-2 text-2xl font-black tracking-tight text-white">
-            Gymmon<span className="text-amber-400">STARS</span>
+            Gymon<span className="text-amber-400">STAR</span>
           </h1>
           <p className="mt-1 text-sm text-slate-400">
             Gotta stack them all.

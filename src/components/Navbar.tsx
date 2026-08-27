@@ -18,7 +18,7 @@ export function Navbar({ trainerLevel, loginStreak }: { trainerLevel: number; lo
         <Link href="/" className="flex items-center gap-2 font-black text-white">
           <span className="text-xl">🏋️‍♂️⭐</span>
           <span>
-            Gymmon<span className="text-amber-400">STARS</span>
+            Gymon<span className="text-amber-400">STAR</span>
           </span>
         </Link>
 
