@@ -54,6 +54,9 @@ export interface ExerciseInput {
   // Minutes for a time-based (cardio machine) exercise -- these don't use
   // sets/reps, so duration is their own volume measure instead.
   durationMinutes?: number;
+  // Optional distance for cardio exercises where mileage is a natural unit
+  // (running, walking, cycling). Record-keeping only, doesn't affect XP.
+  distanceMiles?: number;
 }
 
 // Base XP per logged exercise, plus a small volume bonus for strength work

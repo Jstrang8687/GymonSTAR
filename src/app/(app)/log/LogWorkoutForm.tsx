@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
 import { VideoUpload } from "./VideoUpload";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
-import { EXERCISE_LIBRARY, isTimeBasedExercise, type LibraryExercise } from "@/lib/exerciseLibrary";
+import { EXERCISE_LIBRARY, isTimeBasedExercise, hasMileage, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput, SetDetail } from "@/lib/game";
 
 interface ExerciseRow extends ExerciseInput {
@@ -64,6 +64,30 @@ export function LogWorkoutForm() {
     setExercises((prev) => prev.map((row) => (row.key === key ? { ...row, ...patch } : row)));
   }
 
+  // Drops a muscle-group chip that got auto-selected by picking an exercise,
+  // once nothing else in the list still needs it -- mirrors the auto-select
+  // on the way in.
+  function deselectIfUnused(remainingRows: ExerciseRow[], muscleType: MuscleType | undefined) {
+    if (!muscleType) return;
+    const stillNeeded = remainingRows.some((r) => r.pickedMuscleType === muscleType);
+    if (!stillNeeded) {
+      setMuscleTypes((prev) => prev.filter((t) => t !== muscleType));
+    }
+  }
+
+  function handleNameChange(key: number, name: string) {
+    setExercises((prev) => {
+      const row = prev.find((r) => r.key === key);
+      const next = prev.map((r) =>
+        r.key === key
+          ? { ...r, name, pickedMuscleType: undefined, durationMinutes: undefined, distanceMiles: undefined }
+          : r
+      );
+      deselectIfUnused(next, row?.pickedMuscleType);
+      return next;
+    });
+  }
+
   function suggestionsFor(query: string): LibraryExercise[] {
     const q = query.trim().toLowerCase();
     if (q.length < 2) return [];
@@ -73,17 +97,34 @@ export function LogWorkoutForm() {
   }
 
   function pickSuggestion(key: number, exercise: LibraryExercise) {
-    updateRow(key, {
-      name: exercise.name,
-      category: exercise.category,
-      pickedMuscleType: exercise.muscleType,
-      // Time-based cardio doesn't use sets/reps, but weight still applies
-      // (weighted vest, weighted incline walk, etc.), so leave it.
-      sets: isTimeBasedExercise(exercise.muscleType) ? undefined : 3,
-      reps: isTimeBasedExercise(exercise.muscleType) ? undefined : 10,
-      weight: 0,
-      setDetails: undefined,
-      durationMinutes: isTimeBasedExercise(exercise.muscleType) ? 20 : undefined,
+    const timeBased = isTimeBasedExercise(exercise.muscleType);
+    setExercises((prev) => {
+      const row = prev.find((r) => r.key === key);
+      const oldMuscleType = row?.pickedMuscleType;
+      const next = prev.map((r) =>
+        r.key === key
+          ? {
+              ...r,
+              name: exercise.name,
+              category: exercise.category,
+              pickedMuscleType: exercise.muscleType,
+              // Time-based cardio doesn't use sets/reps, but weight still applies
+              // (weighted vest, weighted incline walk, etc.), so leave it.
+              sets: timeBased ? undefined : 3,
+              reps: timeBased ? undefined : 10,
+              weight: 0,
+              setDetails: undefined,
+              durationMinutes: timeBased ? 20 : undefined,
+              distanceMiles: undefined,
+            }
+          : r
+      );
+      // Switching from one exercise to a different-type one: drop the old
+      // chip if nothing else needs it, same as clearing the field would.
+      if (oldMuscleType && oldMuscleType !== exercise.muscleType) {
+        deselectIfUnused(next, oldMuscleType);
+      }
+      return next;
     });
     setSuggestKey(null);
     // Auto-select the matching muscle group so you don't have to pick it separately.
@@ -102,7 +143,13 @@ export function LogWorkoutForm() {
   }
 
   function removeRow(key: number) {
-    setExercises((prev) => (prev.length > 1 ? prev.filter((row) => row.key !== key) : prev));
+    setExercises((prev) => {
+      if (prev.length <= 1) return prev;
+      const removed = prev.find((r) => r.key === key);
+      const next = prev.filter((row) => row.key !== key);
+      deselectIfUnused(next, removed?.pickedMuscleType);
+      return next;
+    });
   }
 
   function toggleMultiSet(key: number, enable: boolean) {
@@ -177,6 +224,7 @@ export function LogWorkoutForm() {
               reps: row.reps,
               weight: row.weight,
               durationMinutes: row.durationMinutes,
+              distanceMiles: row.distanceMiles,
             }
       );
     if (cleanExercises.length === 0) {
@@ -270,13 +318,7 @@ export function LogWorkoutForm() {
                       <input
                         placeholder="e.g. Barbell Bench Press"
                         value={row.name}
-                        onChange={(e) =>
-                          updateRow(row.key, {
-                            name: e.target.value,
-                            pickedMuscleType: undefined,
-                            durationMinutes: undefined,
-                          })
-                        }
+                        onChange={(e) => handleNameChange(row.key, e.target.value)}
                         onFocus={() => setSuggestKey(row.key)}
                         onBlur={() => {
                           setSuggestKey(null);
@@ -322,20 +364,39 @@ export function LogWorkoutForm() {
                   </Field>
 
                   {timeBased ? (
-                    <Field label="Duration (min)">
-                      <input
-                        type="number"
-                        min={0}
-                        placeholder="e.g. 20"
-                        value={row.durationMinutes ?? ""}
-                        onChange={(e) =>
-                          updateRow(row.key, {
-                            durationMinutes: e.target.value === "" ? undefined : Number(e.target.value),
-                          })
-                        }
-                        className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-                      />
-                    </Field>
+                    <>
+                      <Field label="Duration (min)">
+                        <input
+                          type="number"
+                          min={0}
+                          placeholder="e.g. 20"
+                          value={row.durationMinutes ?? ""}
+                          onChange={(e) =>
+                            updateRow(row.key, {
+                              durationMinutes: e.target.value === "" ? undefined : Number(e.target.value),
+                            })
+                          }
+                          className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                        />
+                      </Field>
+                      {hasMileage(row.name) && (
+                        <Field label="Distance">
+                          <input
+                            type="number"
+                            min={0}
+                            step="0.1"
+                            placeholder="optional, mi"
+                            value={row.distanceMiles ?? ""}
+                            onChange={(e) =>
+                              updateRow(row.key, {
+                                distanceMiles: e.target.value === "" ? undefined : Number(e.target.value),
+                              })
+                            }
+                            className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                          />
+                        </Field>
+                      )}
+                    </>
                   ) : (
                     !multiSet && (
                       <>

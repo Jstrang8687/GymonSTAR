@@ -31,3 +31,22 @@ export function searchExercises(query: string, muscleType?: MuscleType, limit = 
 export function isTimeBasedExercise(muscleType: MuscleType): boolean {
   return muscleType === "CARDIO";
 }
+
+// Of the 14 CARDIO exercises, only the ones that cover real ground have a
+// natural mileage figure. Elliptical/Stairmaster/Step Mill are tracked by
+// level or floors, Rowing by meters, Rope Jumping and Prowler Sprint by
+// reps/yards -- miles wouldn't mean anything for those.
+const MILEAGE_EXERCISE_NAMES = new Set([
+  "Bicycling",
+  "Bicycling, Stationary",
+  "Jogging, Treadmill",
+  "Recumbent Bike",
+  "Running, Treadmill",
+  "Skating",
+  "Trail Running/Walking",
+  "Walking, Treadmill",
+]);
+
+export function hasMileage(name: string): boolean {
+  return MILEAGE_EXERCISE_NAMES.has(name);
+}
