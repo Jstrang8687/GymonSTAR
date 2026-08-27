@@ -36,25 +36,40 @@ export function streakMultiplier(loginStreak: number): number {
   return 1 + Math.min(loginStreak * STREAK_XP_BONUS_PER_DAY, STREAK_XP_BONUS_CAP);
 }
 
+export interface SetDetail {
+  reps?: number;
+  weight?: number;
+}
+
 export interface ExerciseInput {
   name: string;
   category: "strength" | "endurance";
   sets?: number;
   reps?: number;
   weight?: number;
+  // When present (multi-set mode), this is the source of truth for volume
+  // instead of the flat sets/reps pair -- each set can have its own
+  // weight/reps (pyramid sets, drop sets, etc.) under one exercise entry.
+  setDetails?: SetDetail[];
 }
 
 // Base XP per logged exercise, plus a small volume bonus for strength work
-// (sets*reps, capped so nobody games it with absurd rep counts) and a
-// duration bonus applied once per workout for endurance-heavy sessions.
+// (total reps across all sets, capped so nobody games it with absurd rep
+// counts) and a duration bonus applied once per workout for endurance-heavy
+// sessions.
 const BASE_XP_PER_EXERCISE = 15;
 const MAX_VOLUME_BONUS = 20;
 const XP_PER_DURATION_MINUTE = 1;
 
 export function computeExerciseXp(exercise: ExerciseInput): number {
   let xp = BASE_XP_PER_EXERCISE;
-  if (exercise.category === "strength" && exercise.sets && exercise.reps) {
-    xp += Math.min(exercise.sets * exercise.reps, MAX_VOLUME_BONUS);
+  if (exercise.category === "strength") {
+    if (exercise.setDetails && exercise.setDetails.length > 0) {
+      const totalReps = exercise.setDetails.reduce((sum, s) => sum + (s.reps ?? 0), 0);
+      xp += Math.min(totalReps, MAX_VOLUME_BONUS);
+    } else if (exercise.sets && exercise.reps) {
+      xp += Math.min(exercise.sets * exercise.reps, MAX_VOLUME_BONUS);
+    }
   }
   return xp;
 }

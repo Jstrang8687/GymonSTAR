@@ -6,7 +6,7 @@ import { logWorkout, type LogWorkoutResult } from "./actions";
 import { VideoUpload } from "./VideoUpload";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
 import { EXERCISE_LIBRARY, isTimeBasedExercise, type LibraryExercise } from "@/lib/exerciseLibrary";
-import type { ExerciseInput } from "@/lib/game";
+import type { ExerciseInput, SetDetail } from "@/lib/game";
 
 interface ExerciseRow extends ExerciseInput {
   key: number;
@@ -69,6 +69,7 @@ export function LogWorkoutForm() {
       sets: isTimeBasedExercise(exercise.muscleType) ? undefined : 3,
       reps: isTimeBasedExercise(exercise.muscleType) ? undefined : 10,
       weight: 0,
+      setDetails: undefined,
     });
     setSuggestKey(null);
     // Auto-select the matching muscle group so you don't have to pick it separately.
@@ -79,6 +80,60 @@ export function LogWorkoutForm() {
     setExercises((prev) => (prev.length > 1 ? prev.filter((row) => row.key !== key) : prev));
   }
 
+  function toggleMultiSet(key: number, enable: boolean) {
+    setExercises((prev) =>
+      prev.map((row) => {
+        if (row.key !== key) return row;
+        if (enable) {
+          return {
+            ...row,
+            setDetails: [{ weight: row.weight, reps: row.reps }],
+            sets: undefined,
+            reps: undefined,
+            weight: undefined,
+          };
+        }
+        const first = row.setDetails?.[0];
+        return {
+          ...row,
+          setDetails: undefined,
+          sets: row.setDetails?.length ?? 3,
+          reps: first?.reps,
+          weight: first?.weight,
+        };
+      })
+    );
+  }
+
+  function addSetRow(key: number) {
+    setExercises((prev) =>
+      prev.map((row) => {
+        if (row.key !== key || !row.setDetails) return row;
+        // Pre-fill the new set with the previous set's numbers as a starting point.
+        const last = row.setDetails[row.setDetails.length - 1];
+        return { ...row, setDetails: [...row.setDetails, { weight: last?.weight, reps: last?.reps }] };
+      })
+    );
+  }
+
+  function updateSetRow(key: number, index: number, patch: Partial<SetDetail>) {
+    setExercises((prev) =>
+      prev.map((row) => {
+        if (row.key !== key || !row.setDetails) return row;
+        return { ...row, setDetails: row.setDetails.map((s, i) => (i === index ? { ...s, ...patch } : s)) };
+      })
+    );
+  }
+
+  function removeSetRow(key: number, index: number) {
+    setExercises((prev) =>
+      prev.map((row) => {
+        if (row.key !== key || !row.setDetails || row.setDetails.length <= 1) return row;
+        return { ...row, setDetails: row.setDetails.filter((_, i) => i !== index) };
+      })
+    );
+  }
+
   function submit() {
     setError(null);
     if (muscleTypes.length === 0) {
@@ -87,13 +142,11 @@ export function LogWorkoutForm() {
     }
     const cleanExercises: ExerciseInput[] = exercises
       .filter((row) => row.name.trim().length > 0)
-      .map((row) => ({
-        name: row.name,
-        category: row.category,
-        sets: row.sets,
-        reps: row.reps,
-        weight: row.weight,
-      }));
+      .map((row) =>
+        row.setDetails
+          ? { name: row.name, category: row.category, setDetails: row.setDetails }
+          : { name: row.name, category: row.category, sets: row.sets, reps: row.reps, weight: row.weight }
+      );
     if (cleanExercises.length === 0) {
       setError("Add at least one exercise.");
       return;
@@ -177,6 +230,7 @@ export function LogWorkoutForm() {
         <div className="space-y-3">
           {exercises.map((row) => {
             const timeBased = row.pickedMuscleType ? isTimeBasedExercise(row.pickedMuscleType) : false;
+            const multiSet = !!row.setDetails;
             return (
               <div key={row.key} className="rounded-lg border border-white/10 bg-white/5 p-3">
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-6">
@@ -232,52 +286,128 @@ export function LogWorkoutForm() {
                       <p className="pb-1.5 text-xs text-slate-500">⏱️ Time-based, tracked below</p>
                     </div>
                   ) : (
-                    <>
-                      <Field label="Sets">
-                        <input
-                          type="number"
-                          min={0}
-                          placeholder="e.g. 3"
-                          value={row.sets ?? ""}
-                          onChange={(e) =>
-                            updateRow(row.key, { sets: e.target.value === "" ? undefined : Number(e.target.value) })
-                          }
-                          className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-                        />
-                      </Field>
-                      <Field label="Reps">
-                        <input
-                          type="number"
-                          min={0}
-                          placeholder="e.g. 10"
-                          value={row.reps ?? ""}
-                          onChange={(e) =>
-                            updateRow(row.key, { reps: e.target.value === "" ? undefined : Number(e.target.value) })
-                          }
-                          className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-                        />
-                      </Field>
-                    </>
+                    !multiSet && (
+                      <>
+                        <Field label="Sets">
+                          <input
+                            type="number"
+                            min={0}
+                            placeholder="e.g. 3"
+                            value={row.sets ?? ""}
+                            onChange={(e) =>
+                              updateRow(row.key, { sets: e.target.value === "" ? undefined : Number(e.target.value) })
+                            }
+                            className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                          />
+                        </Field>
+                        <Field label="Reps">
+                          <input
+                            type="number"
+                            min={0}
+                            placeholder="e.g. 10"
+                            value={row.reps ?? ""}
+                            onChange={(e) =>
+                              updateRow(row.key, { reps: e.target.value === "" ? undefined : Number(e.target.value) })
+                            }
+                            className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                          />
+                        </Field>
+                      </>
+                    )
                   )}
-                  <Field label={timeBased ? "Weight (lbs, optional)" : "Weight (lbs)"}>
-                    <input
-                      type="number"
-                      min={0}
-                      placeholder={timeBased ? "e.g. weighted vest" : "e.g. 45, or 0"}
-                      value={row.weight ?? ""}
-                      onChange={(e) =>
-                        updateRow(row.key, { weight: e.target.value === "" ? undefined : Number(e.target.value) })
-                      }
-                      className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-                    />
-                  </Field>
+                  {!multiSet && (
+                    <Field label={timeBased ? "Weight (lbs, optional)" : "Weight (lbs)"}>
+                      <input
+                        type="number"
+                        min={0}
+                        placeholder={timeBased ? "e.g. weighted vest" : "e.g. 45, or 0"}
+                        value={row.weight ?? ""}
+                        onChange={(e) =>
+                          updateRow(row.key, { weight: e.target.value === "" ? undefined : Number(e.target.value) })
+                        }
+                        className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                      />
+                    </Field>
+                  )}
+
+                  {!timeBased && (
+                    <label className="col-span-2 mt-1 flex items-center gap-1.5 sm:col-span-6">
+                      <input
+                        type="checkbox"
+                        checked={multiSet}
+                        onChange={(e) => toggleMultiSet(row.key, e.target.checked)}
+                        className="h-3.5 w-3.5 rounded border-white/20 bg-slate-900 accent-amber-400"
+                      />
+                      <span className="text-xs text-slate-400">
+                        Multi-set (different weight/reps per set, e.g. pyramid sets)
+                      </span>
+                    </label>
+                  )}
+
+                  {multiSet && row.setDetails && (
+                    <div className="col-span-2 mt-1 sm:col-span-6">
+                      <div className="grid grid-cols-[2rem_1fr_1fr_1.5rem] gap-2 px-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                        <span>Set</span>
+                        <span>Weight (lbs)</span>
+                        <span>Reps</span>
+                        <span />
+                      </div>
+                      <div className="mt-1 space-y-1.5">
+                        {row.setDetails.map((s, i) => (
+                          <div key={i} className="grid grid-cols-[2rem_1fr_1fr_1.5rem] items-center gap-2">
+                            <span className="text-center text-sm font-semibold text-slate-400">{i + 1}</span>
+                            <input
+                              type="number"
+                              min={0}
+                              placeholder="e.g. 45"
+                              value={s.weight ?? ""}
+                              onChange={(e) =>
+                                updateSetRow(row.key, i, {
+                                  weight: e.target.value === "" ? undefined : Number(e.target.value),
+                                })
+                              }
+                              className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                            />
+                            <input
+                              type="number"
+                              min={0}
+                              placeholder="e.g. 5"
+                              value={s.reps ?? ""}
+                              onChange={(e) =>
+                                updateSetRow(row.key, i, {
+                                  reps: e.target.value === "" ? undefined : Number(e.target.value),
+                                })
+                              }
+                              className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeSetRow(row.key, i)}
+                              disabled={row.setDetails!.length <= 1}
+                              className="text-slate-500 hover:text-red-400 disabled:opacity-30"
+                              aria-label={`Remove set ${i + 1}`}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => addSetRow(row.key)}
+                        className="mt-2 text-xs font-semibold text-amber-400 hover:underline"
+                      >
+                        + Add Set
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <button
                   type="button"
                   onClick={() => removeRow(row.key)}
                   className="mt-2 text-xs font-semibold text-slate-500 hover:text-red-400"
                 >
-                  ✕ Remove
+                  ✕ Remove exercise
                 </button>
               </div>
             );
