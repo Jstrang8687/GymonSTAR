@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getUserId, getProfile } from "@/lib/session-helpers";
-import { computeWorkoutXp, levelFromXp, xpForLevel, type ExerciseInput } from "@/lib/game";
+import { computeWorkoutXp, levelFromXp, xpForLevel, type ExerciseInput, type SetDetail } from "@/lib/game";
 import { saveWorkoutVideo, deleteWorkoutVideo } from "@/lib/videoStorage";
 import type { MuscleType } from "@/lib/muscleTypes";
 
@@ -19,6 +19,36 @@ export interface LogWorkoutResult {
   caughtNewMonster: boolean;
   caughtType: MuscleType | null;
   multiplier: number;
+}
+
+// Looks back through recent logs for the most recent time this exact
+// exercise name was logged, normalized to a per-set array so the UI can
+// show a "Prev" reference regardless of whether that log used multi-set
+// mode or the old single sets/reps/weight fields.
+export async function getPreviousExercise(name: string): Promise<SetDetail[] | null> {
+  const userId = await getUserId();
+  const target = name.trim().toLowerCase();
+  if (!target) return null;
+
+  const logs = await prisma.workoutLog.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+    take: 50,
+    select: { exercises: true },
+  });
+
+  for (const log of logs) {
+    const exercises = JSON.parse(log.exercises) as ExerciseInput[];
+    const match = exercises.find((e) => e.name.trim().toLowerCase() === target);
+    if (!match) continue;
+
+    if (match.setDetails && match.setDetails.length > 0) return match.setDetails;
+    if (match.sets && match.sets > 0) {
+      return Array.from({ length: match.sets }, () => ({ reps: match.reps, weight: match.weight }));
+    }
+    return null;
+  }
+  return null;
 }
 
 export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResult> {

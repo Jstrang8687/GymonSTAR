@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { logWorkout, type LogWorkoutResult } from "./actions";
+import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
 import { VideoUpload } from "./VideoUpload";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
 import { EXERCISE_LIBRARY, isTimeBasedExercise, type LibraryExercise } from "@/lib/exerciseLibrary";
@@ -12,12 +12,26 @@ interface ExerciseRow extends ExerciseInput {
   key: number;
   /** Set when picked from the library, so we know whether to show sets/reps/weight. */
   pickedMuscleType?: MuscleType;
+  /** What you logged for this exact exercise name last time, if ever. */
+  prevSets?: SetDetail[] | null;
 }
 
 let nextKey = 1;
 
 function emptyRow(): ExerciseRow {
   return { key: nextKey++, name: "", category: "strength" };
+}
+
+function formatPrevSet(s: SetDetail | undefined): string {
+  if (!s || (s.weight === undefined && s.reps === undefined)) return "—";
+  if (s.weight !== undefined && s.reps !== undefined) return `${s.weight}×${s.reps}`;
+  if (s.reps !== undefined) return `${s.reps} reps`;
+  return `${s.weight} lbs`;
+}
+
+function formatPrevSummary(sets: SetDetail[] | null | undefined): string | null {
+  if (!sets || sets.length === 0) return null;
+  return `Last time: ${sets.map(formatPrevSet).join(", ")}`;
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -74,6 +88,17 @@ export function LogWorkoutForm() {
     setSuggestKey(null);
     // Auto-select the matching muscle group so you don't have to pick it separately.
     setMuscleTypes((prev) => (prev.includes(exercise.muscleType) ? prev : [...prev, exercise.muscleType]));
+    fetchPrevious(key, exercise.name);
+  }
+
+  async function fetchPrevious(key: number, name: string) {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      updateRow(key, { prevSets: null });
+      return;
+    }
+    const prev = await getPreviousExercise(trimmed);
+    updateRow(key, { prevSets: prev });
   }
 
   function removeRow(key: number) {
@@ -241,7 +266,10 @@ export function LogWorkoutForm() {
                         value={row.name}
                         onChange={(e) => updateRow(row.key, { name: e.target.value, pickedMuscleType: undefined })}
                         onFocus={() => setSuggestKey(row.key)}
-                        onBlur={() => setSuggestKey(null)}
+                        onBlur={() => {
+                          setSuggestKey(null);
+                          fetchPrevious(row.key, row.name);
+                        }}
                         autoComplete="off"
                         className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
                       />
@@ -330,6 +358,12 @@ export function LogWorkoutForm() {
                     </Field>
                   )}
 
+                  {!multiSet && formatPrevSummary(row.prevSets) && (
+                    <p className="col-span-2 text-xs text-slate-500 sm:col-span-6">
+                      {formatPrevSummary(row.prevSets)}
+                    </p>
+                  )}
+
                   {!timeBased && (
                     <label className="col-span-2 mt-1 flex items-center gap-1.5 sm:col-span-6">
                       <input
@@ -346,16 +380,18 @@ export function LogWorkoutForm() {
 
                   {multiSet && row.setDetails && (
                     <div className="col-span-2 mt-1 sm:col-span-6">
-                      <div className="grid grid-cols-[2rem_1fr_1fr_1.5rem] gap-2 px-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                      <div className="grid grid-cols-[2rem_3.5rem_1fr_1fr_1.5rem] gap-2 px-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
                         <span>Set</span>
+                        <span>Prev</span>
                         <span>Weight (lbs)</span>
                         <span>Reps</span>
                         <span />
                       </div>
                       <div className="mt-1 space-y-1.5">
                         {row.setDetails.map((s, i) => (
-                          <div key={i} className="grid grid-cols-[2rem_1fr_1fr_1.5rem] items-center gap-2">
+                          <div key={i} className="grid grid-cols-[2rem_3.5rem_1fr_1fr_1.5rem] items-center gap-2">
                             <span className="text-center text-sm font-semibold text-slate-400">{i + 1}</span>
+                            <span className="text-center text-xs text-slate-500">{formatPrevSet(row.prevSets?.[i])}</span>
                             <input
                               type="number"
                               min={0}
