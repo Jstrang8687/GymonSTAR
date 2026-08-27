@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { proofBonusIsReversible, PROOF_VERIFY_BONUS_XP } from "@/lib/game";
+import { DeleteProofButton } from "./DeleteProofButton";
 
 export default async function HistoryPage() {
   await requireOnboarded();
@@ -26,6 +28,7 @@ export default async function HistoryPage() {
             const muscleTypes = JSON.parse(log.muscleTypes) as MuscleType[];
             const isImage = log.videoMimeType?.startsWith("image/");
             const src = `/api/workout-proof/${log.id}`;
+            const willLoseXp = log.videoVerifiedAt !== null && proofBonusIsReversible(log.videoVerifiedAt);
             return (
               <div key={log.id} className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
                 <div className="flex aspect-video items-center justify-center bg-black/40">
@@ -47,7 +50,10 @@ export default async function HistoryPage() {
                       ))}
                     </div>
                   </div>
-                  <span className="text-sm font-bold text-amber-400">+{log.xpAwarded} XP</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold text-amber-400">+{log.xpAwarded} XP</span>
+                    <DeleteProofButton workoutLogId={log.id} willLoseXp={willLoseXp} bonusXp={PROOF_VERIFY_BONUS_XP} />
+                  </div>
                 </div>
               </div>
             );

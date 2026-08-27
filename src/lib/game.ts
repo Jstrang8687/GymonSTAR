@@ -29,6 +29,28 @@ export function hpForLevel(level: number): number {
   return 20 + level * 5;
 }
 
+// trainerXp in the DB is progress *within* the current level, not a lifetime
+// total (it resets down on level-up). This reconstructs the lifetime total
+// so a delta (like reversing a bonus) can be applied correctly and then
+// re-split back into (level, into-level xp) via xpProgress.
+export function totalTrainerXp(level: number, intoLevelXp: number): number {
+  let total = intoLevelXp;
+  for (let l = 1; l < level; l++) total += xpForLevel(l);
+  return total;
+}
+
+export const PROOF_VERIFY_BONUS_XP = 15;
+
+// Deleting proof normally claws back its verification bonus, but once a
+// verification is a year+ old it's treated as permanent history -- old
+// cleanup shouldn't cost XP earned that long ago.
+export const PROOF_BONUS_REVERSAL_WINDOW_DAYS = 365;
+
+export function proofBonusIsReversible(verifiedAt: Date): boolean {
+  const ageMs = Date.now() - verifiedAt.getTime();
+  return ageMs < PROOF_BONUS_REVERSAL_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+}
+
 export const STREAK_XP_BONUS_PER_DAY = 0.05;
 export const STREAK_XP_BONUS_CAP = 0.5;
 

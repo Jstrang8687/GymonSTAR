@@ -3,8 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getUserId, getProfile } from "@/lib/session-helpers";
-import { computeWorkoutXp, levelFromXp, xpForLevel, type ExerciseInput, type SetDetail } from "@/lib/game";
-import { saveWorkoutProof, deleteWorkoutProof } from "@/lib/proofStorage";
+import {
+  computeWorkoutXp,
+  levelFromXp,
+  totalTrainerXp,
+  xpProgress,
+  proofBonusIsReversible,
+  PROOF_VERIFY_BONUS_XP,
+  type ExerciseInput,
+  type SetDetail,
+} from "@/lib/game";
+import { saveWorkoutProof, deleteWorkoutProof as deleteProofFile } from "@/lib/proofStorage";
 import type { MuscleType } from "@/lib/muscleTypes";
 
 export interface LogWorkoutInput {
@@ -131,7 +140,18 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
   };
 }
 
-const PROOF_VERIFY_BONUS_XP = 15;
+// trainerXp/trainerLevel are stored as (level, progress-within-level), not a
+// lifetime total, so a +/- delta has to go through a total-xp round trip to
+// land on the right level in either direction (level-up or level-down).
+async function applyTrainerXpDelta(userId: string, delta: number) {
+  const profile = await prisma.userProfile.findUniqueOrThrow({ where: { userId } });
+  const currentTotal = totalTrainerXp(profile.trainerLevel, profile.trainerXp);
+  const newTotal = Math.max(0, currentTotal + delta);
+  const { level, into } = xpProgress(newTotal);
+  if (level !== profile.trainerLevel || into !== profile.trainerXp) {
+    await prisma.userProfile.update({ where: { userId }, data: { trainerLevel: level, trainerXp: into } });
+  }
+}
 
 export interface AttachProofResult {
   bonusXp: number;
@@ -149,48 +169,58 @@ export async function attachWorkoutProof(workoutLogId: string, formData: FormDat
   const saved = await saveWorkoutProof(file);
 
   if (log.videoFilename) {
-    await deleteWorkoutProof(log.videoFilename);
+    await deleteProofFile(log.videoFilename);
   }
 
   const alreadyVerified = log.videoVerifiedAt !== null;
   const bonusXp = alreadyVerified ? 0 : PROOF_VERIFY_BONUS_XP;
 
-  await prisma.$transaction([
-    prisma.workoutLog.update({
-      where: { id: workoutLogId },
-      data: {
-        videoFilename: saved.filename,
-        videoMimeType: saved.mimeType,
-        videoVerifiedAt: log.videoVerifiedAt ?? new Date(),
-      },
-    }),
-    ...(bonusXp > 0
-      ? [
-          prisma.userProfile.update({
-            where: { userId },
-            data: { trainerXp: { increment: bonusXp } },
-          }),
-        ]
-      : []),
-  ]);
+  await prisma.workoutLog.update({
+    where: { id: workoutLogId },
+    data: {
+      videoFilename: saved.filename,
+      videoMimeType: saved.mimeType,
+      videoVerifiedAt: log.videoVerifiedAt ?? new Date(),
+    },
+  });
 
   if (bonusXp > 0) {
-    // Re-check for a trainer level-up now that trainerXp increased.
-    const profile = await prisma.userProfile.findUniqueOrThrow({ where: { userId } });
-    let trainerXp = profile.trainerXp;
-    let trainerLevel = profile.trainerLevel;
-    while (trainerXp >= xpForLevel(trainerLevel)) {
-      trainerXp -= xpForLevel(trainerLevel);
-      trainerLevel += 1;
-    }
-    if (trainerLevel !== profile.trainerLevel) {
-      await prisma.userProfile.update({ where: { userId }, data: { trainerXp, trainerLevel } });
-    }
+    await applyTrainerXpDelta(userId, bonusXp);
   }
 
   revalidatePath("/log");
   revalidatePath("/");
   revalidatePath("/monstars");
+  revalidatePath("/history");
 
   return { bonusXp };
+}
+
+export async function deleteWorkoutProof(workoutLogId: string): Promise<void> {
+  const userId = await getUserId();
+
+  const log = await prisma.workoutLog.findUnique({ where: { id: workoutLogId } });
+  if (!log || log.userId !== userId) throw new Error("Workout not found.");
+  if (!log.videoFilename) return;
+
+  await deleteProofFile(log.videoFilename);
+
+  const shouldReverseBonus = log.videoVerifiedAt !== null && proofBonusIsReversible(log.videoVerifiedAt);
+
+  await prisma.workoutLog.update({
+    where: { id: workoutLogId },
+    data: { videoFilename: null, videoMimeType: null, videoVerifiedAt: null },
+  });
+
+  if (shouldReverseBonus) {
+    // Removing proof revokes the verification bonus, so re-uploading later
+    // pays it out again rather than farming it via upload-then-delete.
+    // (Verifications a year+ old are exempt -- see proofBonusIsReversible.)
+    await applyTrainerXpDelta(userId, -PROOF_VERIFY_BONUS_XP);
+  }
+
+  revalidatePath("/log");
+  revalidatePath("/");
+  revalidatePath("/monstars");
+  revalidatePath("/history");
 }
