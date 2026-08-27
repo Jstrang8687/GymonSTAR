@@ -49,7 +49,6 @@ export function LogWorkoutForm() {
   const router = useRouter();
   const [muscleTypes, setMuscleTypes] = useState<MuscleType[]>([]);
   const [exercises, setExercises] = useState<ExerciseRow[]>([emptyRow()]);
-  const [duration, setDuration] = useState(30);
   const [pending, startTransition] = useTransition();
   const [result, setResult] = useState<LogWorkoutResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -84,6 +83,7 @@ export function LogWorkoutForm() {
       reps: isTimeBasedExercise(exercise.muscleType) ? undefined : 10,
       weight: 0,
       setDetails: undefined,
+      durationMinutes: isTimeBasedExercise(exercise.muscleType) ? 20 : undefined,
     });
     setSuggestKey(null);
     // Auto-select the matching muscle group so you don't have to pick it separately.
@@ -170,7 +170,14 @@ export function LogWorkoutForm() {
       .map((row) =>
         row.setDetails
           ? { name: row.name, category: row.category, setDetails: row.setDetails }
-          : { name: row.name, category: row.category, sets: row.sets, reps: row.reps, weight: row.weight }
+          : {
+              name: row.name,
+              category: row.category,
+              sets: row.sets,
+              reps: row.reps,
+              weight: row.weight,
+              durationMinutes: row.durationMinutes,
+            }
       );
     if (cleanExercises.length === 0) {
       setError("Add at least one exercise.");
@@ -182,7 +189,6 @@ export function LogWorkoutForm() {
         const res = await logWorkout({
           muscleTypes,
           exercises: cleanExercises,
-          durationMinutes: duration,
         });
         setResult(res);
         setMuscleTypes([]);
@@ -264,7 +270,13 @@ export function LogWorkoutForm() {
                       <input
                         placeholder="e.g. Barbell Bench Press"
                         value={row.name}
-                        onChange={(e) => updateRow(row.key, { name: e.target.value, pickedMuscleType: undefined })}
+                        onChange={(e) =>
+                          updateRow(row.key, {
+                            name: e.target.value,
+                            pickedMuscleType: undefined,
+                            durationMinutes: undefined,
+                          })
+                        }
                         onFocus={() => setSuggestKey(row.key)}
                         onBlur={() => {
                           setSuggestKey(null);
@@ -310,9 +322,20 @@ export function LogWorkoutForm() {
                   </Field>
 
                   {timeBased ? (
-                    <div className="col-span-2 flex items-end sm:col-span-1">
-                      <p className="pb-1.5 text-xs text-slate-500">⏱️ Time-based, tracked below</p>
-                    </div>
+                    <Field label="Duration (min)">
+                      <input
+                        type="number"
+                        min={0}
+                        placeholder="e.g. 20"
+                        value={row.durationMinutes ?? ""}
+                        onChange={(e) =>
+                          updateRow(row.key, {
+                            durationMinutes: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                        className="w-full rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                      />
+                    </Field>
                   ) : (
                     !multiSet && (
                       <>
@@ -449,20 +472,6 @@ export function LogWorkoutForm() {
             );
           })}
         </div>
-      </section>
-
-      <section className="flex items-center gap-3">
-        <label className="text-sm font-semibold text-slate-300" htmlFor="duration">
-          Duration (minutes)
-        </label>
-        <input
-          id="duration"
-          type="number"
-          min={0}
-          value={duration}
-          onChange={(e) => setDuration(Number(e.target.value) || 0)}
-          className="w-24 rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
-        />
       </section>
 
       {error && <p className="text-sm text-red-400">{error}</p>}

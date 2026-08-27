@@ -51,12 +51,14 @@ export interface ExerciseInput {
   // instead of the flat sets/reps pair -- each set can have its own
   // weight/reps (pyramid sets, drop sets, etc.) under one exercise entry.
   setDetails?: SetDetail[];
+  // Minutes for a time-based (cardio machine) exercise -- these don't use
+  // sets/reps, so duration is their own volume measure instead.
+  durationMinutes?: number;
 }
 
 // Base XP per logged exercise, plus a small volume bonus for strength work
 // (total reps across all sets, capped so nobody games it with absurd rep
-// counts) and a duration bonus applied once per workout for endurance-heavy
-// sessions.
+// counts) or a duration bonus for time-based endurance work, per exercise.
 const BASE_XP_PER_EXERCISE = 15;
 const MAX_VOLUME_BONUS = 20;
 const XP_PER_DURATION_MINUTE = 1;
@@ -70,6 +72,8 @@ export function computeExerciseXp(exercise: ExerciseInput): number {
     } else if (exercise.sets && exercise.reps) {
       xp += Math.min(exercise.sets * exercise.reps, MAX_VOLUME_BONUS);
     }
+  } else if (exercise.durationMinutes) {
+    xp += exercise.durationMinutes * XP_PER_DURATION_MINUTE;
   }
   return xp;
 }
@@ -81,11 +85,7 @@ export interface WorkoutXpResult {
   multiplier: number;
 }
 
-export function computeWorkoutXp(
-  exercises: ExerciseInput[],
-  durationMinutes: number,
-  loginStreak: number
-): WorkoutXpResult {
+export function computeWorkoutXp(exercises: ExerciseInput[], loginStreak: number): WorkoutXpResult {
   const multiplier = streakMultiplier(loginStreak);
   let strengthXp = 0;
   let enduranceXp = 0;
@@ -97,11 +97,6 @@ export function computeWorkoutXp(
     } else {
       enduranceXp += xp;
     }
-  }
-
-  const hasEndurance = exercises.some((e) => e.category === "endurance");
-  if (hasEndurance) {
-    enduranceXp += durationMinutes * XP_PER_DURATION_MINUTE;
   }
 
   strengthXp = Math.round(strengthXp * multiplier);

@@ -10,7 +10,6 @@ import type { MuscleType } from "@/lib/muscleTypes";
 export interface LogWorkoutInput {
   muscleTypes: MuscleType[];
   exercises: ExerciseInput[];
-  durationMinutes: number;
 }
 
 export interface LogWorkoutResult {
@@ -71,7 +70,8 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
   let capAvailable = cappedToday === 0;
   let caughtType: MuscleType | null = null;
 
-  const xpResult = computeWorkoutXp(input.exercises, input.durationMinutes, profile.loginStreak);
+  const xpResult = computeWorkoutXp(input.exercises, profile.loginStreak);
+  const totalDurationMinutes = input.exercises.reduce((sum, e) => sum + (e.durationMinutes ?? 0), 0);
   const perTypeStrength = Math.round(xpResult.strengthXp / input.muscleTypes.length);
   const perTypeEndurance = Math.round(xpResult.enduranceXp / input.muscleTypes.length);
 
@@ -110,7 +110,7 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
     data: {
       userId,
       date: today,
-      durationMinutes: input.durationMinutes,
+      durationMinutes: totalDurationMinutes,
       exercises: JSON.stringify(input.exercises),
       muscleTypes: JSON.stringify(input.muscleTypes),
       xpAwarded: xpResult.totalXp,
