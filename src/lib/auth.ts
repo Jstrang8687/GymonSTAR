@@ -6,6 +6,10 @@ import { prisma } from "@/lib/prisma";
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
+  // Render (and most non-Vercel hosts) put the app behind a host NextAuth
+  // doesn't recognize by default -- local `next dev` auto-trusts, which is
+  // why this never came up until a real deploy hit it.
+  trustHost: true,
   providers: [
     Credentials({
       name: "credentials",
