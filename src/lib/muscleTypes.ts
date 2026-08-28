@@ -74,7 +74,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-orange-400",
     bg: "from-orange-500 to-orange-700",
     stageNames: ["Pecsaur", "Pecsaurus", "Pecs Rex"],
-    artUrls: { 1: "/monstars/chest.png", 2: "/monstars/chest_2.png" },
+    artUrls: { 1: "/monstars/chest.png", 2: "/monstars/chest_2.png", 3: "/monstars/chest_3.png" },
   },
   SIDE_DELTS: {
     label: "Side Delts",
@@ -84,7 +84,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-sky-400",
     bg: "from-sky-500 to-sky-700",
     stageNames: ["Deltoid", "Deltowyrm", "Deltoid Colossus"],
-    artUrls: { 1: "/monstars/side_delts.png", 2: "/monstars/side_delts_2.png" },
+    artUrls: { 1: "/monstars/side_delts.png", 2: "/monstars/side_delts_2.png", 3: "/monstars/side_delts_3.png" },
   },
   FRONT_DELTS: {
     label: "Front Delts",
@@ -94,7 +94,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-indigo-400",
     bg: "from-indigo-500 to-indigo-700",
     stageNames: ["Deltalope", "Deltalope Alpha", "Front Vanguard"],
-    artUrls: { 1: "/monstars/front_delts.png", 2: "/monstars/front_delts_2.png" },
+    artUrls: { 1: "/monstars/front_delts.png", 2: "/monstars/front_delts_2.png", 3: "/monstars/front_delts_3.png" },
   },
   REAR_DELTS: {
     label: "Rear Delts",
@@ -104,7 +104,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-violet-400",
     bg: "from-violet-500 to-violet-700",
     stageNames: ["Deltback", "Deltback Warden", "Rear Sentinel"],
-    artUrls: { 1: "/monstars/rear_delts.png", 2: "/monstars/rear_delts_2.png" },
+    artUrls: { 1: "/monstars/rear_delts.png", 2: "/monstars/rear_delts_2.png", 3: "/monstars/rear_delts_3.png" },
   },
   ROTATOR_CUFF: {
     label: "Rotator Cuff",
@@ -114,7 +114,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-cyan-400",
     bg: "from-cyan-500 to-cyan-700",
     stageNames: ["Cuffling", "Cuffwing", "Rotor Juggernaut"],
-    artUrls: { 1: "/monstars/rotator_cuff.png", 2: "/monstars/rotator_cuff_2.png" },
+    artUrls: { 1: "/monstars/rotator_cuff.png", 2: "/monstars/rotator_cuff_2.png", 3: "/monstars/rotator_cuff_3.png" },
   },
   LATS: {
     label: "Lats",
