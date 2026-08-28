@@ -3,6 +3,7 @@ import type { MonSTAR } from "@prisma/client";
 import {
   MUSCLE_TYPE_META,
   TIER_LABEL,
+  artUrlForLevel,
   monsterNameForLevel,
   stageForLevel,
   type MuscleType,
@@ -37,6 +38,7 @@ export function MonsterTradingCard({ type, monster, linkToDetail = true }: Monst
 
   const tier = stageForLevel(monster.level);
   const name = monsterNameForLevel(meta, monster.level);
+  const artUrl = artUrlForLevel(meta, monster.level);
   const hp = hpForLevel(monster.level);
   const strength = xpProgress(monster.strengthXp);
   const endurance = xpProgress(monster.enduranceXp);
@@ -60,9 +62,9 @@ export function MonsterTradingCard({ type, monster, linkToDetail = true }: Monst
       <h3 className="mt-1.5 truncate text-sm font-black text-white sm:text-base">{name}</h3>
 
       <div className={`relative mt-1.5 flex flex-1 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${meta.bg}`}>
-        {meta.artUrl && tier === 1 ? (
+        {artUrl ? (
           // eslint-disable-next-line @next/next/no-img-element -- small local pixel-art sprite, no need for next/image optimization
-          <img src={meta.artUrl} alt={name} className="h-full w-full object-cover [image-rendering:pixelated]" />
+          <img src={artUrl} alt={name} className="h-full w-full object-cover [image-rendering:pixelated]" />
         ) : (
           <span className="text-5xl drop-shadow-lg sm:text-6xl">{meta.icon}</span>
         )}

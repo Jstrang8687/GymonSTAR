@@ -47,3 +47,7 @@ prisma/*.bak*
 
 # user-uploaded workout verification videos
 /uploads
+
+# raw AI-generated art batches (source grids before cropping) -- not needed
+# to run the app, only the cropped files in public/monstars/ are
+/art/raw-generations
