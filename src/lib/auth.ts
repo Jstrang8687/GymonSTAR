@@ -3,6 +3,18 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
+// Deploys with a fresh/reset database (e.g. Render's free tier) have no way
+// to flip isAdmin=true by hand -- there's no shell access to run a one-off
+// script against them the way local dev allows. Instead, an ADMIN_EMAILS
+// env var (comma-separated) auto-promotes matching accounts on login, so
+// setting it and then registering/logging in with that email is enough.
+const ADMIN_EMAILS = new Set(
+  (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+);
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
@@ -27,6 +39,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const valid = await bcrypt.compare(password, user.passwordHash);
         if (!valid) return null;
+
+        if (!user.isAdmin && ADMIN_EMAILS.has(user.email.toLowerCase())) {
+          await prisma.user.update({ where: { id: user.id }, data: { isAdmin: true } });
+        }
 
         return { id: user.id, email: user.email, name: user.name };
       },
