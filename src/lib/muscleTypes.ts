@@ -74,7 +74,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-orange-400",
     bg: "from-orange-500 to-orange-700",
     stageNames: ["Pecsaur", "Pecsaurus", "Pecs Rex"],
-    artUrls: { 1: "/monstars/chest.png" },
+    artUrls: { 1: "/monstars/chest.png", 2: "/monstars/chest_2.png" },
   },
   SIDE_DELTS: {
     label: "Side Delts",
@@ -84,7 +84,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-sky-400",
     bg: "from-sky-500 to-sky-700",
     stageNames: ["Deltoid", "Deltowyrm", "Deltoid Colossus"],
-    artUrls: { 1: "/monstars/side_delts.png" },
+    artUrls: { 1: "/monstars/side_delts.png", 2: "/monstars/side_delts_2.png" },
   },
   FRONT_DELTS: {
     label: "Front Delts",
@@ -94,7 +94,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-indigo-400",
     bg: "from-indigo-500 to-indigo-700",
     stageNames: ["Deltalope", "Deltalope Alpha", "Front Vanguard"],
-    artUrls: { 1: "/monstars/front_delts.png" },
+    artUrls: { 1: "/monstars/front_delts.png", 2: "/monstars/front_delts_2.png" },
   },
   REAR_DELTS: {
     label: "Rear Delts",
@@ -104,7 +104,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-violet-400",
     bg: "from-violet-500 to-violet-700",
     stageNames: ["Deltback", "Deltback Warden", "Rear Sentinel"],
-    artUrls: { 1: "/monstars/rear_delts.png" },
+    artUrls: { 1: "/monstars/rear_delts.png", 2: "/monstars/rear_delts_2.png" },
   },
   ROTATOR_CUFF: {
     label: "Rotator Cuff",
@@ -114,7 +114,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-cyan-400",
     bg: "from-cyan-500 to-cyan-700",
     stageNames: ["Cuffling", "Cuffwing", "Rotor Juggernaut"],
-    artUrls: { 1: "/monstars/rotator_cuff.png" },
+    artUrls: { 1: "/monstars/rotator_cuff.png", 2: "/monstars/rotator_cuff_2.png" },
   },
   LATS: {
     label: "Lats",
@@ -124,7 +124,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-green-400",
     bg: "from-green-500 to-green-700",
     stageNames: ["Latragon", "Wyverack", "Latitan"],
-    artUrls: { 1: "/monstars/back.png" },
+    artUrls: { 1: "/monstars/back.png", 2: "/monstars/back_2.png" },
   },
   UPPER_TRAPS: {
     label: "Upper Traps",
@@ -134,7 +134,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-emerald-400",
     bg: "from-emerald-500 to-emerald-700",
     stageNames: ["Trapzor", "Trapzorath", "Trap Colossus"],
-    artUrls: { 1: "/monstars/upper_traps.png" },
+    artUrls: { 1: "/monstars/upper_traps.png", 2: "/monstars/upper_traps_2.png" },
   },
   LOWER_TRAPS: {
     label: "Mid/Lower Traps",
@@ -144,7 +144,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-lime-400",
     bg: "from-lime-500 to-lime-700",
     stageNames: ["Trapling", "Trapdrake", "Trap Sovereign"],
-    artUrls: { 1: "/monstars/lower_traps.png" },
+    artUrls: { 1: "/monstars/lower_traps.png", 2: "/monstars/lower_traps_2.png" },
   },
   RHOMBOIDS: {
     label: "Rhomboids",
@@ -154,7 +154,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-amber-400",
     bg: "from-amber-500 to-amber-700",
     stageNames: ["Rhombite", "Rhomboar", "Rhombus Warlord"],
-    artUrls: { 1: "/monstars/rhomboids.png" },
+    artUrls: { 1: "/monstars/rhomboids.png", 2: "/monstars/rhomboids_2.png" },
   },
   LOWER_BACK: {
     label: "Lower Back",
@@ -164,7 +164,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-stone-400",
     bg: "from-stone-500 to-stone-700",
     stageNames: ["Erectling", "Erectowyrm", "Spine Ancient"],
-    artUrls: { 1: "/monstars/lower_back.png" },
+    artUrls: { 1: "/monstars/lower_back.png", 2: "/monstars/lower_back_2.png" },
   },
   BICEPS: {
     label: "Biceps",
@@ -174,7 +174,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-purple-400",
     bg: "from-purple-500 to-purple-700",
     stageNames: ["Bicepsion", "Bicepticore", "Bicep Titan"],
-    artUrls: { 1: "/monstars/biceps.png" },
+    artUrls: { 1: "/monstars/biceps.png", 2: "/monstars/biceps_2.png" },
   },
   TRICEPS: {
     label: "Triceps",
@@ -184,7 +184,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-pink-400",
     bg: "from-pink-500 to-pink-700",
     stageNames: ["Tricepod", "Tricepodon", "Tri-Titan"],
-    artUrls: { 1: "/monstars/triceps.png" },
+    artUrls: { 1: "/monstars/triceps.png", 2: "/monstars/triceps_2.png" },
   },
   FOREARM_FLEXORS: {
     label: "Forearm Flexors",
@@ -194,7 +194,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-blue-400",
     bg: "from-blue-500 to-blue-700",
     stageNames: ["Flexling", "Flexadon", "Flex Champion"],
-    artUrls: { 1: "/monstars/forearm_flexors.png" },
+    artUrls: { 1: "/monstars/forearm_flexors.png", 2: "/monstars/forearm_flexors_2.png" },
   },
   FOREARM_EXTENSORS: {
     label: "Forearm Extensors",
@@ -204,7 +204,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-slate-400",
     bg: "from-slate-500 to-slate-700",
     stageNames: ["Extensor", "Extendrake", "Extension Overlord"],
-    artUrls: { 1: "/monstars/forearm_extensors.png" },
+    artUrls: { 1: "/monstars/forearm_extensors.png", 2: "/monstars/forearm_extensors_2.png" },
   },
   GRIP: {
     label: "Grip",
@@ -214,7 +214,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-fuchsia-400",
     bg: "from-fuchsia-500 to-fuchsia-700",
     stageNames: ["Gripling", "Gripzilla", "Grip Behemoth"],
-    artUrls: { 1: "/monstars/grip.png" },
+    artUrls: { 1: "/monstars/grip.png", 2: "/monstars/grip_2.png" },
   },
   UPPER_ABS: {
     label: "Upper Abs",
@@ -224,7 +224,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-teal-400",
     bg: "from-teal-500 to-teal-700",
     stageNames: ["Abdomite", "Abdomitor", "Core Colossus"],
-    artUrls: { 1: "/monstars/upper_abs.png" },
+    artUrls: { 1: "/monstars/upper_abs.png", 2: "/monstars/upper_abs_2.png" },
   },
   LOWER_ABS: {
     label: "Lower Abs",
@@ -234,7 +234,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-yellow-600",
     bg: "from-yellow-600 to-yellow-800",
     stageNames: ["Loweret", "Loweraptor", "Lower Core Sentinel"],
-    artUrls: { 1: "/monstars/lower_abs.png" },
+    artUrls: { 1: "/monstars/lower_abs.png", 2: "/monstars/lower_abs_2.png" },
   },
   OBLIQUES: {
     label: "Obliques",
@@ -244,7 +244,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-violet-600",
     bg: "from-violet-600 to-violet-800",
     stageNames: ["Obliquid", "Obliquake", "Oblique Serpent"],
-    artUrls: { 1: "/monstars/obliques.png" },
+    artUrls: { 1: "/monstars/obliques.png", 2: "/monstars/obliques_2.png" },
   },
   DEEP_CORE: {
     label: "Deep Core",
@@ -254,7 +254,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-slate-600",
     bg: "from-slate-600 to-slate-800",
     stageNames: ["Coreling", "Coredrake", "Deep Core Warden"],
-    artUrls: { 1: "/monstars/deep_core.png" },
+    artUrls: { 1: "/monstars/deep_core.png", 2: "/monstars/deep_core_2.png" },
   },
   SERRATUS: {
     label: "Serratus Anterior",
@@ -264,7 +264,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-orange-600",
     bg: "from-orange-600 to-orange-800",
     stageNames: ["Serratooth", "Serratosaur", "Serratus Rex"],
-    artUrls: { 1: "/monstars/serratus.png" },
+    artUrls: { 1: "/monstars/serratus.png", 2: "/monstars/serratus_2.png" },
   },
   NECK_FLEXORS: {
     label: "Neck Flexors",
@@ -274,7 +274,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-pink-400",
     bg: "from-pink-400 to-pink-600",
     stageNames: ["Necklet", "Neckadon", "Neck Vanguard"],
-    artUrls: { 1: "/monstars/neck_flexors.png" },
+    artUrls: { 1: "/monstars/neck_flexors.png", 2: "/monstars/neck_flexors_2.png" },
   },
   NECK_EXTENSORS: {
     label: "Neck Extensors",
@@ -284,7 +284,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-teal-400",
     bg: "from-teal-400 to-teal-600",
     stageNames: ["Napeling", "Napedrake", "Nape Sentinel"],
-    artUrls: { 1: "/monstars/neck_extensors.png" },
+    artUrls: { 1: "/monstars/neck_extensors.png", 2: "/monstars/neck_extensors_2.png" },
   },
   OUTER_QUADS: {
     label: "Outer Quads",
@@ -294,7 +294,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-yellow-400",
     bg: "from-yellow-500 to-yellow-700",
     stageNames: ["Quadrilla", "Quadzilla", "Quadragon"],
-    artUrls: { 1: "/monstars/outer_quads.png" },
+    artUrls: { 1: "/monstars/outer_quads.png", 2: "/monstars/outer_quads_2.png" },
   },
   INNER_QUADS: {
     label: "Inner Quads",
@@ -304,7 +304,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-yellow-300",
     bg: "from-yellow-400 to-yellow-600",
     stageNames: ["Teardroplet", "Teardropzilla", "Teardrop Prime"],
-    artUrls: { 1: "/monstars/inner_quads.png" },
+    artUrls: { 1: "/monstars/inner_quads.png", 2: "/monstars/inner_quads_2.png" },
   },
   HAMSTRINGS: {
     label: "Hamstrings",
@@ -314,7 +314,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-red-600",
     bg: "from-red-600 to-red-800",
     stageNames: ["Hamstrix", "Hamstryx", "Hamstring Juggernaut"],
-    artUrls: { 1: "/monstars/hamstrings.png" },
+    artUrls: { 1: "/monstars/hamstrings.png", 2: "/monstars/hamstrings_2.png" },
   },
   GLUTE_MAX: {
     label: "Glute Max",
@@ -324,7 +324,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-rose-400",
     bg: "from-rose-500 to-rose-700",
     stageNames: ["Glutox", "Glutoxus", "Glute Behemoth"],
-    artUrls: { 1: "/monstars/glute_max.png" },
+    artUrls: { 1: "/monstars/glute_max.png", 2: "/monstars/glute_max_2.png" },
   },
   GLUTE_MED: {
     label: "Glute Med/Min",
@@ -334,7 +334,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-rose-300",
     bg: "from-rose-400 to-rose-600",
     stageNames: ["Glutelet", "Glutewing", "Glute Guardian"],
-    artUrls: { 1: "/monstars/glute_med.png" },
+    artUrls: { 1: "/monstars/glute_med.png", 2: "/monstars/glute_med_2.png" },
   },
   ADDUCTORS: {
     label: "Adductors",
@@ -344,7 +344,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-purple-400",
     bg: "from-purple-400 to-purple-600",
     stageNames: ["Adductrix", "Adductorath", "Adductor Titan"],
-    artUrls: { 1: "/monstars/adductors.png" },
+    artUrls: { 1: "/monstars/adductors.png", 2: "/monstars/adductors_2.png" },
   },
   ABDUCTORS: {
     label: "Abductors",
@@ -354,7 +354,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-violet-400",
     bg: "from-violet-400 to-violet-600",
     stageNames: ["Abductrix", "Abductorath", "Abductor Warlord"],
-    artUrls: { 1: "/monstars/abductors.png" },
+    artUrls: { 1: "/monstars/abductors.png", 2: "/monstars/abductors_2.png" },
   },
   HIP_FLEXORS: {
     label: "Hip Flexors",
@@ -364,7 +364,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-amber-300",
     bg: "from-amber-400 to-amber-600",
     stageNames: ["Flexoraptor", "Flexoraptor Alpha", "Hip Juggernaut"],
-    artUrls: { 1: "/monstars/hip_flexors.png" },
+    artUrls: { 1: "/monstars/hip_flexors.png", 2: "/monstars/hip_flexors_2.png" },
   },
   CALVES_GASTROC: {
     label: "Calves (Gastroc)",
@@ -374,7 +374,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-green-300",
     bg: "from-green-400 to-green-600",
     stageNames: ["Gastroc", "Gastrocorn", "Gastro Behemoth"],
-    artUrls: { 1: "/monstars/calves_gastroc.png" },
+    artUrls: { 1: "/monstars/calves_gastroc.png", 2: "/monstars/calves_gastroc_2.png" },
   },
   CALVES_SOLEUS: {
     label: "Calves (Soleus)",
@@ -384,7 +384,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-cyan-300",
     bg: "from-cyan-400 to-cyan-600",
     stageNames: ["Soleon", "Soleodon", "Sole Titan"],
-    artUrls: { 1: "/monstars/calves_soleus.png" },
+    artUrls: { 1: "/monstars/calves_soleus.png", 2: "/monstars/calves_soleus_2.png" },
   },
   TIBIALIS: {
     label: "Tibialis Anterior",
@@ -394,7 +394,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-slate-300",
     bg: "from-slate-400 to-slate-600",
     stageNames: ["Tibialet", "Tibialope", "Tibial Warden"],
-    artUrls: { 1: "/monstars/tibialis.png" },
+    artUrls: { 1: "/monstars/tibialis.png", 2: "/monstars/tibialis_2.png" },
   },
   CARDIO: {
     label: "Cardio",
@@ -404,7 +404,7 @@ export const MUSCLE_TYPE_META: Record<MuscleType, MuscleTypeMeta> = {
     ring: "ring-red-400",
     bg: "from-red-500 to-red-700",
     stageNames: ["Pulsevolt", "Pulsevolt Max", "Cardio Fury"],
-    artUrls: { 1: "/monstars/cardio.png" },
+    artUrls: { 1: "/monstars/cardio.png", 2: "/monstars/cardio_2.png" },
   },
 };
 
