@@ -46,7 +46,7 @@ export default async function AdminGalleryPage() {
         {MUSCLE_REGIONS.map((region) => (
           <section key={region}>
             <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-slate-500">{region}</h2>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-3 gap-4">
               {typesForRegion(region).map((type) =>
                 TIER_PREVIEW_LEVELS.map((level) => (
                   <MonsterTradingCard
