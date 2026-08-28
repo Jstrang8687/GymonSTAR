@@ -21,5 +21,11 @@ export default auth((req: NextRequest & { auth: unknown }) => {
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  // PWA assets (manifest, icons, service worker) are fetched by the browser/
+  // OS without any auth context -- e.g. iOS checks the manifest and icons
+  // before the user has ever logged in -- so they can't be behind the
+  // login redirect the way real app pages are.
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|manifest.webmanifest|icon|icon-192.png|icon-512.png|apple-icon|sw.js).*)",
+  ],
 };
