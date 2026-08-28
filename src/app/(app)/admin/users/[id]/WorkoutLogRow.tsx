@@ -10,9 +10,19 @@ interface WorkoutLogRowProps {
   xpAwarded: number;
   muscleTypes: string[];
   hasProof: boolean;
+  isVerified: boolean;
+  hasXpBreakdown: boolean;
 }
 
-export function WorkoutLogRow({ logId, date, xpAwarded, muscleTypes, hasProof }: WorkoutLogRowProps) {
+export function WorkoutLogRow({
+  logId,
+  date,
+  xpAwarded,
+  muscleTypes,
+  hasProof,
+  isVerified,
+  hasXpBreakdown,
+}: WorkoutLogRowProps) {
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -57,7 +67,10 @@ export function WorkoutLogRow({ logId, date, xpAwarded, muscleTypes, hasProof }:
         </div>
       </div>
       <p className="mt-1 text-[10px] text-slate-500">
-        Deleting only removes this log — it does not reverse XP already awarded to the trainer or monSTARs.
+        {hasXpBreakdown
+          ? "Deleting reverses the monSTAR XP this log granted."
+          : "This log predates precise XP tracking, so its monSTAR XP can't be reversed automatically."}{" "}
+        {isVerified && "Its +15 trainer verification bonus will still be reversed."}
       </p>
     </div>
   );

@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { requireAdmin } from "@/lib/session-helpers";
+import { requireAdmin, getUserId } from "@/lib/session-helpers";
 import { MUSCLE_TYPE_META, monsterNameForLevel, stageForLevel, type MuscleType } from "@/lib/muscleTypes";
 import { xpProgress } from "@/lib/game";
 import { TrainerXpAdjuster } from "./TrainerXpAdjuster";
 import { MonsterEditRow } from "./MonsterEditRow";
 import { WorkoutLogRow } from "./WorkoutLogRow";
+import { DeleteUserForm } from "./DeleteUserForm";
 
 export default async function AdminUserDetailPage({ params }: PageProps<"/admin/users/[id]">) {
   await requireAdmin();
   const { id } = await params;
+  const currentUserId = await getUserId();
 
   const user = await prisma.user.findUnique({
     where: { id },
@@ -97,11 +99,20 @@ export default async function AdminUserDetailPage({ params }: PageProps<"/admin/
                 xpAwarded={log.xpAwarded}
                 muscleTypes={JSON.parse(log.muscleTypes) as string[]}
                 hasProof={!!log.videoFilename}
+                isVerified={!!log.videoVerifiedAt}
+                hasXpBreakdown={!!log.xpBreakdown}
               />
             ))}
           </div>
         )}
       </section>
+
+      {id !== currentUserId && (
+        <section className="mt-10 border-t border-white/10 pt-6">
+          <h2 className="mb-3 text-sm font-bold text-red-300">Danger zone</h2>
+          <DeleteUserForm userId={user.id} email={user.email} />
+        </section>
+      )}
     </div>
   );
 }

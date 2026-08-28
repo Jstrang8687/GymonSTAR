@@ -6,14 +6,13 @@ import { getUserId, getProfile } from "@/lib/session-helpers";
 import {
   computeWorkoutXp,
   levelFromXp,
-  totalTrainerXp,
-  xpProgress,
   proofBonusIsReversible,
   PROOF_VERIFY_BONUS_XP,
   type ExerciseInput,
   type SetDetail,
 } from "@/lib/game";
 import { saveWorkoutProof, deleteWorkoutProof as deleteProofFile } from "@/lib/proofStorage";
+import { applyTrainerXpDelta } from "@/lib/trainerXp";
 import type { MuscleType } from "@/lib/muscleTypes";
 
 export interface LogWorkoutInput {
@@ -84,6 +83,11 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
   const perTypeStrength = Math.round(xpResult.strengthXp / input.muscleTypes.length);
   const perTypeEndurance = Math.round(xpResult.enduranceXp / input.muscleTypes.length);
 
+  // Records exactly which monSTARs got XP from this log and how much, so
+  // deleting the log later (e.g. from /admin) can reverse it precisely
+  // instead of guessing from the total.
+  const xpBreakdown: Record<string, { strengthXp: number; enduranceXp: number }> = {};
+
   for (const muscleType of input.muscleTypes) {
     let owned = ownedTypes.has(muscleType);
 
@@ -112,6 +116,7 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
           level: levelFromXp(newXp),
         },
       });
+      xpBreakdown[muscleType] = { strengthXp: perTypeStrength, enduranceXp: perTypeEndurance };
     }
   }
 
@@ -124,6 +129,7 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
       muscleTypes: JSON.stringify(input.muscleTypes),
       xpAwarded: xpResult.totalXp,
       caughtNewMonster: caughtType !== null,
+      xpBreakdown: JSON.stringify(xpBreakdown),
     },
   });
 
@@ -138,19 +144,6 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
     caughtType,
     multiplier: xpResult.multiplier,
   };
-}
-
-// trainerXp/trainerLevel are stored as (level, progress-within-level), not a
-// lifetime total, so a +/- delta has to go through a total-xp round trip to
-// land on the right level in either direction (level-up or level-down).
-async function applyTrainerXpDelta(userId: string, delta: number) {
-  const profile = await prisma.userProfile.findUniqueOrThrow({ where: { userId } });
-  const currentTotal = totalTrainerXp(profile.trainerLevel, profile.trainerXp);
-  const newTotal = Math.max(0, currentTotal + delta);
-  const { level, into } = xpProgress(newTotal);
-  if (level !== profile.trainerLevel || into !== profile.trainerXp) {
-    await prisma.userProfile.update({ where: { userId }, data: { trainerLevel: level, trainerXp: into } });
-  }
 }
 
 export interface AttachProofResult {

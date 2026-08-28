@@ -125,6 +125,10 @@ model WorkoutLog {
   xpAwarded       Int        @default(0)
   caughtNewMonster Boolean   @default(false)
   muscleTypes     String
+  // JSON map of muscleType -> { strengthXp, enduranceXp } for exactly the
+  // monSTARs that received XP from this log, so deleting the log later can
+  // reverse it precisely. Null on logs created before this field existed.
+  xpBreakdown     String?
   createdAt       DateTime   @default(now())
 
   videoFilename   String?
