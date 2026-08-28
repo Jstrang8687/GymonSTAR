@@ -11,7 +11,15 @@ const LINKS = [
   { href: "/profile", label: "Profile" },
 ] as const;
 
-export function Navbar({ trainerLevel, loginStreak }: { trainerLevel: number; loginStreak: number }) {
+export function Navbar({
+  trainerLevel,
+  loginStreak,
+  isAdmin = false,
+}: {
+  trainerLevel: number;
+  loginStreak: number;
+  isAdmin?: boolean;
+}) {
   return (
     <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-950/90 backdrop-blur">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
@@ -32,6 +40,14 @@ export function Navbar({ trainerLevel, loginStreak }: { trainerLevel: number; lo
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="rounded-md px-3 py-1.5 font-medium text-amber-300 transition hover:bg-amber-400/10 hover:text-amber-200"
+            >
+              Admin
+            </Link>
+          )}
         </nav>
 
         <div className="flex items-center gap-3 text-xs text-slate-300">

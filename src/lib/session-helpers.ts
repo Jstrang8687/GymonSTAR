@@ -72,3 +72,14 @@ export async function requireOnboarded() {
   if (!profile.onboarded) redirect("/onboarding");
   return profile;
 }
+
+export const isCurrentUserAdmin = cache(async (): Promise<boolean> => {
+  const userId = await getUserId();
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { isAdmin: true } });
+  return user?.isAdmin ?? false;
+});
+
+export async function requireAdmin() {
+  const isAdmin = await isCurrentUserAdmin();
+  if (!isAdmin) redirect("/");
+}
