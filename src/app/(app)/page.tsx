@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { xpProgress } from "@/lib/game";
 import { PROGRAM_INFO, scheduleForDay, type ProgramType } from "@/lib/programs";
-import { MUSCLE_TYPES, MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { MUSCLE_REGIONS, MUSCLE_TYPES, MUSCLE_TYPE_META, typesForRegion, type MuscleType } from "@/lib/muscleTypes";
 import { StatBar } from "@/components/StatBar";
 import { CoachAvatar } from "@/components/CoachAvatar";
 
@@ -103,24 +103,29 @@ export default async function DashboardPage() {
             {monsters.length}/{MUSCLE_TYPES.length} — view all
           </Link>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {MUSCLE_TYPES.map((type) => {
-            const meta = MUSCLE_TYPE_META[type];
-            const owned = ownedTypes.has(type);
-            return (
-              <span
-                key={type}
-                title={meta.label}
-                className={`flex h-12 w-12 items-center justify-center rounded-full border text-xl ${
-                  owned
-                    ? `border-transparent bg-gradient-to-br ${meta.bg}`
-                    : "border-dashed border-white/15 opacity-30 grayscale"
-                }`}
-              >
-                {meta.icon}
-              </span>
-            );
-          })}
+        <div className="space-y-2">
+          {MUSCLE_REGIONS.map((region) => (
+            <div key={region} className="flex flex-wrap items-center gap-1.5">
+              <span className="w-16 shrink-0 text-[10px] uppercase tracking-wide text-slate-500">{region}</span>
+              {typesForRegion(region).map((type) => {
+                const meta = MUSCLE_TYPE_META[type];
+                const owned = ownedTypes.has(type);
+                return (
+                  <span
+                    key={type}
+                    title={meta.label}
+                    className={`flex h-9 w-9 items-center justify-center rounded-full border text-base ${
+                      owned
+                        ? `border-transparent bg-gradient-to-br ${meta.bg}`
+                        : "border-dashed border-white/15 opacity-30 grayscale"
+                    }`}
+                  >
+                    {meta.icon}
+                  </span>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </section>
     </div>

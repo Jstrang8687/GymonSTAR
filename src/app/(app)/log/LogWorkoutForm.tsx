@@ -4,7 +4,13 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
 import { ProofUpload } from "./ProofUpload";
-import { MUSCLE_TYPES, MUSCLE_TYPE_META, monsterNameForLevel, type MuscleType } from "@/lib/muscleTypes";
+import {
+  MUSCLE_REGIONS,
+  MUSCLE_TYPE_META,
+  monsterNameForLevel,
+  typesForRegion,
+  type MuscleType,
+} from "@/lib/muscleTypes";
 import { EXERCISE_LIBRARY, isTimeBasedExercise, hasMileage, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput, SetDetail } from "@/lib/game";
 
@@ -273,25 +279,32 @@ export function LogWorkoutForm() {
       <section>
         <h2 className="mb-2 text-sm font-bold text-white">Muscle groups trained</h2>
         <p className="mb-2 text-xs text-slate-500">Picking an exercise below selects this automatically.</p>
-        <div className="flex flex-wrap gap-2">
-          {MUSCLE_TYPES.map((type) => {
-            const meta = MUSCLE_TYPE_META[type];
-            const active = muscleTypes.includes(type);
-            return (
-              <button
-                key={type}
-                type="button"
-                onClick={() => toggleType(type)}
-                className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
-                  active
-                    ? "border-amber-400 bg-amber-400/20 text-amber-300"
-                    : "border-white/10 text-slate-400 hover:border-white/30"
-                }`}
-              >
-                {meta.icon} {meta.label}
-              </button>
-            );
-          })}
+        <div className="space-y-3">
+          {MUSCLE_REGIONS.map((region) => (
+            <div key={region}>
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">{region}</p>
+              <div className="flex flex-wrap gap-2">
+                {typesForRegion(region).map((type) => {
+                  const meta = MUSCLE_TYPE_META[type];
+                  const active = muscleTypes.includes(type);
+                  return (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => toggleType(type)}
+                      className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
+                        active
+                          ? "border-amber-400 bg-amber-400/20 text-amber-300"
+                          : "border-white/10 text-slate-400 hover:border-white/30"
+                      }`}
+                    >
+                      {meta.icon} {meta.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

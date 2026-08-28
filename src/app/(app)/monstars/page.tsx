@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
-import { MUSCLE_TYPES, type MuscleType } from "@/lib/muscleTypes";
+import { MUSCLE_REGIONS, MUSCLE_TYPES, typesForRegion, type MuscleType } from "@/lib/muscleTypes";
 import { MonsterTradingCard } from "@/components/MonsterTradingCard";
 
 export default async function MonstarsPage() {
@@ -17,9 +17,16 @@ export default async function MonstarsPage() {
           {monsters.length} / {MUSCLE_TYPES.length} stacked
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {MUSCLE_TYPES.map((type) => (
-          <MonsterTradingCard key={type} type={type} monster={byType.get(type) ?? null} />
+      <div className="space-y-8">
+        {MUSCLE_REGIONS.map((region) => (
+          <section key={region}>
+            <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-slate-500">{region}</h2>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {typesForRegion(region).map((type) => (
+                <MonsterTradingCard key={type} type={type} monster={byType.get(type) ?? null} />
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </div>
