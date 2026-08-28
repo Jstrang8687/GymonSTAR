@@ -5,6 +5,12 @@ import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { signIn } from "@/lib/auth";
+import { isRateLimited, recordFailure, clearFailures } from "@/lib/rateLimit";
+
+// Keyed by email (not IP) so an attacker can't dodge the limit by rotating
+// source addresses -- what matters is protecting each account, not each IP.
+const LOGIN_MAX_ATTEMPTS = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 
 export interface AuthFormState {
   error?: string;
@@ -59,14 +65,21 @@ export async function loginAction(
     .toLowerCase();
   const password = String(formData.get("password") ?? "");
 
+  const rateLimitKey = `login:${email}`;
+  if (email && isRateLimited(rateLimitKey, LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_MS)) {
+    return { error: "Too many failed attempts on this account. Try again in 15 minutes." };
+  }
+
   try {
     await signIn("credentials", { email, password, redirect: false });
   } catch (error) {
     if (error instanceof AuthError) {
+      if (email) recordFailure(rateLimitKey, LOGIN_WINDOW_MS);
       return { error: "Invalid email or password." };
     }
     throw error;
   }
 
+  if (email) clearFailures(rateLimitKey);
   redirect("/");
 }
