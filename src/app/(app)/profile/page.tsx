@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { xpProgress } from "@/lib/game";
+import { MUSCLE_TYPES } from "@/lib/muscleTypes";
 import { StatBar } from "@/components/StatBar";
 import { CoachAvatar } from "@/components/CoachAvatar";
 import { ChangeCoachPicker } from "./ChangeCoachPicker";
@@ -40,7 +41,7 @@ export default async function ProfilePage() {
             <p className="text-xs text-slate-400">day streak</p>
           </div>
           <div>
-            <p className="text-xl font-bold text-white">{monsterCount}/9</p>
+            <p className="text-xl font-bold text-white">{monsterCount}/{MUSCLE_TYPES.length}</p>
             <p className="text-xs text-slate-400">monSTARs</p>
           </div>
           <div>

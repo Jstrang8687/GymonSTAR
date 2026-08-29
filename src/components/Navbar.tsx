@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/battle", label: "Battle" },
   { href: "/history", label: "History" },
   { href: "/profile", label: "Profile" },
+  { href: "/settings", label: "Settings" },
 ] as const;
 
 export function Navbar({
