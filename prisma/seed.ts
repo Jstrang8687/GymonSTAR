@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../src/lib/prisma";
 import { COACHES } from "../src/lib/coaches";
-
-const prisma = new PrismaClient();
 
 async function main() {
   for (const coach of COACHES) {
