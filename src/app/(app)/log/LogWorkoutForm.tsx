@@ -257,22 +257,31 @@ export function LogWorkoutForm() {
   return (
     <div className="space-y-6">
       {result && (
-        <div className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-4 text-amber-200">
-          <p className="font-bold">
-            +{result.totalXp} XP{" "}
-            {result.multiplier > 1 && (
-              <span className="font-normal text-amber-300">
-                (×{result.multiplier.toFixed(2)} streak bonus)
-              </span>
-            )}
-          </p>
-          {result.caughtNewMonster && result.caughtType && (
-            <p className="mt-1 text-lg font-black text-white">
-              🎉 New monSTAR! You caught {monsterNameForLevel(MUSCLE_TYPE_META[result.caughtType], 1)}{" "}
-              {MUSCLE_TYPE_META[result.caughtType].icon}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+          <div className="w-full max-w-sm rounded-2xl border border-amber-400/40 bg-slate-900 p-5 text-amber-200 shadow-2xl">
+            <p className="text-lg font-bold">
+              +{result.totalXp} XP{" "}
+              {result.multiplier > 1 && (
+                <span className="font-normal text-amber-300">
+                  (×{result.multiplier.toFixed(2)} streak bonus)
+                </span>
+              )}
             </p>
-          )}
-          <ProofUpload workoutLogId={result.workoutLogId} />
+            {result.caughtNewMonster && result.caughtType && (
+              <p className="mt-1 text-lg font-black text-white">
+                🎉 New monSTAR! You caught {monsterNameForLevel(MUSCLE_TYPE_META[result.caughtType], 1)}{" "}
+                {MUSCLE_TYPE_META[result.caughtType].icon}
+              </p>
+            )}
+            <ProofUpload workoutLogId={result.workoutLogId} />
+            <button
+              type="button"
+              onClick={() => setResult(null)}
+              className="mt-4 w-full rounded-lg border border-white/10 py-2 text-sm font-semibold text-slate-300 transition hover:border-white/30 hover:text-white"
+            >
+              No verification — I&apos;m done
+            </button>
+          </div>
         </div>
       )}
 
@@ -546,6 +555,13 @@ export function LogWorkoutForm() {
             );
           })}
         </div>
+        <button
+          type="button"
+          onClick={() => setExercises((prev) => [...prev, emptyRow()])}
+          className="mt-3 text-xs font-semibold text-amber-400 hover:underline"
+        >
+          + Add exercise
+        </button>
       </section>
 
       {error && <p className="text-sm text-red-400">{error}</p>}

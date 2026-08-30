@@ -81,23 +81,16 @@ export interface ExerciseInput {
   distanceMiles?: number;
 }
 
-// Base XP per logged exercise, plus a small volume bonus for strength work
-// (total reps across all sets, capped so nobody games it with absurd rep
-// counts) or a duration bonus for time-based endurance work, per exercise.
+// Flat XP per logged exercise -- logging sets/reps/weight is just the normal
+// shape of a strength exercise, not extra effort worth a bonus. Time-based
+// (cardio) work still gets a duration bonus since minutes spent is a real
+// separate effort signal, not just data entry.
 const BASE_XP_PER_EXERCISE = 15;
-const MAX_VOLUME_BONUS = 20;
 const XP_PER_DURATION_MINUTE = 1;
 
 export function computeExerciseXp(exercise: ExerciseInput): number {
   let xp = BASE_XP_PER_EXERCISE;
-  if (exercise.category === "strength") {
-    if (exercise.setDetails && exercise.setDetails.length > 0) {
-      const totalReps = exercise.setDetails.reduce((sum, s) => sum + (s.reps ?? 0), 0);
-      xp += Math.min(totalReps, MAX_VOLUME_BONUS);
-    } else if (exercise.sets && exercise.reps) {
-      xp += Math.min(exercise.sets * exercise.reps, MAX_VOLUME_BONUS);
-    }
-  } else if (exercise.durationMinutes) {
+  if (exercise.category === "endurance" && exercise.durationMinutes) {
     xp += exercise.durationMinutes * XP_PER_DURATION_MINUTE;
   }
   return xp;
