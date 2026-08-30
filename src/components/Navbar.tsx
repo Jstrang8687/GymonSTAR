@@ -15,7 +15,8 @@ export function Navbar({
     <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-950/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2 font-black text-white">
-          <span className="text-xl">🏋️‍♂️⭐</span>
+          {/* eslint-disable-next-line @next/next/no-img-element -- small static mark, no need for next/image optimization */}
+          <img src="/icon-192.png" alt="" className="h-7 w-7 rounded-md" />
           <span>
             Gymon<span className="text-amber-400">STAR</span>
           </span>
