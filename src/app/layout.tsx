@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GymonSTAR",
+  title: "GymonSTARs",
   description: "Gamified Strength Tracking & Anatomy Regimen System — gotta stack them all.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "GymonSTAR",
+    title: "GymonSTARs",
   },
   // Next's appleWebApp.capable option doesn't actually emit this meta tag in
   // this version -- older iOS Safari still checks for it explicitly for

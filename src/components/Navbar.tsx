@@ -18,7 +18,7 @@ export function Navbar({
           {/* eslint-disable-next-line @next/next/no-img-element -- small static mark, no need for next/image optimization */}
           <img src="/icon-192.png" alt="" className="h-7 w-7 rounded-md" />
           <span>
-            Gymon<span className="text-amber-400">STAR</span>
+            Gymon<span className="text-amber-400">STARs</span>
           </span>
         </Link>
 

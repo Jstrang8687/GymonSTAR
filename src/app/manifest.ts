@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "GymonSTAR",
-    short_name: "GymonSTAR",
+    name: "GymonSTARs",
+    short_name: "GymonSTARs",
     description: "Gamified Strength Tracking & Anatomy Regimen System — gotta stack them all.",
     start_url: "/",
     display: "standalone",
