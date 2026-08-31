@@ -3,6 +3,38 @@
 import { useRef, useState, useTransition } from "react";
 import { attachWorkoutProof } from "./actions";
 
+// Prefixes of the deliberate, user-actionable messages our own validation
+// throws (see saveWorkoutProof in proofStorage.ts and attachWorkoutProof in
+// actions.ts) -- safe to show verbatim. Anything else reaching the client is
+// either React's redacted "error occurred in Server Components render"
+// digest or a raw transport failure -- e.g. the host's request timeout
+// killing a slow upload mid-stream, which shows up server-side as
+// "Unexpected end of form" regardless of how good the connection is, once a
+// video is big enough to take a while to upload and process. Neither is
+// meaningful to a user, so those get a friendly fallback instead of leaking
+// internals.
+const KNOWN_PROOF_ERROR_PREFIXES = [
+  "Workout not found.",
+  "No file selected.",
+  "Unsupported file.",
+  "That file is too small",
+  "File is too large",
+  "That file doesn't look like a real",
+  "Couldn't read that image",
+  "Image is too small",
+];
+
+const GENERIC_UPLOAD_ERROR =
+  "Upload failed. This can happen with large video files -- try a shorter clip, or upload a screenshot instead.";
+
+function messageForError(e: unknown): string {
+  const message = e instanceof Error ? e.message : "";
+  if (KNOWN_PROOF_ERROR_PREFIXES.some((prefix) => message.startsWith(prefix))) {
+    return message;
+  }
+  return GENERIC_UPLOAD_ERROR;
+}
+
 export function ProofUpload({ workoutLogId }: { workoutLogId: string }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
@@ -24,7 +56,7 @@ export function ProofUpload({ workoutLogId }: { workoutLogId: string }) {
         setBonusXp(res.bonusXp);
         setStatus("done");
       } catch (e) {
-        setError(e instanceof Error ? e.message : "Upload failed.");
+        setError(messageForError(e));
       }
     });
   }
