@@ -2,6 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 import { attachWorkoutProof } from "./actions";
+import { compressVideo } from "@/lib/compressVideo";
 
 // Prefixes of the deliberate, user-actionable messages our own validation
 // throws (see saveWorkoutProof in proofStorage.ts and attachWorkoutProof in
@@ -35,27 +36,39 @@ function messageForError(e: unknown): string {
   return GENERIC_UPLOAD_ERROR;
 }
 
-export function ProofUpload({ workoutLogId }: { workoutLogId: string }) {
+export function ProofUpload({ workoutLogId, onVerified }: { workoutLogId: string; onVerified?: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
   const [status, setStatus] = useState<"idle" | "done">("idle");
   const [bonusXp, setBonusXp] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [compressPct, setCompressPct] = useState<number | null>(null);
 
   function handleFile(file: File | undefined) {
     if (!file) return;
     setError(null);
     setFileName(file.name);
-    const formData = new FormData();
-    formData.set("proof", file);
 
     startTransition(async () => {
       try {
+        let uploadFile = file;
+        if (file.type.startsWith("video/")) {
+          setCompressPct(0);
+          uploadFile = await compressVideo(file, { onProgress: setCompressPct });
+          setCompressPct(null);
+        }
+
+        const formData = new FormData();
+        formData.set("proof", uploadFile);
         const res = await attachWorkoutProof(workoutLogId, formData);
         setBonusXp(res.bonusXp);
         setStatus("done");
+        // Brief pause so the "Verified" confirmation is actually visible
+        // before the modal disappears out from under it.
+        setTimeout(() => onVerified?.(), 1200);
       } catch (e) {
+        setCompressPct(null);
         setError(messageForError(e));
       }
     });
@@ -68,6 +81,13 @@ export function ProofUpload({ workoutLogId }: { workoutLogId: string }) {
       </p>
     );
   }
+
+  const label =
+    compressPct !== null
+      ? `Compressing video... ${Math.round(compressPct * 100)}%`
+      : pending
+        ? `Uploading ${fileName ?? "file"}...`
+        : "📹📸 Verify with video or screenshot";
 
   return (
     <div className="mt-3">
@@ -84,7 +104,7 @@ export function ProofUpload({ workoutLogId }: { workoutLogId: string }) {
         onClick={() => inputRef.current?.click()}
         className="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-amber-400 hover:text-amber-300 disabled:opacity-60"
       >
-        {pending ? `Uploading ${fileName ?? "file"}...` : "📹📸 Verify with video or screenshot"}
+        {label}
       </button>
       {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
     </div>

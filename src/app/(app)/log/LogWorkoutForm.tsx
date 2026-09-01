@@ -273,7 +273,7 @@ export function LogWorkoutForm() {
                 {MUSCLE_TYPE_META[result.caughtType].icon}
               </p>
             )}
-            <ProofUpload workoutLogId={result.workoutLogId} />
+            <ProofUpload workoutLogId={result.workoutLogId} onVerified={() => setResult(null)} />
             <button
               type="button"
               onClick={() => setResult(null)}
