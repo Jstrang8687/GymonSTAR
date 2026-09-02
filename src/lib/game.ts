@@ -81,6 +81,38 @@ export interface ExerciseInput {
   distanceMiles?: number;
 }
 
+// Human-readable summary of what was actually logged for an exercise, e.g.
+// "3×10 @ 135 lbs", "135×8, 155×6, 175×4" (multi-set), or "20 min, 2.5 mi"
+// -- so history views can show the real numbers instead of just the name.
+export function formatExerciseDetail(exercise: ExerciseInput): string | null {
+  const parts: string[] = [];
+
+  if (exercise.setDetails && exercise.setDetails.length > 0) {
+    parts.push(
+      exercise.setDetails
+        .map((s) => {
+          if (s.weight !== undefined && s.reps !== undefined) return `${s.weight}×${s.reps}`;
+          if (s.reps !== undefined) return `${s.reps} reps`;
+          if (s.weight !== undefined) return `${s.weight} lbs`;
+          return null;
+        })
+        .filter(Boolean)
+        .join(", ")
+    );
+  } else if (exercise.sets !== undefined || exercise.reps !== undefined || exercise.weight) {
+    let flat = "";
+    if (exercise.sets !== undefined && exercise.reps !== undefined) flat = `${exercise.sets}×${exercise.reps}`;
+    else if (exercise.reps !== undefined) flat = `${exercise.reps} reps`;
+    if (exercise.weight) flat = flat ? `${flat} @ ${exercise.weight} lbs` : `${exercise.weight} lbs`;
+    if (flat) parts.push(flat);
+  }
+
+  if (exercise.durationMinutes) parts.push(`${exercise.durationMinutes} min`);
+  if (exercise.distanceMiles) parts.push(`${exercise.distanceMiles} mi`);
+
+  return parts.length > 0 ? parts.join(", ") : null;
+}
+
 // Flat XP per logged exercise -- logging sets/reps/weight is just the normal
 // shape of a strength exercise, not extra effort worth a bonus. Time-based
 // (cardio) work still gets a duration bonus since minutes spent is a real
