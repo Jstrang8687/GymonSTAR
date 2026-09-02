@@ -99,7 +99,7 @@ export function MonsterTradingCard({ type, monster, linkToDetail = true }: Monst
           <div className={`relative mt-1.5 flex flex-1 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${meta.bg}`}>
             {artUrl ? (
               // eslint-disable-next-line @next/next/no-img-element -- small local pixel-art sprite, no need for next/image optimization
-              <img src={artUrl} alt={name} className="h-full w-full object-cover [image-rendering:pixelated]" />
+              <img src={artUrl} alt={name} className="h-full w-full object-contain [image-rendering:pixelated]" />
             ) : (
               <span className="text-5xl drop-shadow-lg sm:text-6xl">{meta.icon}</span>
             )}
