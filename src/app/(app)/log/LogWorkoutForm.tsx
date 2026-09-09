@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
+import { createTemplate } from "../settings/templates/actions";
 import { ProofUpload } from "./ProofUpload";
 import {
   MUSCLE_REGIONS,
@@ -13,6 +14,7 @@ import {
 } from "@/lib/muscleTypes";
 import { EXERCISE_LIBRARY, isTimeBasedExercise, hasMileage, type LibraryExercise } from "@/lib/exerciseLibrary";
 import type { ExerciseInput, SetDetail } from "@/lib/game";
+import type { WorkoutTemplateData } from "@/lib/workoutTemplates";
 
 interface ExerciseRow extends ExerciseInput {
   key: number;
@@ -51,7 +53,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function LogWorkoutForm() {
+export function LogWorkoutForm({ templates }: { templates: WorkoutTemplateData[] }) {
   const router = useRouter();
   const [muscleTypes, setMuscleTypes] = useState<MuscleType[]>([]);
   const [exercises, setExercises] = useState<ExerciseRow[]>([emptyRow()]);
@@ -59,6 +61,48 @@ export function LogWorkoutForm() {
   const [result, setResult] = useState<LogWorkoutResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [suggestKey, setSuggestKey] = useState<number | null>(null);
+  const [savingTemplate, setSavingTemplate] = useState(false);
+  const [templateName, setTemplateName] = useState("");
+  const [templateSaved, setTemplateSaved] = useState(false);
+  const [templatePending, startTemplateTransition] = useTransition();
+
+  function loadTemplate(template: WorkoutTemplateData) {
+    setMuscleTypes(template.muscleTypes);
+    setExercises(
+      template.exercises.map((ex) => ({
+        key: nextKey++,
+        name: ex.name,
+        category: ex.category,
+        pickedMuscleType: ex.muscleType,
+      }))
+    );
+    setResult(null);
+    setError(null);
+  }
+
+  function saveAsTemplate() {
+    const skeleton = exercises
+      .filter((row) => row.name.trim().length > 0)
+      .map((row) => ({ name: row.name, category: row.category, muscleType: row.pickedMuscleType }));
+    if (skeleton.length === 0) {
+      setError("Add at least one exercise before saving a template.");
+      return;
+    }
+    const name = templateName.trim();
+    if (!name) return;
+
+    startTemplateTransition(async () => {
+      try {
+        await createTemplate({ name, muscleTypes, exercises: skeleton });
+        setSavingTemplate(false);
+        setTemplateName("");
+        setTemplateSaved(true);
+        router.refresh();
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Couldn't save that template.");
+      }
+    });
+  }
 
   function toggleType(type: MuscleType) {
     setMuscleTypes((prev) =>
@@ -247,6 +291,8 @@ export function LogWorkoutForm() {
         setResult(res);
         setMuscleTypes([]);
         setExercises([emptyRow()]);
+        setSavingTemplate(false);
+        setTemplateSaved(false);
         router.refresh();
       } catch (e) {
         setError(e instanceof Error ? e.message : "Something went wrong.");
@@ -283,6 +329,24 @@ export function LogWorkoutForm() {
             </button>
           </div>
         </div>
+      )}
+
+      {templates.length > 0 && (
+        <section>
+          <h2 className="mb-2 text-sm font-bold text-white">Start from a template</h2>
+          <div className="flex flex-wrap gap-2">
+            {templates.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => loadTemplate(t)}
+                className="rounded-full border border-white/10 px-3 py-1.5 text-sm font-medium text-slate-300 transition hover:border-amber-400 hover:text-amber-300"
+              >
+                {t.name}
+              </button>
+            ))}
+          </div>
+        </section>
       )}
 
       <section>
@@ -562,6 +626,50 @@ export function LogWorkoutForm() {
         >
           + Add exercise
         </button>
+
+        <div className="mt-4 border-t border-white/10 pt-3">
+          {savingTemplate ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                autoFocus
+                placeholder="e.g. Push Day A"
+                value={templateName}
+                onChange={(e) => setTemplateName(e.target.value)}
+                className="rounded-md border border-white/10 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+              />
+              <button
+                type="button"
+                disabled={templatePending || templateName.trim().length === 0}
+                onClick={saveAsTemplate}
+                className="rounded-md bg-amber-400 px-3 py-1.5 text-xs font-bold text-slate-900 disabled:opacity-50"
+              >
+                {templatePending ? "Saving..." : "Save"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSavingTemplate(false);
+                  setTemplateName("");
+                }}
+                className="text-xs font-semibold text-slate-500 hover:text-white"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setSavingTemplate(true);
+                setTemplateSaved(false);
+              }}
+              className="text-xs font-semibold text-slate-400 hover:text-amber-300"
+            >
+              💾 Save as a template
+            </button>
+          )}
+          {templateSaved && <p className="mt-1.5 text-xs text-emerald-400">Template saved.</p>}
+        </div>
       </section>
 
       {error && <p className="text-sm text-red-400">{error}</p>}

@@ -19,6 +19,7 @@ model User {
   monsters      MonSTAR[]
   programs      TrainingProgram[]
   workoutLogs   WorkoutLog[]
+  templates     WorkoutTemplate[]
 }
 
 model Coach {
@@ -134,4 +135,17 @@ model WorkoutLog {
   videoFilename   String?
   videoMimeType   String?
   videoVerifiedAt DateTime?
+}
+
+model WorkoutTemplate {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  // JSON MuscleType[] and JSON TemplateExercise[] (name/category/muscleType only --
+  // no sets/reps/weight, since a template is the skeleton you fill in each time).
+  muscleTypes String
+  exercises   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
