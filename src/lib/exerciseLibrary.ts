@@ -37,6 +37,7 @@ export function isTimeBasedExercise(muscleType: MuscleType): boolean {
 // level or floors, Rowing by meters, Rope Jumping and Prowler Sprint by
 // reps/yards -- miles wouldn't mean anything for those.
 const MILEAGE_EXERCISE_NAMES = new Set([
+  "Assault Bike",
   "Bicycling",
   "Bicycling, Stationary",
   "Jogging, Treadmill",

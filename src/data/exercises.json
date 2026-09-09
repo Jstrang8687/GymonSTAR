@@ -5248,5 +5248,306 @@
     "category": "strength",
     "equipment": "dumbbell",
     "level": "intermediate"
+  },
+  {
+    "name": "Neck Extension Machine",
+    "muscleType": "NECK_EXTENSORS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Manual Resistance Neck Extension",
+    "muscleType": "NECK_EXTENSORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Neck Harness Extension",
+    "muscleType": "NECK_EXTENSORS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Prone Neck Raise",
+    "muscleType": "NECK_EXTENSORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Wrestler's Neck Bridge",
+    "muscleType": "NECK_EXTENSORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Band Neck Extension",
+    "muscleType": "NECK_EXTENSORS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Weighted Chin Tuck",
+    "muscleType": "NECK_FLEXORS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Neck Flexion Machine",
+    "muscleType": "NECK_FLEXORS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Side-Lying Hip Abduction",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Clamshell",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Cable Hip Abduction",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Band Hip Abduction",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Single-Leg Glute Bridge",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Fire Hydrant",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Cable Hip Abduction",
+    "muscleType": "ABDUCTORS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Resistance Band Lateral Walk",
+    "muscleType": "ABDUCTORS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Side-Lying Leg Raise",
+    "muscleType": "ABDUCTORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Seated Hip Abduction Machine",
+    "muscleType": "ABDUCTORS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Hip Abduction",
+    "muscleType": "ABDUCTORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Sumo Squat",
+    "muscleType": "ADDUCTORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Copenhagen Plank",
+    "muscleType": "ADDUCTORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Side Lunge",
+    "muscleType": "ADDUCTORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Adductor Machine Squeeze",
+    "muscleType": "ADDUCTORS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Standing Cable Hip Flexion",
+    "muscleType": "HIP_FLEXORS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "intermediate"
+  },
+  {
+    "name": "Hanging Knee Raise",
+    "muscleType": "HIP_FLEXORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Standing Knee Raise",
+    "muscleType": "HIP_FLEXORS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Weighted Leg Raise",
+    "muscleType": "HIP_FLEXORS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Sled Hip Flexion March",
+    "muscleType": "HIP_FLEXORS",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Calf Raise Machine",
+    "muscleType": "CALVES_SOLEUS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "beginner"
+  },
+  {
+    "name": "Bent-Knee Calf Raise",
+    "muscleType": "CALVES_SOLEUS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Smith Machine Seated Calf Raise",
+    "muscleType": "CALVES_SOLEUS",
+    "category": "strength",
+    "equipment": "machine",
+    "level": "intermediate"
+  },
+  {
+    "name": "Seated Cable Row",
+    "muscleType": "RHOMBOIDS",
+    "category": "strength",
+    "equipment": "cable",
+    "level": "beginner"
+  },
+  {
+    "name": "Chest-Supported Dumbbell Row",
+    "muscleType": "RHOMBOIDS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Prone Y-Raise",
+    "muscleType": "RHOMBOIDS",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Band Scapular Retraction",
+    "muscleType": "RHOMBOIDS",
+    "category": "strength",
+    "equipment": "bands",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse-Grip Bent-Over Row",
+    "muscleType": "RHOMBOIDS",
+    "category": "strength",
+    "equipment": "barbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Fat Grip Bar Hold",
+    "muscleType": "GRIP",
+    "category": "strength",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Towel Pull-Up Hang",
+    "muscleType": "GRIP",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Dumbbell External Rotation",
+    "muscleType": "ROTATOR_CUFF",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "beginner"
+  },
+  {
+    "name": "Prone Dumbbell External Rotation",
+    "muscleType": "ROTATOR_CUFF",
+    "category": "strength",
+    "equipment": "dumbbell",
+    "level": "intermediate"
+  },
+  {
+    "name": "Swimming",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Battle Ropes",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "other",
+    "level": "intermediate"
+  },
+  {
+    "name": "Assault Bike",
+    "muscleType": "CARDIO",
+    "category": "endurance",
+    "equipment": "machine",
+    "level": "intermediate"
   }
 ]
