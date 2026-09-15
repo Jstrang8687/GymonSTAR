@@ -1,3 +1,5 @@
+import type { MuscleType } from "@/lib/muscleTypes";
+
 // Core game formulas shared by server actions and UI display.
 // Kept pure/deterministic so the dashboard can preview XP math client-side too.
 
@@ -79,6 +81,12 @@ export interface ExerciseInput {
   // Optional distance for cardio exercises where mileage is a natural unit
   // (running, walking, cycling). Record-keeping only, doesn't affect XP.
   distanceMiles?: number;
+  // Set only when the name doesn't match the library and the user tagged
+  // which muscle group it trains -- lets the server add it to the shared
+  // custom-exercise list so it's searchable/suggested for everyone next
+  // time. Doesn't affect this log's own XP distribution (that still runs
+  // off LogWorkoutInput.muscleTypes as before).
+  muscleType?: MuscleType;
 }
 
 // Human-readable summary of what was actually logged for an exercise, e.g.

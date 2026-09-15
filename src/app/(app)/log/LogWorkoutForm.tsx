@@ -12,7 +12,13 @@ import {
   typesForRegion,
   type MuscleType,
 } from "@/lib/muscleTypes";
-import { EXERCISE_LIBRARY, isTimeBasedExercise, hasMileage, type LibraryExercise } from "@/lib/exerciseLibrary";
+import {
+  EXERCISE_LIBRARY,
+  isTimeBasedExercise,
+  hasMileage,
+  normalizeExerciseQuery,
+  type LibraryExercise,
+} from "@/lib/exerciseLibrary";
 import type { ExerciseInput, SetDetail } from "@/lib/game";
 import type { WorkoutTemplateData } from "@/lib/workoutTemplates";
 
@@ -53,8 +59,17 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function LogWorkoutForm({ templates }: { templates: WorkoutTemplateData[] }) {
+export function LogWorkoutForm({
+  templates,
+  customExercises,
+}: {
+  templates: WorkoutTemplateData[];
+  customExercises: LibraryExercise[];
+}) {
   const router = useRouter();
+  // Static library plus exercises the community has already tagged and
+  // added -- one combined pool for suggestions/autocomplete either way.
+  const fullLibrary = [...EXERCISE_LIBRARY, ...customExercises];
   const [muscleTypes, setMuscleTypes] = useState<MuscleType[]>([]);
   const [exercises, setExercises] = useState<ExerciseRow[]>([emptyRow()]);
   const [pending, startTransition] = useTransition();
@@ -139,11 +154,24 @@ export function LogWorkoutForm({ templates }: { templates: WorkoutTemplateData[]
   }
 
   function suggestionsFor(query: string): LibraryExercise[] {
-    const q = query.trim().toLowerCase();
-    if (q.length < 2) return [];
+    if (query.trim().length < 2) return [];
+    const q = normalizeExerciseQuery(query);
     // Search the whole library, not just already-selected muscle groups — picking
     // an exercise is what selects its muscle group now, not the other way around.
-    return EXERCISE_LIBRARY.filter((e) => e.name.toLowerCase().includes(q)).slice(0, 8);
+    return fullLibrary.filter((e) => normalizeExerciseQuery(e.name).includes(q)).slice(0, 8);
+  }
+
+  // True once someone's typed enough that we'd expect a match and found
+  // none at all (not even a partial one) -- the "you're logging something
+  // brand new" case, as opposed to still mid-typing toward a known exercise.
+  function isUnrecognized(row: ExerciseRow): boolean {
+    if (row.pickedMuscleType) return false;
+    return suggestionsFor(row.name).length === 0 && row.name.trim().length >= 2;
+  }
+
+  function tagMuscleType(key: number, muscleType: MuscleType) {
+    updateRow(key, { pickedMuscleType: muscleType });
+    setMuscleTypes((prev) => (prev.includes(muscleType) ? prev : [...prev, muscleType]));
   }
 
   function pickSuggestion(key: number, exercise: LibraryExercise) {
@@ -266,7 +294,7 @@ export function LogWorkoutForm({ templates }: { templates: WorkoutTemplateData[]
       .filter((row) => row.name.trim().length > 0)
       .map((row) =>
         row.setDetails
-          ? { name: row.name, category: row.category, setDetails: row.setDetails }
+          ? { name: row.name, category: row.category, setDetails: row.setDetails, muscleType: row.pickedMuscleType }
           : {
               name: row.name,
               category: row.category,
@@ -275,6 +303,7 @@ export function LogWorkoutForm({ templates }: { templates: WorkoutTemplateData[]
               weight: row.weight,
               durationMinutes: row.durationMinutes,
               distanceMiles: row.distanceMiles,
+              muscleType: row.pickedMuscleType,
             }
       );
     if (cleanExercises.length === 0) {
@@ -434,6 +463,31 @@ export function LogWorkoutForm({ templates }: { templates: WorkoutTemplateData[]
                           </li>
                         ))}
                       </ul>
+                    )}
+                    {isUnrecognized(row) && (
+                      <div className="mt-1.5">
+                        <p className="text-xs text-amber-300/80">
+                          New one — which muscle group does it train? We&apos;ll remember it for next time.
+                        </p>
+                        <select
+                          value=""
+                          onChange={(e) => tagMuscleType(row.key, e.target.value as MuscleType)}
+                          className="mt-1 w-full rounded-md border border-amber-400/30 bg-slate-900/60 px-2 py-1.5 text-sm text-white outline-none focus:border-amber-400"
+                        >
+                          <option value="" disabled>
+                            Pick a muscle group…
+                          </option>
+                          {MUSCLE_REGIONS.map((region) => (
+                            <optgroup key={region} label={region}>
+                              {typesForRegion(region).map((type) => (
+                                <option key={type} value={type}>
+                                  {MUSCLE_TYPE_META[type].icon} {MUSCLE_TYPE_META[type].label}
+                                </option>
+                              ))}
+                            </optgroup>
+                          ))}
+                        </select>
+                      </div>
                     )}
                   </div>
                   <Field label="Type">

@@ -13,6 +13,7 @@ import {
 } from "@/lib/game";
 import { saveWorkoutProof, deleteWorkoutProof as deleteProofFile } from "@/lib/proofStorage";
 import { applyTrainerXpDelta } from "@/lib/trainerXp";
+import { recordCustomExerciseIfNew } from "@/lib/customExercises";
 import { MUSCLE_TYPE_META, typesForRegion, type MuscleRegion, type MuscleType } from "@/lib/muscleTypes";
 
 // Once a trainer owns more than this many monSTARs in a trained region, XP
@@ -178,6 +179,15 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
       xpBreakdown: JSON.stringify(xpBreakdown),
     },
   });
+
+  // Best-effort: grows the shared exercise list from real usage. Never
+  // blocks or fails the log itself -- see recordCustomExerciseIfNew.
+  const loggingUser = await prisma.user.findUnique({ where: { id: userId }, select: { email: true } });
+  if (loggingUser) {
+    for (const exercise of input.exercises) {
+      await recordCustomExerciseIfNew(exercise.name, exercise.muscleType, exercise.category, loggingUser.email);
+    }
+  }
 
   revalidatePath("/");
   revalidatePath("/monstars");

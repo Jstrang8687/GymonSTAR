@@ -170,3 +170,21 @@ model WorkoutTemplate {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+// Exercises the static library (src/data/exercises.json) doesn't have, added
+// automatically the first time someone logs a workout with a name it doesn't
+// recognize and tags which muscle group it trains. Shared across all users
+// (like the static library) so the searchable set grows from real usage
+// instead of everyone hitting the same gap over and over.
+model CustomExercise {
+  id             String     @id @default(cuid())
+  name           String
+  // Same normalization as normalizeExerciseQuery() in exerciseLibrary.ts --
+  // enforced unique here so two people logging "Push Up" and "push-up" on
+  // the same untracked exercise can't both create separate entries.
+  normalizedName String     @unique
+  muscleType     MuscleType
+  category       String
+  createdByEmail String
+  createdAt      DateTime   @default(now())
+}
