@@ -5549,5 +5549,180 @@
     "category": "endurance",
     "equipment": "machine",
     "level": "intermediate"
+  },
+  {
+    "name": "Pike Push-Up",
+    "muscleType": "FRONT_DELTS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Diamond Push-Up",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Superman",
+    "muscleType": "LOWER_BACK",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Hollow Body Hold",
+    "muscleType": "UPPER_ABS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bulgarian Split Squat",
+    "muscleType": "OUTER_QUADS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Pistol Squat",
+    "muscleType": "OUTER_QUADS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Nordic Curl",
+    "muscleType": "HAMSTRINGS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "expert"
+  },
+  {
+    "name": "Burpee",
+    "muscleType": "OUTER_QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Wall Sit",
+    "muscleType": "OUTER_QUADS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Jumping Jack",
+    "muscleType": "OUTER_QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "High Knees",
+    "muscleType": "OUTER_QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Bear Crawl",
+    "muscleType": "DEEP_CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Plank Jack",
+    "muscleType": "DEEP_CORE",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Side Plank",
+    "muscleType": "DEEP_CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "V-Up",
+    "muscleType": "UPPER_ABS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Bicycle Crunch",
+    "muscleType": "UPPER_ABS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Donkey Kick",
+    "muscleType": "GLUTE_MAX",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Wall Push-Up",
+    "muscleType": "CHEST",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Inchworm",
+    "muscleType": "DEEP_CORE",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Broad Jump",
+    "muscleType": "OUTER_QUADS",
+    "category": "endurance",
+    "equipment": "body only",
+    "level": "intermediate"
+  },
+  {
+    "name": "Glute Bridge",
+    "muscleType": "GLUTE_MAX",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Reverse Lunge",
+    "muscleType": "OUTER_QUADS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Curtsy Lunge",
+    "muscleType": "GLUTE_MED",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Crab Walk",
+    "muscleType": "TRICEPS",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
+  },
+  {
+    "name": "Dead Hang",
+    "muscleType": "GRIP",
+    "category": "strength",
+    "equipment": "body only",
+    "level": "beginner"
   }
 ]
