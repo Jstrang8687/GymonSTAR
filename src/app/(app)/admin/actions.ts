@@ -7,6 +7,7 @@ import { requireAdmin, getUserId } from "@/lib/session-helpers";
 import { levelFromXp, PROOF_VERIFY_BONUS_XP } from "@/lib/game";
 import { applyTrainerXpDelta } from "@/lib/trainerXp";
 import { deleteWorkoutProof as deleteProofFile } from "@/lib/proofStorage";
+import { sendAccountDeletedEmail } from "@/lib/email";
 import type { MuscleType } from "@/lib/muscleTypes";
 
 export async function adminAdjustTrainerXp(userId: string, delta: number): Promise<void> {
@@ -103,15 +104,19 @@ export async function adminDeleteUser(userId: string): Promise<void> {
     throw new Error("You can't delete your own account from here.");
   }
 
-  const logs = await prisma.workoutLog.findMany({
-    where: { userId, videoFilename: { not: null } },
-    select: { videoFilename: true },
-  });
+  const [logs, user] = await Promise.all([
+    prisma.workoutLog.findMany({
+      where: { userId, videoFilename: { not: null } },
+      select: { videoFilename: true },
+    }),
+    prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { email: true, name: true } }),
+  ]);
   for (const log of logs) {
     if (log.videoFilename) await deleteProofFile(log.videoFilename);
   }
 
   await prisma.user.delete({ where: { id: userId } });
+  await sendAccountDeletedEmail(user.email, user.name);
 
   revalidatePath("/admin");
   redirect("/admin");

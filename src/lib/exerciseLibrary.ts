@@ -17,11 +17,19 @@ export function exercisesForType(muscleType: MuscleType): LibraryExercise[] {
   return EXERCISE_LIBRARY.filter((e) => e.muscleType === muscleType);
 }
 
+// Strips everything but letters/digits so "push up", "push-up", and
+// "pushups" all normalize to the same string -- a plain substring match on
+// raw text misses these since a space, a hyphen, and nothing are three
+// different characters as far as .includes() is concerned.
+export function normalizeExerciseQuery(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
 export function searchExercises(query: string, muscleType?: MuscleType, limit = 20): LibraryExercise[] {
   const pool = muscleType ? exercisesForType(muscleType) : EXERCISE_LIBRARY;
-  const q = query.trim().toLowerCase();
+  const q = normalizeExerciseQuery(query);
   if (!q) return pool.slice(0, limit);
-  return pool.filter((e) => e.name.toLowerCase().includes(q)).slice(0, limit);
+  return pool.filter((e) => normalizeExerciseQuery(e.name).includes(q)).slice(0, limit);
 }
 
 // The CARDIO muscle type is exclusively populated from the source dataset's
@@ -37,6 +45,7 @@ export function isTimeBasedExercise(muscleType: MuscleType): boolean {
 // level or floors, Rowing by meters, Rope Jumping and Prowler Sprint by
 // reps/yards -- miles wouldn't mean anything for those.
 const MILEAGE_EXERCISE_NAMES = new Set([
+  "Assault Bike",
   "Bicycling",
   "Bicycling, Stationary",
   "Jogging, Treadmill",

@@ -1,3 +1,5 @@
+import type { MuscleType } from "@/lib/muscleTypes";
+
 // Core game formulas shared by server actions and UI display.
 // Kept pure/deterministic so the dashboard can preview XP math client-side too.
 
@@ -79,6 +81,44 @@ export interface ExerciseInput {
   // Optional distance for cardio exercises where mileage is a natural unit
   // (running, walking, cycling). Record-keeping only, doesn't affect XP.
   distanceMiles?: number;
+  // Set only when the name doesn't match the library and the user tagged
+  // which muscle group it trains -- lets the server add it to the shared
+  // custom-exercise list so it's searchable/suggested for everyone next
+  // time. Doesn't affect this log's own XP distribution (that still runs
+  // off LogWorkoutInput.muscleTypes as before).
+  muscleType?: MuscleType;
+}
+
+// Human-readable summary of what was actually logged for an exercise, e.g.
+// "3×10 @ 135 lbs", "135×8, 155×6, 175×4" (multi-set), or "20 min, 2.5 mi"
+// -- so history views can show the real numbers instead of just the name.
+export function formatExerciseDetail(exercise: ExerciseInput): string | null {
+  const parts: string[] = [];
+
+  if (exercise.setDetails && exercise.setDetails.length > 0) {
+    parts.push(
+      exercise.setDetails
+        .map((s) => {
+          if (s.weight !== undefined && s.reps !== undefined) return `${s.weight}×${s.reps}`;
+          if (s.reps !== undefined) return `${s.reps} reps`;
+          if (s.weight !== undefined) return `${s.weight} lbs`;
+          return null;
+        })
+        .filter(Boolean)
+        .join(", ")
+    );
+  } else if (exercise.sets !== undefined || exercise.reps !== undefined || exercise.weight) {
+    let flat = "";
+    if (exercise.sets !== undefined && exercise.reps !== undefined) flat = `${exercise.sets}×${exercise.reps}`;
+    else if (exercise.reps !== undefined) flat = `${exercise.reps} reps`;
+    if (exercise.weight) flat = flat ? `${flat} @ ${exercise.weight} lbs` : `${exercise.weight} lbs`;
+    if (flat) parts.push(flat);
+  }
+
+  if (exercise.durationMinutes) parts.push(`${exercise.durationMinutes} min`);
+  if (exercise.distanceMiles) parts.push(`${exercise.distanceMiles} mi`);
+
+  return parts.length > 0 ? parts.join(", ") : null;
 }
 
 // Flat XP per logged exercise -- logging sets/reps/weight is just the normal

@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
-import { proofBonusIsReversible, PROOF_VERIFY_BONUS_XP, type ExerciseInput } from "@/lib/game";
+import { proofBonusIsReversible, PROOF_VERIFY_BONUS_XP, formatExerciseDetail, type ExerciseInput } from "@/lib/game";
 import { DeleteProofButton } from "./DeleteProofButton";
 
 export default async function HistoryPage() {
@@ -96,7 +96,17 @@ export default async function HistoryPage() {
                       </span>
                     ))}
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-400">{exercises.map((e) => e.name).join(", ")}</p>
+                  <ul className="mt-1.5 space-y-0.5 text-xs text-slate-400">
+                    {exercises.map((e, i) => {
+                      const detail = formatExerciseDetail(e);
+                      return (
+                        <li key={i}>
+                          {e.name}
+                          {detail && <span className="text-slate-500"> — {detail}</span>}
+                        </li>
+                      );
+                    })}
+                  </ul>
                   {(log.caughtNewMonster || log.videoFilename) && (
                     <div className="mt-1.5 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide">
                       {log.caughtNewMonster && <span className="text-amber-300">🎉 New monSTAR</span>}
