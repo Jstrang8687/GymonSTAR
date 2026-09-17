@@ -4,7 +4,10 @@ import { prisma } from "@/lib/prisma";
 import type { AuthTokenType } from "@prisma/client";
 
 const TTL_MS: Record<AuthTokenType, number> = {
-  EMAIL_VERIFY: 24 * 60 * 60 * 1000,
+  // Generous on purpose -- verification email routinely lands in junk and
+  // doesn't get noticed same-day, and getting locked out over it is worse
+  // than the (low) security cost of a longer-lived link for this one.
+  EMAIL_VERIFY: 7 * 24 * 60 * 60 * 1000,
   PASSWORD_RESET: 60 * 60 * 1000,
 };
 
