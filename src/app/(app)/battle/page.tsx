@@ -1,27 +1,33 @@
 import Link from "next/link";
 import { requireOnboarded } from "@/lib/session-helpers";
+import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { listGyms } from "./gyms/actions";
+import { CheckInButton } from "./gyms/CheckInButton";
+
+function formatCountdown(ms: number): string {
+  if (ms <= 0) return "closing...";
+  const hours = Math.floor(ms / (60 * 60 * 1000));
+  const days = Math.floor(hours / 24);
+  if (days > 0) return `${days}d ${hours % 24}h left`;
+  const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
+  return `${hours}h ${minutes}m left`;
+}
 
 export default async function BattlePage() {
   await requireOnboarded();
+  const gyms = await listGyms();
 
   return (
-    <div className="mx-auto max-w-lg text-center">
-      <div className="text-6xl">🗺️⚔️</div>
-      <h1 className="mt-4 text-2xl font-black text-white">Battles — Coming Soon</h1>
-      <p className="mt-3 text-sm leading-relaxed text-slate-400">
-        Soon you&apos;ll be able to share your location and challenge nearby trainers to a
-        monSTAR battle. We&apos;re building this carefully — real matchmaking and location
-        sharing take real safety design, so it&apos;s not wired up yet.
-      </p>
-      <div className="mt-6 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-8 text-slate-600">
-        No opponents nearby (feature disabled)
+    <div className="mx-auto max-w-lg space-y-8">
+      <div>
+        <h1 className="text-2xl font-black text-white">Battle</h1>
+        <p className="mt-1 text-sm text-slate-400">Two ways to throw down.</p>
       </div>
 
-      <div className="mt-8 rounded-2xl border border-amber-400/30 bg-amber-400/5 p-5 text-left">
-        <p className="text-sm font-bold text-amber-300">🧪 Quick Battle prototypes</p>
+      <section className="rounded-2xl border border-amber-400/30 bg-amber-400/5 p-5">
+        <p className="text-sm font-bold text-amber-300">🃏 Solo Card Battle</p>
         <p className="mt-1 text-xs text-slate-400">
-          Two versions of an instant, no-workout-required battle mode, for testing before we
-          commit to one. Nothing here is saved.
+          Instant, single-player, cards only -- no workouts involved, nothing here is saved.
         </p>
         <div className="mt-3 space-y-2">
           <Link
@@ -37,7 +43,66 @@ export default async function BattlePage() {
             Full rules — 12-card roster, hand of 4, 6 energy-gated turns
           </Link>
         </div>
-      </div>
+      </section>
+
+      <section>
+        <p className="text-sm font-bold text-white">🗺️ Gym Duels</p>
+        <p className="mt-1 text-xs text-slate-400">
+          Claim a real place by checking in. Someone else's turf? Beat their score in a 48-hour training
+          window to take it.
+        </p>
+
+        <div className="mt-3">
+          <CheckInButton />
+        </div>
+
+        <div className="mt-4 space-y-3">
+          {gyms.length === 0 ? (
+            <p className="text-sm text-slate-500">No gyms claimed yet — be the first.</p>
+          ) : (
+            gyms.map((gym) => (
+              <div key={gym.id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="flex items-center justify-between">
+                  <p className="font-bold text-white">{gym.name}</p>
+                  {gym.championMuscleType && (
+                    <span className="text-xs text-slate-400">
+                      {MUSCLE_TYPE_META[gym.championMuscleType].icon} {MUSCLE_TYPE_META[gym.championMuscleType].label}
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 text-sm text-amber-300">
+                  👑 {gym.championName ?? "Unclaimed"}
+                </p>
+
+                {gym.challenge && gym.challenge.status === "OPEN" && (
+                  <div className="mt-3 rounded-lg border border-white/10 bg-slate-900/60 p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-red-300">
+                      ⚔️ Duel in progress — {gym.challenge.muscleTypeLabel}
+                    </p>
+                    <div className="mt-2 flex items-center justify-between text-sm">
+                      <span className="text-white">{gym.challenge.challengerName}</span>
+                      <span className="font-bold text-amber-400">
+                        {gym.challenge.challengerScore} — {gym.challenge.defenderScore}
+                      </span>
+                      <span className="text-white">{gym.challenge.defenderName}</span>
+                    </div>
+                    <p className="mt-1 text-center text-xs text-slate-500">
+                      {formatCountdown(gym.challenge.msRemaining)}
+                    </p>
+                  </div>
+                )}
+
+                {gym.challenge && gym.challenge.status === "RESOLVED" && (
+                  <p className="mt-2 text-xs text-slate-500">
+                    Last duel: {gym.challenge.winnerName} won {gym.challenge.challengerScore} —{" "}
+                    {gym.challenge.defenderScore}
+                  </p>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </section>
     </div>
   );
 }

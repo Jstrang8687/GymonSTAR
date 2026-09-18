@@ -188,3 +188,48 @@ model CustomExercise {
   createdByEmail String
   createdAt      DateTime   @default(now())
 }
+
+// A real-world location, claimed by whoever checks in there first (a
+// one-time GPS grab, not live tracking -- see GymChallenge for what
+// "claimed" actually means). championMuscleType is fixed to whichever of
+// the champion's monSTARs was their strongest at claim/defense time -- that's
+// what any challenger has to already own a monster of to fight for the gym.
+model Gym {
+  id                 String    @id @default(cuid())
+  name               String
+  latitude           Float
+  longitude          Float
+  championUserId     String?
+  championMuscleType MuscleType?
+  claimedAt          DateTime?
+  createdAt          DateTime  @default(now())
+
+  challenges         GymChallenge[]
+}
+
+enum GymChallengeStatus {
+  OPEN
+  RESOLVED
+}
+
+// A live duel window over one gym. Score = each side's MonSTAR.xp for
+// muscleType at the moment the challenge opened, plus whatever xpBreakdown
+// credit either of them earns for that exact muscleType from real
+// WorkoutLogs during [windowStart, windowEnd] -- computed on read
+// (gymDuel.ts), not tracked incrementally. Ties go to the defender.
+model GymChallenge {
+  id                   String             @id @default(cuid())
+  gymId                String
+  gym                  Gym                @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  muscleType           MuscleType
+  challengerId         String
+  defenderId           String
+  challengerStartXp    Int
+  defenderStartXp      Int
+  windowStart          DateTime
+  windowEnd            DateTime
+  status               GymChallengeStatus @default(OPEN)
+  winnerId             String?
+  resolvedAt           DateTime?
+  createdAt            DateTime           @default(now())
+}
