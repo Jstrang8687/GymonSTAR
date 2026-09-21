@@ -29,7 +29,7 @@ export default async function QuickBattleSimplePage() {
         ← Back to Battle
       </Link>
       <div className="mt-2 mb-4 rounded-lg border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-xs text-amber-300">
-        🧪 Prototype — testing only, nothing here is saved.
+        🃏 Solo card battle — instant, just for fun. Nothing here is saved.
       </div>
       <h1 className="text-2xl font-black text-white">Quick Battle — Simple</h1>
       <p className="mt-1 text-sm text-slate-400">

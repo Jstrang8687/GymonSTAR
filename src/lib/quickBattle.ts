@@ -37,6 +37,10 @@ export interface LaneEffect {
   name: string;
   icon: string;
   description: string;
+  /** Short label for the prominent on-card badge, e.g. "+2", "×2", "—". */
+  badge: string;
+  /** Badge color hint -- "up" (boost), "down" (penalty), or "neutral" (no change). */
+  badgeKind: "up" | "down" | "neutral";
   /** Real location card art, once it exists -- falls back to the icon placeholder until then. */
   artUrl?: string;
   apply: (power: number) => number;
@@ -48,14 +52,21 @@ export interface LaneEffect {
 // monSTAR cards. Art lives at /public/locations/<id>.jpg -- entries without
 // matching art on disk just fall back to the icon placeholder.
 const LANE_EFFECTS_BASE: Omit<LaneEffect, "artUrl">[] = [
-  { id: "crossfit-box", name: "CrossFit box", icon: "🏋️", description: "Power x2 here", apply: (p) => p * 2 },
-  { id: "community-center", name: "Community center", icon: "🏢", description: "+3 power here", apply: (p) => (p > 0 ? p + 3 : 0) },
-  { id: "the-park", name: "The park", icon: "🌳", description: "+2 power here", apply: (p) => (p > 0 ? p + 2 : 0) },
-  { id: "garage-gym", name: "Garage gym", icon: "🚪", description: "+1 power here", apply: (p) => (p > 0 ? p + 1 : 0) },
-  { id: "24-hour-gym", name: "24-hour gym", icon: "🌙", description: "+3 power here", apply: (p) => (p > 0 ? p + 3 : 0) },
-  { id: "track-and-field", name: "Track & field", icon: "🏃", description: "+2 power here", apply: (p) => (p > 0 ? p + 2 : 0) },
-  { id: "rooftop-gym", name: "Rooftop gym", icon: "🌆", description: "+1 power here", apply: (p) => (p > 0 ? p + 1 : 0) },
-  { id: "the-beach", name: "The beach", icon: "🏖️", description: "No bonus, just sand", apply: (p) => p },
+  { id: "crossfit-box", name: "CrossFit box", icon: "🏋️", description: "Power x2 here", badge: "×2", badgeKind: "up", apply: (p) => p * 2 },
+  { id: "community-center", name: "Community center", icon: "🏢", description: "+3 power here", badge: "+3", badgeKind: "up", apply: (p) => (p > 0 ? p + 3 : 0) },
+  { id: "the-park", name: "The park", icon: "🌳", description: "+2 power here", badge: "+2", badgeKind: "up", apply: (p) => (p > 0 ? p + 2 : 0) },
+  { id: "garage-gym", name: "Garage gym", icon: "🚪", description: "+1 power here", badge: "+1", badgeKind: "up", apply: (p) => (p > 0 ? p + 1 : 0) },
+  { id: "24-hour-gym", name: "24-hour gym", icon: "🌙", description: "+3 power here", badge: "+3", badgeKind: "up", apply: (p) => (p > 0 ? p + 3 : 0) },
+  { id: "track-and-field", name: "Track & field", icon: "🏃", description: "+2 power here", badge: "+2", badgeKind: "up", apply: (p) => (p > 0 ? p + 2 : 0) },
+  { id: "rooftop-gym", name: "Rooftop gym", icon: "🌆", description: "+1 power here", badge: "+1", badgeKind: "up", apply: (p) => (p > 0 ? p + 1 : 0) },
+  { id: "the-beach", name: "The beach", icon: "🏖️", description: "No bonus, just sand", badge: "—", badgeKind: "neutral", apply: (p) => p },
+  // Debuff locations, mirroring Marvel Snap's flat power-penalty spots
+  // (Sewer System -1, Necrosha -2, Negative Zone -3) -- same escalating
+  // tiers as the boost locations above, just the other direction. No real
+  // art yet, so these render icon-only until art gets generated for them.
+  { id: "overcrowded-gym-floor", name: "Overcrowded gym floor", icon: "😤", description: "-1 power here (every machine's taken)", badge: "-1", badgeKind: "down", apply: (p) => Math.max(0, p - 1) },
+  { id: "the-sauna", name: "The sauna", icon: "🧖", description: "-2 power here (the heat drains you)", badge: "-2", badgeKind: "down", apply: (p) => Math.max(0, p - 2) },
+  { id: "physical-therapy", name: "Physical therapy", icon: "🩹", description: "-3 power here (still recovering)", badge: "-3", badgeKind: "down", apply: (p) => Math.max(0, p - 3) },
 ];
 
 export const LANE_EFFECT_POOL: LaneEffect[] = LANE_EFFECTS_BASE.map((e) => ({
