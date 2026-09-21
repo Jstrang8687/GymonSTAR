@@ -25,11 +25,40 @@ export function normalizeExerciseQuery(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-export function searchExercises(query: string, muscleType?: MuscleType, limit = 20): LibraryExercise[] {
-  const pool = muscleType ? exercisesForType(muscleType) : EXERCISE_LIBRARY;
+// Lower is better. Ranks a real word-boundary match (query starts a whole
+// word in the name, e.g. "run" -> "Running, Treadmill") well above a match
+// that's merely buried inside an unrelated word (e.g. "run" -> "cRUNch") --
+// plain substring search ranks those identically, which buries exercises
+// like "Running, Treadmill" under a wall of crunch variations for a query
+// as short and common as "run". Returns null when the name doesn't match
+// the query at all.
+function matchScore(name: string, normalizedQuery: string): number | null {
+  const normName = normalizeExerciseQuery(name);
+  if (normName === normalizedQuery) return 0;
+  if (normName.startsWith(normalizedQuery)) return 1;
+  const words = name.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  if (words.some((w) => w.startsWith(normalizedQuery))) return 2;
+  if (normName.includes(normalizedQuery)) return 3;
+  return null;
+}
+
+// Shared ranking used by both the settings-side search (searchExercises)
+// and the log form's inline autocomplete, so "type a few letters, see the
+// exercises that actually matter first" behaves the same everywhere.
+export function rankExercises<T extends { name: string }>(pool: T[], query: string, limit: number): T[] {
   const q = normalizeExerciseQuery(query);
   if (!q) return pool.slice(0, limit);
-  return pool.filter((e) => normalizeExerciseQuery(e.name).includes(q)).slice(0, limit);
+  return pool
+    .map((e) => ({ exercise: e, score: matchScore(e.name, q) }))
+    .filter((r): r is { exercise: T; score: number } => r.score !== null)
+    .sort((a, b) => a.score - b.score)
+    .slice(0, limit)
+    .map((r) => r.exercise);
+}
+
+export function searchExercises(query: string, muscleType?: MuscleType, limit = 20): LibraryExercise[] {
+  const pool = muscleType ? exercisesForType(muscleType) : EXERCISE_LIBRARY;
+  return rankExercises(pool, query, limit);
 }
 
 // The CARDIO muscle type is exclusively populated from the source dataset's

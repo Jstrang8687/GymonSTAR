@@ -16,7 +16,7 @@ import {
   EXERCISE_LIBRARY,
   isTimeBasedExercise,
   hasMileage,
-  normalizeExerciseQuery,
+  rankExercises,
   type LibraryExercise,
 } from "@/lib/exerciseLibrary";
 import type { ExerciseInput, SetDetail } from "@/lib/game";
@@ -155,10 +155,12 @@ export function LogWorkoutForm({
 
   function suggestionsFor(query: string): LibraryExercise[] {
     if (query.trim().length < 2) return [];
-    const q = normalizeExerciseQuery(query);
     // Search the whole library, not just already-selected muscle groups — picking
     // an exercise is what selects its muscle group now, not the other way around.
-    return fullLibrary.filter((e) => normalizeExerciseQuery(e.name).includes(q)).slice(0, 8);
+    // Ranked (not just filtered) so a real match like "Running, Treadmill"
+    // surfaces above unrelated exercises that merely contain the same
+    // letters mid-word (e.g. "run" inside "cRUNch").
+    return rankExercises(fullLibrary, query, 8);
   }
 
   // True once someone's typed enough that we'd expect a match and found
