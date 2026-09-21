@@ -14,7 +14,8 @@ import {
 import { saveWorkoutProof, deleteWorkoutProof as deleteProofFile } from "@/lib/proofStorage";
 import { applyTrainerXpDelta } from "@/lib/trainerXp";
 import { recordCustomExerciseIfNew } from "@/lib/customExercises";
-import { MUSCLE_TYPE_META, typesForRegion, type MuscleRegion, type MuscleType } from "@/lib/muscleTypes";
+import { MUSCLE_TYPE_META, monsterNameForLevel, typesForRegion, type MuscleRegion, type MuscleType } from "@/lib/muscleTypes";
+import type { MonSTAR } from "@prisma/client";
 
 // Once a trainer owns more than this many monSTARs in a trained region, XP
 // for that region is credited to a random one of them instead of always the
@@ -27,12 +28,27 @@ export interface LogWorkoutInput {
   exercises: ExerciseInput[];
 }
 
+// Exactly which monSTAR(s) this log's XP actually went to, and what they're
+// at now -- since XP can be credited to a random monster in the trained
+// region rather than the exact sub-type logged (see RANDOM_XP_THRESHOLD_PER_REGION),
+// the total alone doesn't tell you where it landed.
+export interface XpDistributionEntry {
+  muscleType: MuscleType;
+  monsterName: string;
+  icon: string;
+  strengthXp: number;
+  enduranceXp: number;
+  newLevel: number;
+}
+
 export interface LogWorkoutResult {
   workoutLogId: string;
   totalXp: number;
   caughtNewMonster: boolean;
   caughtType: MuscleType | null;
+  caughtMonster: MonSTAR | null;
   multiplier: number;
+  distribution: XpDistributionEntry[];
 }
 
 // Looks back through recent logs for the most recent time this exact
@@ -106,6 +122,9 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
   // deleting the log later (e.g. from /admin) can reverse it precisely
   // instead of guessing from the total.
   const xpBreakdown: Record<string, { strengthXp: number; enduranceXp: number }> = {};
+  // Same data, kept as the client-facing shape (see XpDistributionEntry) so
+  // the log popup can show exactly where the XP went.
+  const distributionByType = new Map<MuscleType, { strengthXp: number; enduranceXp: number; newLevel: number }>();
 
   for (const muscleType of input.muscleTypes) {
     const region = MUSCLE_TYPE_META[muscleType].region;
@@ -150,13 +169,14 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
       const newStrengthXp = monster.strengthXp + perTypeStrength;
       const newEnduranceXp = monster.enduranceXp + perTypeEndurance;
       const newXp = newStrengthXp + newEnduranceXp;
+      const newLevel = levelFromXp(newXp);
       await prisma.monSTAR.update({
         where: { id: monster.id },
         data: {
           strengthXp: newStrengthXp,
           enduranceXp: newEnduranceXp,
           xp: newXp,
-          level: levelFromXp(newXp),
+          level: newLevel,
         },
       });
       const existing = xpBreakdown[targetType] ?? { strengthXp: 0, enduranceXp: 0 };
@@ -164,6 +184,13 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
         strengthXp: existing.strengthXp + perTypeStrength,
         enduranceXp: existing.enduranceXp + perTypeEndurance,
       };
+
+      const existingDist = distributionByType.get(targetType) ?? { strengthXp: 0, enduranceXp: 0, newLevel };
+      distributionByType.set(targetType, {
+        strengthXp: existingDist.strengthXp + perTypeStrength,
+        enduranceXp: existingDist.enduranceXp + perTypeEndurance,
+        newLevel,
+      });
     }
   }
 
@@ -189,6 +216,22 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
     }
   }
 
+  const caughtMonster = caughtType
+    ? await prisma.monSTAR.findUnique({ where: { userId_muscleType: { userId, muscleType: caughtType } } })
+    : null;
+
+  const distribution: XpDistributionEntry[] = Array.from(distributionByType.entries()).map(([muscleType, d]) => {
+    const meta = MUSCLE_TYPE_META[muscleType];
+    return {
+      muscleType,
+      monsterName: monsterNameForLevel(meta, d.newLevel),
+      icon: meta.icon,
+      strengthXp: d.strengthXp,
+      enduranceXp: d.enduranceXp,
+      newLevel: d.newLevel,
+    };
+  });
+
   revalidatePath("/");
   revalidatePath("/monstars");
   revalidatePath("/log");
@@ -198,7 +241,9 @@ export async function logWorkout(input: LogWorkoutInput): Promise<LogWorkoutResu
     totalXp: xpResult.totalXp,
     caughtNewMonster: caughtType !== null,
     caughtType,
+    caughtMonster,
     multiplier: xpResult.multiplier,
+    distribution,
   };
 }
 

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
 import { createTemplate } from "../settings/templates/actions";
 import { ProofUpload } from "./ProofUpload";
+import { MonsterTradingCard } from "@/components/MonsterTradingCard";
 import {
   MUSCLE_REGIONS,
   MUSCLE_TYPE_META,
-  monsterNameForLevel,
   typesForRegion,
   type MuscleType,
 } from "@/lib/muscleTypes";
@@ -334,7 +334,7 @@ export function LogWorkoutForm({
   return (
     <div className="space-y-6">
       {result && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-4">
           <div className="w-full max-w-sm rounded-2xl border border-amber-400/40 bg-slate-900 p-5 text-amber-200 shadow-2xl">
             <p className="text-lg font-bold">
               +{result.totalXp} XP{" "}
@@ -344,12 +344,32 @@ export function LogWorkoutForm({
                 </span>
               )}
             </p>
-            {result.caughtNewMonster && result.caughtType && (
-              <p className="mt-1 text-lg font-black text-white">
-                🎉 New monSTAR! You caught {monsterNameForLevel(MUSCLE_TYPE_META[result.caughtType], 1)}{" "}
-                {MUSCLE_TYPE_META[result.caughtType].icon}
-              </p>
+
+            {result.distribution.length > 0 && (
+              <div className="mt-3 space-y-1.5 rounded-lg border border-white/10 bg-white/5 p-3">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">Where it went</p>
+                {result.distribution.map((d) => (
+                  <div key={d.muscleType} className="flex items-center justify-between text-sm">
+                    <span className="text-slate-200">
+                      {d.icon} {d.monsterName}
+                    </span>
+                    <span className="font-semibold text-amber-300">
+                      +{d.strengthXp + d.enduranceXp} XP <span className="text-slate-500">· Lv.{d.newLevel}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
             )}
+
+            {result.caughtNewMonster && result.caughtType && result.caughtMonster && (
+              <div className="mt-3">
+                <p className="text-center text-sm font-black text-white">🎉 New monSTAR caught!</p>
+                <div className="mx-auto mt-2 w-32">
+                  <MonsterTradingCard type={result.caughtType} monster={result.caughtMonster} linkToDetail={false} />
+                </div>
+              </div>
+            )}
+
             <ProofUpload workoutLogId={result.workoutLogId} onVerified={() => setResult(null)} />
             <button
               type="button"
