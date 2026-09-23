@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { requireOnboarded } from "@/lib/session-helpers";
-import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { MUSCLE_TYPE_META } from "@/lib/muscleTypes";
 import { listGyms } from "./gyms/actions";
 import { CheckInButton } from "./gyms/CheckInButton";
+import { DuelSearch } from "./duels/DuelSearch";
+import { myDuels } from "./duels/actions";
 
 function formatCountdown(ms: number): string {
   if (ms <= 0) return "closing...";
@@ -15,13 +17,13 @@ function formatCountdown(ms: number): string {
 
 export default async function BattlePage() {
   await requireOnboarded();
-  const gyms = await listGyms();
+  const [gyms, duels] = await Promise.all([listGyms(), myDuels()]);
 
   return (
     <div className="mx-auto max-w-lg space-y-8">
       <div>
         <h1 className="text-2xl font-black text-white">Battle</h1>
-        <p className="mt-1 text-sm text-slate-400">Two ways to throw down.</p>
+        <p className="mt-1 text-sm text-slate-400">Three ways to throw down.</p>
       </div>
 
       <section className="rounded-2xl border border-amber-400/30 bg-amber-400/5 p-5">
@@ -46,9 +48,41 @@ export default async function BattlePage() {
       </section>
 
       <section>
+        <p className="text-sm font-bold text-white">⚔️ Head-to-Head Duels</p>
+        <p className="mt-1 text-xs text-slate-400">
+          Challenge anyone, anywhere -- no gym required. Whoever earns more XP in that muscle type over 48
+          hours wins.
+        </p>
+
+        <div className="mt-3">
+          <DuelSearch />
+        </div>
+
+        {duels.length > 0 && (
+          <div className="mt-4 space-y-2">
+            {duels.map((d) => (
+              <div key={d.id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{d.muscleTypeLabel}</p>
+                <div className="mt-1 flex items-center justify-between text-sm">
+                  <span className="text-white">You</span>
+                  <span className="font-bold text-amber-400">
+                    {d.myScore} — {d.opponentScore}
+                  </span>
+                  <span className="text-white">{d.opponentName}</span>
+                </div>
+                <p className="mt-1 text-center text-xs text-slate-500">
+                  {d.status === "OPEN" ? formatCountdown(d.msRemaining) : d.won ? "You won!" : "You lost"}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section>
         <p className="text-sm font-bold text-white">🗺️ Gym Duels</p>
         <p className="mt-1 text-xs text-slate-400">
-          Claim a real place by checking in. Someone else's turf? Beat their score in a 48-hour training
+          Claim a real place by checking in. Someone else&apos;s turf? Beat their score in a 48-hour training
           window to take it.
         </p>
 

@@ -45,7 +45,7 @@ export async function listGyms(): Promise<GymDisplay[]> {
 
   for (const gym of gyms) {
     const rawChallenge = await prisma.gymChallenge.findFirst({
-      where: { gymId: gym.id },
+      where: { gymId: gym.id, kind: "THRONE" },
       orderBy: { createdAt: "desc" },
     });
     const challenge = rawChallenge ? await resolveIfExpired(rawChallenge) : null;

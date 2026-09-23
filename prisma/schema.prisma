@@ -212,6 +212,14 @@ enum GymChallengeStatus {
   RESOLVED
 }
 
+// THRONE duels are challenger-vs-champion, gym-gated by check-in -- winning
+// hands over the gym. FREEFORM duels are open PvP between any two trainers,
+// found by search, with no gym or location involved at all.
+enum GymChallengeKind {
+  THRONE
+  FREEFORM
+}
+
 // A live duel window over one gym. Score = each side's MonSTAR.xp for
 // muscleType at the moment the challenge opened, plus whatever xpBreakdown
 // credit either of them earns for that exact muscleType from real
@@ -219,8 +227,10 @@ enum GymChallengeStatus {
 // (gymDuel.ts), not tracked incrementally. Ties go to the defender.
 model GymChallenge {
   id                   String             @id @default(cuid())
-  gymId                String
-  gym                  Gym                @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  // Null for FREEFORM duels -- those aren't tied to any location.
+  gymId                String?
+  gym                  Gym?               @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  kind                 GymChallengeKind   @default(THRONE)
   muscleType           MuscleType
   challengerId         String
   defenderId           String

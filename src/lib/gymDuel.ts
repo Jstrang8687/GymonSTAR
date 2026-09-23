@@ -83,8 +83,9 @@ export async function liveScores(challenge: GymChallenge): Promise<ChallengeScor
 
 // Lazily closes out a challenge whose window has passed -- there's no
 // background job, so this runs whenever a challenge is read (gyms list,
-// battle page). Ties go to the defender. A challenger win hands the gym
-// over; the muscle type stays what it was fought over.
+// battle page). Ties go to the defender. A challenger win on a THRONE duel
+// hands the gym over; FREEFORM duels never touch the gym's champion --
+// they're just two members settling a score.
 export async function resolveIfExpired(challenge: GymChallenge): Promise<GymChallenge> {
   if (challenge.status !== "OPEN" || challenge.windowEnd > new Date()) return challenge;
 
@@ -96,7 +97,7 @@ export async function resolveIfExpired(challenge: GymChallenge): Promise<GymChal
     data: { status: "RESOLVED", winnerId, resolvedAt: new Date() },
   });
 
-  if (winnerId === challenge.challengerId) {
+  if (challenge.kind === "THRONE" && challenge.gymId && winnerId === challenge.challengerId) {
     await prisma.gym.update({
       where: { id: challenge.gymId },
       data: { championUserId: challenge.challengerId, claimedAt: new Date() },
@@ -176,6 +177,7 @@ export async function checkInAtGym(userId: string, lat: number, lng: number, nam
   await prisma.gymChallenge.create({
     data: {
       gymId: gym.id,
+      kind: "THRONE",
       muscleType,
       challengerId: userId,
       defenderId: gym.championUserId,
@@ -191,4 +193,140 @@ export async function checkInAtGym(userId: string, lat: number, lng: number, nam
     message: `Duel started at ${gym.name}! 48 hours of ${MUSCLE_TYPE_META[muscleType].label} training decides it.`,
     gymId: gym.id,
   };
+}
+
+export interface TrainerSearchResult {
+  userId: string;
+  name: string;
+}
+
+// Name/email search for freeform duel opponents -- no gym or location
+// involved, so there's no roster to pick from otherwise. Email is only used
+// to match, never returned -- results show name alone.
+export async function searchTrainers(query: string, excludeUserId: string): Promise<TrainerSearchResult[]> {
+  const q = query.trim();
+  if (!q) return [];
+  const users = await prisma.user.findMany({
+    where: {
+      id: { not: excludeUserId },
+      OR: [{ name: { contains: q, mode: "insensitive" } }, { email: { contains: q, mode: "insensitive" } }],
+    },
+    select: { id: true, name: true },
+    take: 8,
+  });
+  return users.map((u) => ({ userId: u.id, name: u.name ?? "Unknown" }));
+}
+
+// The only muscle types a duel between these two could actually be fought
+// over -- both sides need their own monSTAR of that type to have XP to score.
+export async function sharedMuscleTypes(userId: string, otherUserId: string): Promise<MuscleType[]> {
+  const [mine, theirs] = await Promise.all([
+    prisma.monSTAR.findMany({ where: { userId }, select: { muscleType: true } }),
+    prisma.monSTAR.findMany({ where: { userId: otherUserId }, select: { muscleType: true } }),
+  ]);
+  const theirTypes = new Set(theirs.map((m) => m.muscleType as MuscleType));
+  return mine.map((m) => m.muscleType as MuscleType).filter((t) => theirTypes.has(t));
+}
+
+export interface FreeformDuelResult {
+  message: string;
+}
+
+// Open PvP between any two trainers -- no gym, no throne, just whoever
+// out-trains the other for that muscle type over 48 hours.
+export async function startFreeformDuel(
+  challengerId: string,
+  opponentId: string,
+  muscleType: MuscleType
+): Promise<FreeformDuelResult> {
+  if (challengerId === opponentId) {
+    throw new Error("You can't duel yourself.");
+  }
+
+  const existingOpen = await prisma.gymChallenge.findFirst({
+    where: {
+      kind: "FREEFORM",
+      status: "OPEN",
+      OR: [
+        { challengerId, defenderId: opponentId },
+        { challengerId: opponentId, defenderId: challengerId },
+      ],
+    },
+  });
+  if (existingOpen) {
+    throw new Error("You already have a duel in progress with that trainer.");
+  }
+
+  const [myMonster, theirMonster, opponent] = await Promise.all([
+    prisma.monSTAR.findUnique({ where: { userId_muscleType: { userId: challengerId, muscleType } } }),
+    prisma.monSTAR.findUnique({ where: { userId_muscleType: { userId: opponentId, muscleType } } }),
+    prisma.user.findUniqueOrThrow({ where: { id: opponentId }, select: { name: true } }),
+  ]);
+  if (!myMonster || !theirMonster) {
+    throw new Error(`Both of you need a ${MUSCLE_TYPE_META[muscleType].label} monSTAR to duel over it.`);
+  }
+
+  const windowStart = new Date();
+  const windowEnd = new Date(windowStart.getTime() + CHALLENGE_WINDOW_MS);
+  await prisma.gymChallenge.create({
+    data: {
+      kind: "FREEFORM",
+      muscleType,
+      challengerId,
+      defenderId: opponentId,
+      challengerStartXp: myMonster.xp,
+      defenderStartXp: theirMonster.xp,
+      windowStart,
+      windowEnd,
+    },
+  });
+
+  return {
+    message: `Duel started with ${opponent.name}! 48 hours of ${MUSCLE_TYPE_META[muscleType].label} training decides it.`,
+  };
+}
+
+export interface MyDuelDisplay {
+  id: string;
+  muscleTypeLabel: string;
+  opponentName: string;
+  isChallenger: boolean;
+  myScore: number;
+  opponentScore: number;
+  msRemaining: number;
+  status: "OPEN" | "RESOLVED";
+  won: boolean | null;
+}
+
+// The viewer's own freeform duels -- open ones plus recent results, newest
+// first, since these no longer live on any single gym's card.
+export async function listMyDuels(userId: string): Promise<MyDuelDisplay[]> {
+  const raw = await prisma.gymChallenge.findMany({
+    where: { kind: "FREEFORM", OR: [{ challengerId: userId }, { defenderId: userId }] },
+    orderBy: { createdAt: "desc" },
+    take: 20,
+  });
+  const resolved = await Promise.all(raw.map((c) => resolveIfExpired(c)));
+
+  const results: MyDuelDisplay[] = [];
+  for (const c of resolved) {
+    const isChallenger = c.challengerId === userId;
+    const opponentId = isChallenger ? c.defenderId : c.challengerId;
+    const [opponent, scores] = await Promise.all([
+      prisma.user.findUnique({ where: { id: opponentId }, select: { name: true } }),
+      liveScores(c),
+    ]);
+    results.push({
+      id: c.id,
+      muscleTypeLabel: MUSCLE_TYPE_META[c.muscleType as MuscleType].label,
+      opponentName: opponent?.name ?? "Unknown",
+      isChallenger,
+      myScore: isChallenger ? scores.challengerScore : scores.defenderScore,
+      opponentScore: isChallenger ? scores.defenderScore : scores.challengerScore,
+      msRemaining: scores.msRemaining,
+      status: c.status,
+      won: c.winnerId ? c.winnerId === userId : null,
+    });
+  }
+  return results;
 }
