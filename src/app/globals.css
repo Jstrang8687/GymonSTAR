@@ -47,14 +47,32 @@ body {
   animation: holo-sweep 3.5s linear infinite;
 }
 
-/* Squad Battle card motion. */
-@keyframes battle-punch {
+/* Squad Battle card motion. Opponent's panel sits above the player's, so
+   an attacking card lunges TOWARD the other side: opponent lunges down,
+   player lunges up -- a real strike, not just a scale pulse in place. */
+@keyframes battle-lunge-down {
   0%,
   100% {
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
-  50% {
-    transform: scale(1.12);
+  35% {
+    transform: translateY(18px) scale(1.1);
+  }
+  60% {
+    transform: translateY(-4px) scale(1);
+  }
+}
+
+@keyframes battle-lunge-up {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-18px) scale(1.1);
+  }
+  60% {
+    transform: translateY(4px) scale(1);
   }
 }
 
@@ -62,18 +80,22 @@ body {
   0%,
   100% {
     transform: translateX(0);
+    filter: brightness(1);
   }
-  20% {
-    transform: translateX(-6px);
+  10% {
+    filter: brightness(1.8) saturate(0.4);
   }
-  40% {
-    transform: translateX(6px);
+  25% {
+    transform: translateX(-8px);
   }
-  60% {
-    transform: translateX(-4px);
+  45% {
+    transform: translateX(8px);
   }
-  80% {
-    transform: translateX(4px);
+  65% {
+    transform: translateX(-5px);
+  }
+  85% {
+    transform: translateX(5px);
   }
 }
 
@@ -115,8 +137,12 @@ body {
   }
 }
 
-.battle-punch {
-  animation: battle-punch 0.4s ease-in-out;
+.battle-lunge-down {
+  animation: battle-lunge-down 0.4s ease-out;
+}
+
+.battle-lunge-up {
+  animation: battle-lunge-up 0.4s ease-out;
 }
 
 .battle-shake {

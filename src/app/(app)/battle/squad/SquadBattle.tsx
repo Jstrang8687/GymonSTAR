@@ -6,6 +6,7 @@ import { computeDamage, generateOpponentCard, type BattleCard } from "@/lib/quic
 import { hpForLevel } from "@/lib/game";
 import { MONSTER_LORE } from "@/lib/monsterLore";
 import { BattleCardFace } from "../BattleCardFace";
+import { playAttackSound, playFaintSound, playHitSound, playLossSound, playSwitchSound, playWinSound } from "@/lib/battleSounds";
 
 const MAX_TEAM = 3;
 // How long each animated beat (punch/shake/faint/pop-in) stays on screen
@@ -182,7 +183,9 @@ function FighterPanel({
   const animClass = isFainting
     ? "battle-faint"
     : isAttacker
-      ? "battle-punch"
+      ? side === "player"
+        ? "battle-lunge-up"
+        : "battle-lunge-down"
       : isDefender
         ? "battle-shake"
         : isPoppingIn
@@ -330,12 +333,24 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
     setPhase("select");
   }
 
+  function playEffectSound(effectToPlay: BattleEffect) {
+    if (effectToPlay.kind === "attack") {
+      playAttackSound();
+      setTimeout(playHitSound, 80);
+    } else if (effectToPlay.kind === "faint") {
+      playFaintSound();
+    } else {
+      playSwitchSound();
+    }
+  }
+
   // One-shot visual beat outside the step player -- used for automatic
   // swaps (the foe's own faint-triggered switch, the player's free
   // post-faint switch) that don't need a whole animated sequence.
   function flash(next: BattleEffect) {
     setEffectKey((k) => k + 1);
     setEffect(next);
+    playEffectSound(next);
     setTimeout(() => setEffect(null), STEP_MS);
   }
 
@@ -350,6 +365,7 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
       setBattle(step.state);
       setEffect(step.effect);
       setEffectKey((k) => k + 1);
+      playEffectSound(step.effect);
       i++;
       if (i < steps.length) {
         setTimeout(playNext, STEP_MS);
@@ -382,6 +398,7 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
         setBattle({ playerTeam, opponentTeam, activePlayer, activeOpponent, log, awaitingPlayerSwitch: false });
         setOutcome("win");
         setPhase("over");
+        playWinSound();
         return;
       }
       nextActiveOpponent = next;
@@ -402,6 +419,7 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
         });
         setOutcome("loss");
         setPhase("over");
+        playLossSound();
         return;
       }
       setBattle({
