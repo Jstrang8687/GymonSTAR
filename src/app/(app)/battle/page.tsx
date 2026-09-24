@@ -39,10 +39,10 @@ export default async function BattlePage() {
             Simple — 3 lanes, one instant reveal
           </Link>
           <Link
-            href="/battle/quick-full"
+            href="/battle/squad"
             className="block rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-white hover:border-amber-400/50"
           >
-            Full rules — 12-card roster, hand of 4, 6 energy-gated turns
+            Squad Battle — pick 3, attack, switch when one faints
           </Link>
         </div>
       </section>

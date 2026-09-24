@@ -100,9 +100,14 @@ export function generateOpponentCard(playerAveragePower: number): BattleCard {
   };
 }
 
-// Energy cost for the full-rules prototype, derived from the card's power
-// so stronger monSTARs cost more to deploy -- clamped to the 1-6 range the
-// six-turn energy curve actually reaches.
-export function energyCostForPower(power: number): number {
-  return Math.min(6, Math.max(1, Math.ceil(power / 3)));
+// Squad Battle damage: scaled to the DEFENDER's own max HP rather than a
+// flat power-as-damage hit, so a fight takes a similar number of exchanges
+// (roughly 3-5) no matter how high-level the two monSTARs are -- a stronger
+// attacker (relative to the defender) needs fewer hits, a weaker one needs
+// more. +-15% jitter keeps exchanges from being perfectly predictable.
+export function computeDamage(attackerPower: number, defenderPower: number, defenderMaxHp: number): number {
+  const ratio = attackerPower / Math.max(1, defenderPower);
+  const base = (defenderMaxHp / 4) * ratio;
+  const jitter = 0.85 + Math.random() * 0.3;
+  return Math.max(1, Math.round(base * jitter));
 }

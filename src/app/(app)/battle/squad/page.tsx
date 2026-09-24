@@ -3,9 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { MUSCLE_TYPE_META, artUrlForLevel, monsterNameForLevel, stageForLevel, type MuscleType } from "@/lib/muscleTypes";
 import type { BattleCard } from "@/lib/quickBattle";
-import { QuickBattleFull } from "./QuickBattleFull";
+import { SquadBattle } from "./SquadBattle";
 
-export default async function QuickBattleFullPage() {
+export default async function SquadBattlePage() {
   await requireOnboarded();
   const userId = await getUserId();
   const monsters = await prisma.monSTAR.findMany({ where: { userId } });
@@ -31,11 +31,11 @@ export default async function QuickBattleFullPage() {
       <div className="mt-2 mb-4 rounded-lg border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-xs text-amber-300">
         🃏 Solo card battle — instant, just for fun. Nothing here is saved.
       </div>
-      <h1 className="text-2xl font-black text-white">Quick Battle — Full Rules</h1>
+      <h1 className="text-2xl font-black text-white">Squad Battle</h1>
       <p className="mt-1 text-sm text-slate-400">
-        A 12-card roster, a hand of 4, and 6 turns of energy-gated deploys before the reveal.
+        Pick a squad of up to 3 monSTARs. Attack, switch when one faints, last team standing wins.
       </p>
-      <QuickBattleFull cards={cards} />
+      <SquadBattle cards={cards} />
     </div>
   );
 }
