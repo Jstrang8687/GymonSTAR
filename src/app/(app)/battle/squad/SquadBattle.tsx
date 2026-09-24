@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { TIER_BORDER, generateOpponentCard, type BattleCard } from "@/lib/quickBattle";
-import { MUSCLE_TYPE_META } from "@/lib/muscleTypes";
+import { MUSCLE_TYPE_META, TIER_LABEL } from "@/lib/muscleTypes";
 import { MONSTER_LORE } from "@/lib/monsterLore";
 import { REGION_TRAITS } from "@/lib/regionTraits";
 import {
@@ -61,8 +61,12 @@ function FighterCard({
 }) {
   const [imgFailed, setImgFailed] = useState(false);
   const showArt = fighter.card.artUrl && !imgFailed;
-  const trait = REGION_TRAITS[MUSCLE_TYPE_META[fighter.card.muscleType].region];
+  const meta = MUSCLE_TYPE_META[fighter.card.muscleType];
+  const trait = REGION_TRAITS[meta.region];
   const move = MONSTER_LORE[fighter.card.muscleType].move;
+  const tier = fighter.card.tier;
+  const tierPillClass =
+    tier === 3 ? "bg-amber-400 text-slate-900" : tier === 2 ? "bg-slate-300 text-slate-900" : "bg-slate-700 text-slate-200";
 
   const isAttacker = effect?.kind === "attack" && !effect.blocked && effect.side === side;
   const isDefender = effect?.kind === "attack" && effect.side !== side;
@@ -101,17 +105,28 @@ function FighterCard({
         ) : (
           <span className="flex h-full items-center justify-center text-6xl">{fighter.card.icon}</span>
         )}
+        {tier === 3 && <div className="holo-shimmer" />}
 
-        <span className="absolute left-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full border-2 border-amber-200 bg-amber-500 text-xs font-black text-slate-900 shadow">
-          {fighter.card.power}
+        <span className={`absolute left-1.5 top-1.5 rounded-full px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wide shadow ${tierPillClass}`}>
+          {TIER_LABEL[tier]}
         </span>
         <span className="absolute right-1.5 top-1.5 rounded bg-black/75 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-sky-300">
           {trait.name}
         </span>
 
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-2 pt-8 pb-1.5">
-          <p className="truncate text-sm font-black text-white">{fighter.card.name}</p>
-          <p className="truncate text-[10px] font-semibold text-amber-300">{move}</p>
+        <div className="absolute inset-x-0 bottom-0 flex items-end gap-1.5 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-1.5 pt-8 pb-1.5">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-amber-200 bg-amber-500 text-xs font-black text-slate-900 shadow">
+            {fighter.card.power}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-black text-white">
+              {meta.icon} {fighter.card.name}
+            </p>
+            <p className="truncate text-[10px] font-semibold text-amber-300">{move}</p>
+          </div>
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-red-300 bg-red-600 text-[10px] font-black text-white shadow">
+            {fighter.hp}
+          </span>
         </div>
 
         {isDefender && effect?.kind === "attack" && (
