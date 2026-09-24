@@ -42,3 +42,30 @@ export async function resendVerificationEmail(): Promise<void> {
   const token = await createAuthToken(userId, "EMAIL_VERIFY");
   await sendVerificationEmail(user.email, user.name, `${APP_URL}/verify-email?token=${token}`);
 }
+
+export interface PushSubscriptionJson {
+  endpoint: string;
+  keys: { p256dh: string; auth: string };
+}
+
+// Upsert on endpoint -- re-enabling notifications on the same device after
+// disabling them re-subscribes with the same endpoint, so this should
+// replace the old row rather than error on the unique constraint.
+export async function subscribeToPush(subscription: PushSubscriptionJson): Promise<void> {
+  const userId = await getUserId();
+  await prisma.pushSubscription.upsert({
+    where: { endpoint: subscription.endpoint },
+    create: {
+      userId,
+      endpoint: subscription.endpoint,
+      p256dh: subscription.keys.p256dh,
+      auth: subscription.keys.auth,
+    },
+    update: { userId, p256dh: subscription.keys.p256dh, auth: subscription.keys.auth },
+  });
+}
+
+export async function unsubscribeFromPush(endpoint: string): Promise<void> {
+  const userId = await getUserId();
+  await prisma.pushSubscription.deleteMany({ where: { endpoint, userId } });
+}

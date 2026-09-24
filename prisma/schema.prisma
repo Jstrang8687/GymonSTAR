@@ -22,6 +22,22 @@ model User {
   workoutLogs   WorkoutLog[]
   templates     WorkoutTemplate[]
   authTokens    AuthToken[]
+  pushSubscriptions PushSubscription[]
+}
+
+// One row per browser/device the user enabled notifications on -- endpoint
+// is that push service's unique URL for this subscription, p256dh/auth are
+// the encryption keys web-push needs to encrypt the payload to it.
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Coach {

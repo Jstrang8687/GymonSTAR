@@ -13,6 +13,7 @@ function getClient(): Resend | null {
 }
 
 const FROM = process.env.EMAIL_FROM ?? "GymonSTARs <noreply@example.com>";
+const APP_URL = process.env.APP_URL ?? "http://localhost:3000";
 
 async function sendEmail(to: string, subject: string, html: string): Promise<void> {
   const resend = getClient();
@@ -81,6 +82,23 @@ export async function sendPasswordResetEmail(to: string, name: string, resetUrl:
      <p style="margin-top:24px;font-size:12px;color:#64748b;">This link expires in 1 hour. If you didn't request this, you can safely ignore this email — your password won't change.</p>`
   );
   await sendEmail(to, "Reset your password", html);
+}
+
+export async function sendChallengedEmail(
+  to: string,
+  name: string,
+  challengerName: string,
+  muscleTypeLabel: string,
+  gymName: string | null
+): Promise<void> {
+  const where = gymName ? ` for ${gymName}` : "";
+  const html = emailShell(
+    "You've been challenged!",
+    `<p>Hey ${name},</p>
+     <p><strong>${challengerName}</strong> just challenged you to a ${muscleTypeLabel} duel${where}. You have 48 hours to out-train them.</p>
+     ${button(`${APP_URL}/battle`, "See the duel")}`
+  );
+  await sendEmail(to, `${challengerName} challenged you to a duel`, html);
 }
 
 export async function sendAccountDeletedEmail(to: string, name: string): Promise<void> {

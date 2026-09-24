@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getUserId } from "@/lib/session-helpers";
 import { DeleteMyAccountForm } from "./DeleteMyAccountForm";
 import { ResendVerificationButton } from "./ResendVerificationButton";
+import { NotificationsToggle } from "./NotificationsToggle";
 
 export default async function SettingsPage() {
   const userId = await getUserId();
@@ -17,6 +18,10 @@ export default async function SettingsPage() {
         <p className="text-sm text-slate-400">{user.email}</p>
         {!user.emailVerified && <ResendVerificationButton />}
       </div>
+
+      <section>
+        <NotificationsToggle />
+      </section>
 
       <section>
         <Link

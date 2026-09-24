@@ -1,7 +1,30 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { sendChallengedEmail } from "@/lib/email";
+import { sendPushToUser } from "@/lib/push";
 import type { Gym, GymChallenge } from "@prisma/client";
+
+// Fire-and-forget by design, matching email.ts/push.ts -- a challenge should
+// never fail to start because a notification couldn't be delivered.
+async function notifyChallenged(
+  defenderId: string,
+  challengerName: string,
+  muscleTypeLabel: string,
+  gymName: string | null
+): Promise<void> {
+  const defender = await prisma.user.findUnique({ where: { id: defenderId }, select: { email: true, name: true } });
+  if (!defender) return;
+  const where = gymName ? ` for ${gymName}` : "";
+  await Promise.all([
+    sendChallengedEmail(defender.email, defender.name, challengerName, muscleTypeLabel, gymName),
+    sendPushToUser(defenderId, {
+      title: "You've been challenged!",
+      body: `${challengerName} challenged you to a ${muscleTypeLabel} duel${where}.`,
+      url: "/battle",
+    }),
+  ]);
+}
 
 // Anything checked in within this radius of an existing gym snaps to it
 // instead of creating a duplicate -- a one-time GPS grab at check-in, not
@@ -168,9 +191,12 @@ export async function checkInAtGym(userId: string, lat: number, lng: number, nam
       `${gym.name} is defended with a ${MUSCLE_TYPE_META[muscleType].label} monSTAR. Catch one of your own before you can challenge it.`
     );
   }
-  const defenderMonster = await prisma.monSTAR.findUniqueOrThrow({
-    where: { userId_muscleType: { userId: gym.championUserId, muscleType } },
-  });
+  const [defenderMonster, challenger] = await Promise.all([
+    prisma.monSTAR.findUniqueOrThrow({
+      where: { userId_muscleType: { userId: gym.championUserId, muscleType } },
+    }),
+    prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { name: true } }),
+  ]);
 
   const windowStart = new Date();
   const windowEnd = new Date(windowStart.getTime() + CHALLENGE_WINDOW_MS);
@@ -187,6 +213,8 @@ export async function checkInAtGym(userId: string, lat: number, lng: number, nam
       windowEnd,
     },
   });
+
+  await notifyChallenged(gym.championUserId, challenger.name, MUSCLE_TYPE_META[muscleType].label, gym.name);
 
   return {
     status: "challenge-started",
@@ -257,10 +285,11 @@ export async function startFreeformDuel(
     throw new Error("You already have a duel in progress with that trainer.");
   }
 
-  const [myMonster, theirMonster, opponent] = await Promise.all([
+  const [myMonster, theirMonster, opponent, challenger] = await Promise.all([
     prisma.monSTAR.findUnique({ where: { userId_muscleType: { userId: challengerId, muscleType } } }),
     prisma.monSTAR.findUnique({ where: { userId_muscleType: { userId: opponentId, muscleType } } }),
     prisma.user.findUniqueOrThrow({ where: { id: opponentId }, select: { name: true } }),
+    prisma.user.findUniqueOrThrow({ where: { id: challengerId }, select: { name: true } }),
   ]);
   if (!myMonster || !theirMonster) {
     throw new Error(`Both of you need a ${MUSCLE_TYPE_META[muscleType].label} monSTAR to duel over it.`);
@@ -280,6 +309,8 @@ export async function startFreeformDuel(
       windowEnd,
     },
   });
+
+  await notifyChallenged(opponentId, challenger.name, MUSCLE_TYPE_META[muscleType].label, null);
 
   return {
     message: `Duel started with ${opponent.name}! 48 hours of ${MUSCLE_TYPE_META[muscleType].label} training decides it.`,
