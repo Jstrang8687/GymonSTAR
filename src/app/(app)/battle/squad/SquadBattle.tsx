@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { generateOpponentCard, type BattleCard } from "@/lib/quickBattle";
+import { TIER_BORDER, generateOpponentCard, type BattleCard } from "@/lib/quickBattle";
 import { MUSCLE_TYPE_META } from "@/lib/muscleTypes";
+import { MONSTER_LORE } from "@/lib/monsterLore";
 import { REGION_TRAITS } from "@/lib/regionTraits";
 import {
   toFighter,
@@ -43,19 +44,26 @@ function HpBar({ hp, maxHp }: { hp: number; maxHp: number }) {
   );
 }
 
-function FighterPanel({
+// The hero visual of a battle -- a real trading-card layout (art, name,
+// signature move, attack/power badge, region-trait pill) instead of a tiny
+// thumbnail next to a text block, so the card itself carries the
+// information a real card battler puts on the card.
+function FighterCard({
   fighter,
   side,
   effect,
   effectKey,
-  flip = false,
 }: {
   fighter: Fighter;
   side: "player" | "opponent";
   effect: BattleEffect | null;
   effectKey: number;
-  flip?: boolean;
 }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showArt = fighter.card.artUrl && !imgFailed;
+  const trait = REGION_TRAITS[MUSCLE_TYPE_META[fighter.card.muscleType].region];
+  const move = MONSTER_LORE[fighter.card.muscleType].move;
+
   const isAttacker = effect?.kind === "attack" && !effect.blocked && effect.side === side;
   const isDefender = effect?.kind === "attack" && effect.side !== side;
   const isHealing = effect?.kind === "heal" && effect.side === side;
@@ -77,16 +85,40 @@ function FighterPanel({
             : "";
 
   return (
-    <div className={`flex items-center gap-3 ${flip ? "flex-row-reverse text-right" : ""}`}>
-      <div className="relative h-20 w-14 shrink-0">
-        <div key={animClass ? `card-${effectKey}` : "card-idle"} className={animClass}>
-          <BattleCardFace card={fighter.card} />
+    <div className="mx-auto w-36 sm:w-44">
+      <div
+        key={animClass ? `card-${effectKey}` : "card-idle"}
+        className={`relative aspect-[3/4] overflow-hidden rounded-xl border-4 bg-gradient-to-br from-orange-800 to-orange-950 shadow-lg ${TIER_BORDER[fighter.card.tier]} ${animClass}`}
+      >
+        {showArt ? (
+          // eslint-disable-next-line @next/next/no-img-element -- small local pixel-art sprite, no need for next/image optimization
+          <img
+            src={fighter.card.artUrl}
+            alt={fighter.card.name}
+            onError={() => setImgFailed(true)}
+            className="h-full w-full object-contain [image-rendering:pixelated]"
+          />
+        ) : (
+          <span className="flex h-full items-center justify-center text-6xl">{fighter.card.icon}</span>
+        )}
+
+        <span className="absolute left-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full border-2 border-amber-200 bg-amber-500 text-xs font-black text-slate-900 shadow">
+          {fighter.card.power}
+        </span>
+        <span className="absolute right-1.5 top-1.5 rounded bg-black/75 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-sky-300">
+          {trait.name}
+        </span>
+
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-2 pt-8 pb-1.5">
+          <p className="truncate text-sm font-black text-white">{fighter.card.name}</p>
+          <p className="truncate text-[10px] font-semibold text-amber-300">{move}</p>
         </div>
+
         {isDefender && effect?.kind === "attack" && (
           <span
             key={`dmg-${effectKey}`}
-            className={`damage-float pointer-events-none absolute top-0 left-1/2 text-sm font-black ${
-              effect.blocked ? "text-slate-300" : "text-red-400"
+            className={`damage-float pointer-events-none absolute top-1/3 left-1/2 text-lg font-black drop-shadow ${
+              effect.blocked ? "text-slate-200" : "text-red-400"
             }`}
           >
             {effect.blocked ? "Blocked!" : `-${effect.damage}`}
@@ -95,16 +127,15 @@ function FighterPanel({
         {isHealing && effect?.kind === "heal" && (
           <span
             key={`heal-${effectKey}`}
-            className="heal-float pointer-events-none absolute top-0 left-1/2 text-sm font-black text-emerald-400"
+            className="heal-float pointer-events-none absolute top-1/3 left-1/2 text-lg font-black text-emerald-400 drop-shadow"
           >
             +{effect.amount}
           </span>
         )}
       </div>
-      <div className="flex-1">
-        <p className="text-sm font-bold text-white">{fighter.card.name}</p>
+      <div className="mt-1.5">
         <HpBar hp={fighter.hp} maxHp={fighter.maxHp} />
-        <p className="mt-0.5 text-[10px] text-slate-400">
+        <p className="mt-0.5 text-center text-[10px] text-slate-400">
           {fighter.hp}/{fighter.maxHp} HP
         </p>
       </div>
@@ -114,15 +145,15 @@ function FighterPanel({
 
 function BenchRow({ team, activeIndex }: { team: Fighter[]; activeIndex: number }) {
   return (
-    <div className="mt-1 flex gap-1.5">
+    <div className="mt-2 flex justify-center gap-2">
       {team.map((f, i) => (
         <div
           key={f.card.id}
-          className={`h-8 w-8 overflow-hidden rounded border transition-opacity ${
+          className={`h-11 w-11 overflow-hidden rounded-md border-2 transition-opacity ${
             i === activeIndex ? "border-amber-400" : "border-white/10"
           } ${f.hp === 0 ? "opacity-25 grayscale" : ""}`}
         >
-          <BattleCardFace card={f.card} iconSize="text-xs" />
+          <BattleCardFace card={f.card} iconSize="text-lg" />
         </div>
       ))}
     </div>
@@ -414,26 +445,23 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
   return (
     <div className="mt-6 space-y-4">
       <div>
-        <FighterPanel
+        <FighterCard
           fighter={battle.opponentTeam[battle.activeOpponent]}
           side="opponent"
           effect={effect}
           effectKey={effectKey}
-          flip
         />
-        <div className="flex justify-end">
-          <BenchRow team={battle.opponentTeam} activeIndex={battle.activeOpponent} />
-        </div>
+        <BenchRow team={battle.opponentTeam} activeIndex={battle.activeOpponent} />
       </div>
 
-      <div className="h-28 space-y-1 overflow-y-auto rounded-lg border border-white/10 bg-black/30 p-2 text-xs text-slate-300">
+      <div className="h-24 space-y-1 overflow-y-auto rounded-lg border border-white/10 bg-black/30 p-2 text-xs text-slate-300">
         {battle.log.map((line, i) => (
           <p key={i}>{line}</p>
         ))}
       </div>
 
       <div>
-        <FighterPanel fighter={battle.playerTeam[battle.activePlayer]} side="player" effect={effect} effectKey={effectKey} />
+        <FighterCard fighter={battle.playerTeam[battle.activePlayer]} side="player" effect={effect} effectKey={effectKey} />
         <BenchRow team={battle.playerTeam} activeIndex={battle.activePlayer} />
       </div>
 
