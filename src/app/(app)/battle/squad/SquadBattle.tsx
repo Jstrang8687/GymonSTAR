@@ -8,6 +8,10 @@ import { MONSTER_LORE } from "@/lib/monsterLore";
 import { BattleCardFace } from "../BattleCardFace";
 
 const MAX_TEAM = 3;
+// How long each animated beat (punch/shake/faint/pop-in) stays on screen
+// before the next step in the sequence plays -- matches the ~0.4-0.5s CSS
+// animation durations in globals.css with a little breathing room after.
+const STEP_MS = 550;
 
 interface Fighter {
   card: BattleCard;
@@ -25,6 +29,18 @@ interface BattleState {
   awaitingPlayerSwitch: boolean;
 }
 
+// A single animated beat in a round -- who's attacking/fainting/switching
+// in, so the card art can punch, shake, fade out, or pop in to match.
+type BattleEffect =
+  | { kind: "attack"; side: "player" | "opponent"; damage: number }
+  | { kind: "faint"; side: "player" | "opponent" }
+  | { kind: "switch-in"; side: "player" | "opponent" };
+
+interface Step {
+  state: BattleState;
+  effect: BattleEffect;
+}
+
 function toFighter(card: BattleCard): Fighter {
   const maxHp = hpForLevel(card.power);
   return { card, maxHp, hp: maxHp };
@@ -38,21 +54,155 @@ function livingIndex(team: Fighter[]): number {
   return team.findIndex((f) => f.hp > 0);
 }
 
+function snapshot(
+  playerTeam: Fighter[],
+  opponentTeam: Fighter[],
+  activePlayer: number,
+  activeOpponent: number,
+  log: string[]
+): BattleState {
+  return {
+    playerTeam: cloneTeam(playerTeam),
+    opponentTeam: cloneTeam(opponentTeam),
+    activePlayer,
+    activeOpponent,
+    log,
+    awaitingPlayerSwitch: false,
+  };
+}
+
+// Builds the whole round as a sequence of animated steps rather than
+// resolving straight to a final state -- each attack, faint, and switch-in
+// gets its own beat so the cards visibly trade blows instead of the HP
+// bars just jumping to their end values.
+function buildAttackSteps(battle: BattleState): Step[] {
+  const steps: Step[] = [];
+  const playerTeam = cloneTeam(battle.playerTeam);
+  const opponentTeam = cloneTeam(battle.opponentTeam);
+  let log = battle.log;
+  const p = playerTeam[battle.activePlayer];
+  const o = opponentTeam[battle.activeOpponent];
+
+  // Higher power acts first, same "power doubles as speed" simplification
+  // the other Solo Card Battle modes already use.
+  const order: { atk: Fighter; def: Fighter; side: "player" | "opponent" }[] =
+    p.card.power >= o.card.power
+      ? [
+          { atk: p, def: o, side: "player" },
+          { atk: o, def: p, side: "opponent" },
+        ]
+      : [
+          { atk: o, def: p, side: "opponent" },
+          { atk: p, def: o, side: "player" },
+        ];
+
+  for (const { atk, def, side } of order) {
+    if (atk.hp <= 0 || def.hp <= 0) continue;
+    const dmg = computeDamage(atk.card.power, def.card.power, def.maxHp);
+    def.hp = Math.max(0, def.hp - dmg);
+    log = [...log, `${atk.card.name} uses ${MONSTER_LORE[atk.card.muscleType].move}! ${dmg} damage.`];
+    steps.push({
+      state: snapshot(playerTeam, opponentTeam, battle.activePlayer, battle.activeOpponent, log),
+      effect: { kind: "attack", side, damage: dmg },
+    });
+    if (def.hp === 0) {
+      log = [...log, `${def.card.name} fainted!`];
+      steps.push({
+        state: snapshot(playerTeam, opponentTeam, battle.activePlayer, battle.activeOpponent, log),
+        effect: { kind: "faint", side: side === "player" ? "opponent" : "player" },
+      });
+    }
+  }
+
+  return steps;
+}
+
+// Voluntary switch: the new fighter pops in, then the foe gets a free hit
+// on them -- same real cost a Pokemon-style switch has.
+function buildSwitchSteps(battle: BattleState, index: number): Step[] {
+  const steps: Step[] = [];
+  const playerTeam = cloneTeam(battle.playerTeam);
+  const opponentTeam = cloneTeam(battle.opponentTeam);
+  let log = [...battle.log, `Go, ${playerTeam[index].card.name}!`];
+
+  steps.push({
+    state: snapshot(playerTeam, opponentTeam, index, battle.activeOpponent, log),
+    effect: { kind: "switch-in", side: "player" },
+  });
+
+  const p = playerTeam[index];
+  const o = opponentTeam[battle.activeOpponent];
+  const dmg = computeDamage(o.card.power, p.card.power, p.maxHp);
+  p.hp = Math.max(0, p.hp - dmg);
+  log = [...log, `${o.card.name} uses ${MONSTER_LORE[o.card.muscleType].move}! ${dmg} damage.`];
+  steps.push({
+    state: snapshot(playerTeam, opponentTeam, index, battle.activeOpponent, log),
+    effect: { kind: "attack", side: "opponent", damage: dmg },
+  });
+
+  if (p.hp === 0) {
+    log = [...log, `${p.card.name} fainted!`];
+    steps.push({
+      state: snapshot(playerTeam, opponentTeam, index, battle.activeOpponent, log),
+      effect: { kind: "faint", side: "player" },
+    });
+  }
+
+  return steps;
+}
+
 function HpBar({ hp, maxHp }: { hp: number; maxHp: number }) {
   const pct = Math.max(0, Math.min(100, (hp / maxHp) * 100));
   const color = pct > 50 ? "bg-emerald-400" : pct > 20 ? "bg-amber-400" : "bg-red-500";
   return (
     <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
-      <div className={`h-full ${color} transition-all`} style={{ width: `${pct}%` }} />
+      <div className={`h-full ${color} transition-all duration-500`} style={{ width: `${pct}%` }} />
     </div>
   );
 }
 
-function FighterPanel({ fighter, flip = false }: { fighter: Fighter; flip?: boolean }) {
+function FighterPanel({
+  fighter,
+  side,
+  effect,
+  effectKey,
+  flip = false,
+}: {
+  fighter: Fighter;
+  side: "player" | "opponent";
+  effect: BattleEffect | null;
+  effectKey: number;
+  flip?: boolean;
+}) {
+  const isAttacker = effect?.kind === "attack" && effect.side === side;
+  const isDefender = effect?.kind === "attack" && effect.side !== side;
+  const isFainting = effect?.kind === "faint" && effect.side === side;
+  const isPoppingIn = effect?.kind === "switch-in" && effect.side === side;
+
+  const animClass = isFainting
+    ? "battle-faint"
+    : isAttacker
+      ? "battle-punch"
+      : isDefender
+        ? "battle-shake"
+        : isPoppingIn
+          ? "battle-pop-in"
+          : "";
+
   return (
     <div className={`flex items-center gap-3 ${flip ? "flex-row-reverse text-right" : ""}`}>
-      <div className="h-20 w-14 shrink-0">
-        <BattleCardFace card={fighter.card} />
+      <div className="relative h-20 w-14 shrink-0">
+        <div key={animClass ? `card-${effectKey}` : "card-idle"} className={animClass}>
+          <BattleCardFace card={fighter.card} />
+        </div>
+        {isDefender && effect?.kind === "attack" && (
+          <span
+            key={`dmg-${effectKey}`}
+            className="damage-float pointer-events-none absolute top-0 left-1/2 text-sm font-black text-red-400"
+          >
+            -{effect.damage}
+          </span>
+        )}
       </div>
       <div className="flex-1">
         <p className="text-sm font-bold text-white">{fighter.card.name}</p>
@@ -71,7 +221,7 @@ function BenchRow({ team, activeIndex }: { team: Fighter[]; activeIndex: number 
       {team.map((f, i) => (
         <div
           key={f.card.id}
-          className={`h-8 w-8 overflow-hidden rounded border ${
+          className={`h-8 w-8 overflow-hidden rounded border transition-opacity ${
             i === activeIndex ? "border-amber-400" : "border-white/10"
           } ${f.hp === 0 ? "opacity-25 grayscale" : ""}`}
         >
@@ -129,6 +279,9 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
   const [battle, setBattle] = useState<BattleState | null>(null);
   const [outcome, setOutcome] = useState<"win" | "loss" | null>(null);
   const [choosingSwitch, setChoosingSwitch] = useState(false);
+  const [effect, setEffect] = useState<BattleEffect | null>(null);
+  const [effectKey, setEffectKey] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
   if (cards.length === 0) {
     return (
@@ -164,6 +317,7 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
       log: [`Go, ${playerTeam[0].card.name}!`, `Foe sends out ${opponentTeam[0].card.name}!`],
       awaitingPlayerSwitch: false,
     });
+    setEffect(null);
     setOutcome(null);
     setPhase("battle");
   }
@@ -172,7 +326,42 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
     setBattle(null);
     setOutcome(null);
     setChoosingSwitch(false);
+    setEffect(null);
     setPhase("select");
+  }
+
+  // One-shot visual beat outside the step player -- used for automatic
+  // swaps (the foe's own faint-triggered switch, the player's free
+  // post-faint switch) that don't need a whole animated sequence.
+  function flash(next: BattleEffect) {
+    setEffectKey((k) => k + 1);
+    setEffect(next);
+    setTimeout(() => setEffect(null), STEP_MS);
+  }
+
+  // Plays a precomputed sequence of steps one beat at a time, then hands
+  // the final state to the caller to run its own end-of-round logic on.
+  function playSteps(steps: Step[], onDone: (final: BattleState) => void) {
+    if (steps.length === 0) return;
+    setAnimating(true);
+    let i = 0;
+    const playNext = () => {
+      const step = steps[i];
+      setBattle(step.state);
+      setEffect(step.effect);
+      setEffectKey((k) => k + 1);
+      i++;
+      if (i < steps.length) {
+        setTimeout(playNext, STEP_MS);
+      } else {
+        setTimeout(() => {
+          setEffect(null);
+          setAnimating(false);
+          onDone(step.state);
+        }, STEP_MS);
+      }
+    };
+    playNext();
   }
 
   // Shared cleanup after any exchange: auto-advances a fainted opponent to
@@ -196,7 +385,8 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
         return;
       }
       nextActiveOpponent = next;
-      log.push(`Foe sends out ${opponentTeam[next].card.name}!`);
+      log = [...log, `Foe sends out ${opponentTeam[next].card.name}!`];
+      flash({ kind: "switch-in", side: "opponent" });
     }
 
     if (playerTeam[activePlayer].hp === 0) {
@@ -236,56 +426,20 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
   }
 
   function handleAttack() {
-    if (!battle || phase !== "battle" || battle.awaitingPlayerSwitch) return;
-
-    const playerTeam = cloneTeam(battle.playerTeam);
-    const opponentTeam = cloneTeam(battle.opponentTeam);
-    const log = [...battle.log];
-    const p = playerTeam[battle.activePlayer];
-    const o = opponentTeam[battle.activeOpponent];
-
-    // Higher power acts first, same "power doubles as speed" simplification
-    // the other Solo Card Battle modes already use.
-    const order =
-      p.card.power >= o.card.power
-        ? [
-            { atk: p, def: o },
-            { atk: o, def: p },
-          ]
-        : [
-            { atk: o, def: p },
-            { atk: p, def: o },
-          ];
-
-    for (const { atk, def } of order) {
-      if (atk.hp <= 0 || def.hp <= 0) continue;
-      const dmg = computeDamage(atk.card.power, def.card.power, def.maxHp);
-      def.hp = Math.max(0, def.hp - dmg);
-      log.push(`${atk.card.name} uses ${MONSTER_LORE[atk.card.muscleType].move}! ${dmg} damage.`);
-      if (def.hp === 0) log.push(`${def.card.name} fainted!`);
-    }
-
-    finishRound(playerTeam, opponentTeam, battle.activePlayer, battle.activeOpponent, log);
+    if (!battle || phase !== "battle" || battle.awaitingPlayerSwitch || animating) return;
+    const steps = buildAttackSteps(battle);
+    playSteps(steps, (final) =>
+      finishRound(final.playerTeam, final.opponentTeam, final.activePlayer, final.activeOpponent, final.log)
+    );
   }
 
-  // Switching mid-decision still costs you the round -- the foe gets a free
-  // hit on whoever you just sent in, same as a real Pokemon-style switch.
   function handleVoluntarySwitch(index: number) {
-    if (!battle || phase !== "battle" || battle.awaitingPlayerSwitch) return;
+    if (!battle || phase !== "battle" || battle.awaitingPlayerSwitch || animating) return;
     setChoosingSwitch(false);
-
-    const playerTeam = cloneTeam(battle.playerTeam);
-    const opponentTeam = cloneTeam(battle.opponentTeam);
-    const log = [...battle.log, `Go, ${playerTeam[index].card.name}!`];
-
-    const p = playerTeam[index];
-    const o = opponentTeam[battle.activeOpponent];
-    const dmg = computeDamage(o.card.power, p.card.power, p.maxHp);
-    p.hp = Math.max(0, p.hp - dmg);
-    log.push(`${o.card.name} uses ${MONSTER_LORE[o.card.muscleType].move}! ${dmg} damage.`);
-    if (p.hp === 0) log.push(`${p.card.name} fainted!`);
-
-    finishRound(playerTeam, opponentTeam, index, battle.activeOpponent, log);
+    const steps = buildSwitchSteps(battle, index);
+    playSteps(steps, (final) =>
+      finishRound(final.playerTeam, final.opponentTeam, final.activePlayer, final.activeOpponent, final.log)
+    );
   }
 
   // Replacing a fighter that just fainted is free -- the round already
@@ -294,6 +448,7 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
     if (!battle) return;
     const log = [...battle.log, `Go, ${battle.playerTeam[index].card.name}!`];
     setBattle({ ...battle, activePlayer: index, log, awaitingPlayerSwitch: false });
+    flash({ kind: "switch-in", side: "player" });
   }
 
   if (phase === "select") {
@@ -336,7 +491,13 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
   return (
     <div className="mt-6 space-y-4">
       <div>
-        <FighterPanel fighter={battle.opponentTeam[battle.activeOpponent]} flip />
+        <FighterPanel
+          fighter={battle.opponentTeam[battle.activeOpponent]}
+          side="opponent"
+          effect={effect}
+          effectKey={effectKey}
+          flip
+        />
         <div className="flex justify-end">
           <BenchRow team={battle.opponentTeam} activeIndex={battle.activeOpponent} />
         </div>
@@ -349,7 +510,7 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
       </div>
 
       <div>
-        <FighterPanel fighter={battle.playerTeam[battle.activePlayer]} />
+        <FighterPanel fighter={battle.playerTeam[battle.activePlayer]} side="player" effect={effect} effectKey={effectKey} />
         <BenchRow team={battle.playerTeam} activeIndex={battle.activePlayer} />
       </div>
 
@@ -373,15 +534,17 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
         <div className="flex gap-2">
           <button
             type="button"
+            disabled={animating}
             onClick={handleAttack}
-            className="flex-1 rounded-lg bg-amber-400 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-amber-300"
+            className="flex-1 rounded-lg bg-amber-400 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-amber-300 disabled:opacity-50"
           >
             ⚔️ Attack
           </button>
           <button
             type="button"
+            disabled={animating}
             onClick={() => setChoosingSwitch(true)}
-            className="flex-1 rounded-lg border border-white/10 py-2.5 text-sm font-bold text-white transition hover:border-amber-400/50"
+            className="flex-1 rounded-lg border border-white/10 py-2.5 text-sm font-bold text-white transition hover:border-amber-400/50 disabled:opacity-50"
           >
             🔁 Switch
           </button>

@@ -46,3 +46,91 @@ body {
   background-size: 250% 250%;
   animation: holo-sweep 3.5s linear infinite;
 }
+
+/* Squad Battle card motion. */
+@keyframes battle-punch {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes battle-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes battle-faint {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: grayscale(0);
+  }
+  100% {
+    transform: translateY(16px) scale(0.9);
+    opacity: 0.2;
+    filter: grayscale(1);
+  }
+}
+
+@keyframes battle-pop-in {
+  0% {
+    transform: scale(0.6) translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes damage-float {
+  0% {
+    transform: translateY(0) translateX(-50%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px) translateX(-50%);
+    opacity: 0;
+  }
+}
+
+.battle-punch {
+  animation: battle-punch 0.4s ease-in-out;
+}
+
+.battle-shake {
+  animation: battle-shake 0.4s ease-in-out;
+}
+
+.battle-faint {
+  animation: battle-faint 0.5s ease-in forwards;
+}
+
+.battle-pop-in {
+  animation: battle-pop-in 0.35s ease-out;
+}
+
+.damage-float {
+  animation: damage-float 0.8s ease-out forwards;
+}
