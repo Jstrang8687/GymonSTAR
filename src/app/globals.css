@@ -137,6 +137,36 @@ body {
   }
 }
 
+/* Same float as damage-float, kept as a separate name/class so the two can
+   be styled independently (color is set inline via text color classes). */
+@keyframes heal-float {
+  0% {
+    transform: translateY(0) translateX(-50%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px) translateX(-50%);
+    opacity: 0;
+  }
+}
+
+@keyframes battle-heal-glow {
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 0 0 rgba(52, 211, 153, 0));
+  }
+  50% {
+    filter: brightness(1.25) drop-shadow(0 0 6px rgba(52, 211, 153, 0.8));
+  }
+}
+
+.heal-float {
+  animation: heal-float 0.8s ease-out forwards;
+}
+
 .battle-lunge-down {
   animation: battle-lunge-down 0.4s ease-out;
 }
@@ -151,6 +181,10 @@ body {
 
 .battle-faint {
   animation: battle-faint 0.5s ease-in forwards;
+}
+
+.battle-heal-glow {
+  animation: battle-heal-glow 0.5s ease-in-out;
 }
 
 .battle-pop-in {

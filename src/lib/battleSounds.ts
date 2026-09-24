@@ -39,6 +39,15 @@ export function playHitSound() {
   tone(110, 0.16, "sawtooth", 0.2);
 }
 
+export function playBlockSound() {
+  tone(500, 0.06, "square", 0.12);
+}
+
+export function playHealSound() {
+  tone(523, 0.09, "sine", 0.13);
+  tone(784, 0.12, "sine", 0.13, 0.07);
+}
+
 export function playFaintSound() {
   const ctx = getContext();
   if (!ctx) return;

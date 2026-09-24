@@ -2,155 +2,36 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { computeDamage, generateOpponentCard, type BattleCard } from "@/lib/quickBattle";
-import { hpForLevel } from "@/lib/game";
-import { MONSTER_LORE } from "@/lib/monsterLore";
+import { generateOpponentCard, type BattleCard } from "@/lib/quickBattle";
+import { MUSCLE_TYPE_META } from "@/lib/muscleTypes";
+import { REGION_TRAITS } from "@/lib/regionTraits";
+import {
+  toFighter,
+  livingIndex,
+  buildAttackSteps,
+  buildSwitchSteps,
+  type Fighter,
+  type BattleState,
+  type BattleEffect,
+  type Step,
+} from "@/lib/squadBattleEngine";
 import { BattleCardFace } from "../BattleCardFace";
-import { playAttackSound, playFaintSound, playHitSound, playLossSound, playSwitchSound, playWinSound } from "@/lib/battleSounds";
+import {
+  playAttackSound,
+  playBlockSound,
+  playFaintSound,
+  playHealSound,
+  playHitSound,
+  playLossSound,
+  playSwitchSound,
+  playWinSound,
+} from "@/lib/battleSounds";
 
 const MAX_TEAM = 3;
-// How long each animated beat (punch/shake/faint/pop-in) stays on screen
+// How long each animated beat (lunge/shake/faint/pop-in) stays on screen
 // before the next step in the sequence plays -- matches the ~0.4-0.5s CSS
 // animation durations in globals.css with a little breathing room after.
 const STEP_MS = 550;
-
-interface Fighter {
-  card: BattleCard;
-  maxHp: number;
-  hp: number;
-}
-
-interface BattleState {
-  playerTeam: Fighter[];
-  opponentTeam: Fighter[];
-  activePlayer: number;
-  activeOpponent: number;
-  log: string[];
-  /** The player's active fighter just fainted and they must pick a replacement before anything else can happen. */
-  awaitingPlayerSwitch: boolean;
-}
-
-// A single animated beat in a round -- who's attacking/fainting/switching
-// in, so the card art can punch, shake, fade out, or pop in to match.
-type BattleEffect =
-  | { kind: "attack"; side: "player" | "opponent"; damage: number }
-  | { kind: "faint"; side: "player" | "opponent" }
-  | { kind: "switch-in"; side: "player" | "opponent" };
-
-interface Step {
-  state: BattleState;
-  effect: BattleEffect;
-}
-
-function toFighter(card: BattleCard): Fighter {
-  const maxHp = hpForLevel(card.power);
-  return { card, maxHp, hp: maxHp };
-}
-
-function cloneTeam(team: Fighter[]): Fighter[] {
-  return team.map((f) => ({ ...f }));
-}
-
-function livingIndex(team: Fighter[]): number {
-  return team.findIndex((f) => f.hp > 0);
-}
-
-function snapshot(
-  playerTeam: Fighter[],
-  opponentTeam: Fighter[],
-  activePlayer: number,
-  activeOpponent: number,
-  log: string[]
-): BattleState {
-  return {
-    playerTeam: cloneTeam(playerTeam),
-    opponentTeam: cloneTeam(opponentTeam),
-    activePlayer,
-    activeOpponent,
-    log,
-    awaitingPlayerSwitch: false,
-  };
-}
-
-// Builds the whole round as a sequence of animated steps rather than
-// resolving straight to a final state -- each attack, faint, and switch-in
-// gets its own beat so the cards visibly trade blows instead of the HP
-// bars just jumping to their end values.
-function buildAttackSteps(battle: BattleState): Step[] {
-  const steps: Step[] = [];
-  const playerTeam = cloneTeam(battle.playerTeam);
-  const opponentTeam = cloneTeam(battle.opponentTeam);
-  let log = battle.log;
-  const p = playerTeam[battle.activePlayer];
-  const o = opponentTeam[battle.activeOpponent];
-
-  // Higher power acts first, same "power doubles as speed" simplification
-  // the other Solo Card Battle modes already use.
-  const order: { atk: Fighter; def: Fighter; side: "player" | "opponent" }[] =
-    p.card.power >= o.card.power
-      ? [
-          { atk: p, def: o, side: "player" },
-          { atk: o, def: p, side: "opponent" },
-        ]
-      : [
-          { atk: o, def: p, side: "opponent" },
-          { atk: p, def: o, side: "player" },
-        ];
-
-  for (const { atk, def, side } of order) {
-    if (atk.hp <= 0 || def.hp <= 0) continue;
-    const dmg = computeDamage(atk.card.power, def.card.power, def.maxHp);
-    def.hp = Math.max(0, def.hp - dmg);
-    log = [...log, `${atk.card.name} uses ${MONSTER_LORE[atk.card.muscleType].move}! ${dmg} damage.`];
-    steps.push({
-      state: snapshot(playerTeam, opponentTeam, battle.activePlayer, battle.activeOpponent, log),
-      effect: { kind: "attack", side, damage: dmg },
-    });
-    if (def.hp === 0) {
-      log = [...log, `${def.card.name} fainted!`];
-      steps.push({
-        state: snapshot(playerTeam, opponentTeam, battle.activePlayer, battle.activeOpponent, log),
-        effect: { kind: "faint", side: side === "player" ? "opponent" : "player" },
-      });
-    }
-  }
-
-  return steps;
-}
-
-// Voluntary switch: the new fighter pops in, then the foe gets a free hit
-// on them -- same real cost a Pokemon-style switch has.
-function buildSwitchSteps(battle: BattleState, index: number): Step[] {
-  const steps: Step[] = [];
-  const playerTeam = cloneTeam(battle.playerTeam);
-  const opponentTeam = cloneTeam(battle.opponentTeam);
-  let log = [...battle.log, `Go, ${playerTeam[index].card.name}!`];
-
-  steps.push({
-    state: snapshot(playerTeam, opponentTeam, index, battle.activeOpponent, log),
-    effect: { kind: "switch-in", side: "player" },
-  });
-
-  const p = playerTeam[index];
-  const o = opponentTeam[battle.activeOpponent];
-  const dmg = computeDamage(o.card.power, p.card.power, p.maxHp);
-  p.hp = Math.max(0, p.hp - dmg);
-  log = [...log, `${o.card.name} uses ${MONSTER_LORE[o.card.muscleType].move}! ${dmg} damage.`];
-  steps.push({
-    state: snapshot(playerTeam, opponentTeam, index, battle.activeOpponent, log),
-    effect: { kind: "attack", side: "opponent", damage: dmg },
-  });
-
-  if (p.hp === 0) {
-    log = [...log, `${p.card.name} fainted!`];
-    steps.push({
-      state: snapshot(playerTeam, opponentTeam, index, battle.activeOpponent, log),
-      effect: { kind: "faint", side: "player" },
-    });
-  }
-
-  return steps;
-}
 
 function HpBar({ hp, maxHp }: { hp: number; maxHp: number }) {
   const pct = Math.max(0, Math.min(100, (hp / maxHp) * 100));
@@ -175,8 +56,9 @@ function FighterPanel({
   effectKey: number;
   flip?: boolean;
 }) {
-  const isAttacker = effect?.kind === "attack" && effect.side === side;
+  const isAttacker = effect?.kind === "attack" && !effect.blocked && effect.side === side;
   const isDefender = effect?.kind === "attack" && effect.side !== side;
+  const isHealing = effect?.kind === "heal" && effect.side === side;
   const isFainting = effect?.kind === "faint" && effect.side === side;
   const isPoppingIn = effect?.kind === "switch-in" && effect.side === side;
 
@@ -188,9 +70,11 @@ function FighterPanel({
         : "battle-lunge-down"
       : isDefender
         ? "battle-shake"
-        : isPoppingIn
-          ? "battle-pop-in"
-          : "";
+        : isHealing
+          ? "battle-heal-glow"
+          : isPoppingIn
+            ? "battle-pop-in"
+            : "";
 
   return (
     <div className={`flex items-center gap-3 ${flip ? "flex-row-reverse text-right" : ""}`}>
@@ -201,9 +85,19 @@ function FighterPanel({
         {isDefender && effect?.kind === "attack" && (
           <span
             key={`dmg-${effectKey}`}
-            className="damage-float pointer-events-none absolute top-0 left-1/2 text-sm font-black text-red-400"
+            className={`damage-float pointer-events-none absolute top-0 left-1/2 text-sm font-black ${
+              effect.blocked ? "text-slate-300" : "text-red-400"
+            }`}
           >
-            -{effect.damage}
+            {effect.blocked ? "Blocked!" : `-${effect.damage}`}
+          </span>
+        )}
+        {isHealing && effect?.kind === "heal" && (
+          <span
+            key={`heal-${effectKey}`}
+            className="heal-float pointer-events-none absolute top-0 left-1/2 text-sm font-black text-emerald-400"
+          >
+            +{effect.amount}
           </span>
         )}
       </div>
@@ -335,8 +229,14 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
 
   function playEffectSound(effectToPlay: BattleEffect) {
     if (effectToPlay.kind === "attack") {
-      playAttackSound();
-      setTimeout(playHitSound, 80);
+      if (effectToPlay.blocked) {
+        playBlockSound();
+      } else {
+        playAttackSound();
+        setTimeout(playHitSound, 80);
+      }
+    } else if (effectToPlay.kind === "heal") {
+      playHealSound();
     } else if (effectToPlay.kind === "faint") {
       playFaintSound();
     } else {
@@ -475,19 +375,24 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
         <p className="text-sm font-semibold text-slate-300">
           Squad ({selectedIds.length}/{MAX_TEAM})
         </p>
-        <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-5">
+        <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
           {cards.map((c) => {
             const selected = selectedIds.includes(c.id);
+            const trait = REGION_TRAITS[MUSCLE_TYPE_META[c.muscleType].region];
             return (
               <button
                 key={c.id}
                 type="button"
                 onClick={() => toggleSelect(c.id)}
-                className={`aspect-[2/3] rounded-lg border-2 transition ${
+                className={`rounded-lg border-2 p-1.5 text-left transition ${
                   selected ? "border-amber-400" : "border-white/10 hover:border-white/30"
                 }`}
               >
-                <BattleCardFace card={c} />
+                <div className="aspect-[2/3]">
+                  <BattleCardFace card={c} />
+                </div>
+                <p className="mt-1 truncate text-[10px] font-bold text-amber-300">{trait.name}</p>
+                <p className="text-[9px] leading-tight text-slate-400">{trait.description}</p>
               </button>
             );
           })}
