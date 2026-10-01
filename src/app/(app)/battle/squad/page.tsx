@@ -3,12 +3,17 @@ import { prisma } from "@/lib/prisma";
 import { getUserId, requireOnboarded } from "@/lib/session-helpers";
 import { MUSCLE_TYPE_META, artUrlForLevel, monsterNameForLevel, stageForLevel, type MuscleType } from "@/lib/muscleTypes";
 import type { BattleCard } from "@/lib/quickBattle";
+import { listMyTrophies } from "@/lib/duelTrophies";
 import { SquadBattle } from "./SquadBattle";
 
 export default async function SquadBattlePage() {
   await requireOnboarded();
   const userId = await getUserId();
-  const monsters = await prisma.monSTAR.findMany({ where: { userId } });
+  const [monsters, allTrophies] = await Promise.all([
+    prisma.monSTAR.findMany({ where: { userId } }),
+    listMyTrophies(userId),
+  ]);
+  const trophies = allTrophies.filter((t) => !t.used);
 
   const cards: BattleCard[] = monsters.map((m) => {
     const meta = MUSCLE_TYPE_META[m.muscleType as MuscleType];
@@ -35,7 +40,7 @@ export default async function SquadBattlePage() {
       <p className="mt-1 text-sm text-slate-400">
         Pick a squad of up to 3 monSTARs. Attack, switch when one faints, last team standing wins.
       </p>
-      <SquadBattle cards={cards} />
+      <SquadBattle cards={cards} trophies={trophies} />
     </div>
   );
 }

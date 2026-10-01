@@ -1,9 +1,14 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
-import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
+import { MUSCLE_TYPES, MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
 import { sendChallengedEmail } from "@/lib/email";
 import { sendPushToUser } from "@/lib/push";
 import type { Gym, GymChallenge } from "@prisma/client";
+
+// Every 5th duel win converts into catching a random muscle type the
+// winner hasn't caught yet, at level 1 -- same floor as a normal catch, so
+// it's a head start, not a free power boost to an existing fighter.
+const TROPHIES_PER_RANDOM_CATCH = 5;
 
 // Fire-and-forget by design, matching email.ts/push.ts -- a challenge should
 // never fail to start because a notification couldn't be delivered.
@@ -104,30 +109,71 @@ export async function liveScores(challenge: GymChallenge): Promise<ChallengeScor
   };
 }
 
+// Awarded to the winner of every resolved duel -- a permanent trophy-case
+// entry that never touches MonSTAR.xp/level, so it can't feed back into
+// who wins future duels (those are scored on real XP alone). Every 5th
+// trophy additionally catches a random not-yet-owned muscle type at level
+// 1; once the full 34 are caught there's nothing left to unlock that way,
+// so the milestone just grants a bonus trophy instead.
+async function awardDuelTrophy(challenge: GymChallenge, winnerId: string): Promise<void> {
+  const loserId = winnerId === challenge.challengerId ? challenge.defenderId : challenge.challengerId;
+  const loser = await prisma.user.findUnique({ where: { id: loserId }, select: { name: true } });
+  const opponentName = loser?.name ?? "Unknown";
+
+  await prisma.duelTrophy.create({
+    data: { userId: winnerId, muscleType: challenge.muscleType, kind: challenge.kind, opponentName },
+  });
+
+  const trophyCount = await prisma.duelTrophy.count({ where: { userId: winnerId } });
+  if (trophyCount % TROPHIES_PER_RANDOM_CATCH !== 0) return;
+
+  const owned = await prisma.monSTAR.findMany({ where: { userId: winnerId }, select: { muscleType: true } });
+  const ownedTypes = new Set(owned.map((m) => m.muscleType as MuscleType));
+  const uncaught = MUSCLE_TYPES.filter((t) => !ownedTypes.has(t));
+
+  if (uncaught.length > 0) {
+    const picked = uncaught[Math.floor(Math.random() * uncaught.length)];
+    await prisma.monSTAR.create({
+      data: { userId: winnerId, muscleType: picked, level: 1, xp: 0, strengthXp: 0, enduranceXp: 0, caughtAt: new Date() },
+    });
+  } else {
+    await prisma.duelTrophy.create({
+      data: { userId: winnerId, muscleType: challenge.muscleType, kind: challenge.kind, opponentName },
+    });
+  }
+}
+
 // Lazily closes out a challenge whose window has passed -- there's no
 // background job, so this runs whenever a challenge is read (gyms list,
 // battle page). Ties go to the defender. A challenger win on a THRONE duel
 // hands the gym over; FREEFORM duels never touch the gym's champion --
-// they're just two members settling a score.
+// they're just two members settling a score. The update is conditioned on
+// still being OPEN so that if two requests race to resolve the same
+// expired challenge, only one of them actually flips it and runs the
+// one-time side effects (trophy, champion handoff) -- the loser of that
+// race just re-reads the already-resolved row.
 export async function resolveIfExpired(challenge: GymChallenge): Promise<GymChallenge> {
   if (challenge.status !== "OPEN" || challenge.windowEnd > new Date()) return challenge;
 
   const { challengerScore, defenderScore } = await liveScores(challenge);
   const winnerId = challengerScore > defenderScore ? challenge.challengerId : challenge.defenderId;
 
-  const resolved = await prisma.gymChallenge.update({
-    where: { id: challenge.id },
+  const { count } = await prisma.gymChallenge.updateMany({
+    where: { id: challenge.id, status: "OPEN" },
     data: { status: "RESOLVED", winnerId, resolvedAt: new Date() },
   });
 
-  if (challenge.kind === "THRONE" && challenge.gymId && winnerId === challenge.challengerId) {
-    await prisma.gym.update({
-      where: { id: challenge.gymId },
-      data: { championUserId: challenge.challengerId, claimedAt: new Date() },
-    });
+  if (count === 1) {
+    if (challenge.kind === "THRONE" && challenge.gymId && winnerId === challenge.challengerId) {
+      await prisma.gym.update({
+        where: { id: challenge.gymId },
+        data: { championUserId: challenge.challengerId, claimedAt: new Date() },
+      });
+    }
+    await awardDuelTrophy(challenge, winnerId);
   }
 
-  return resolved;
+  return prisma.gymChallenge.findUniqueOrThrow({ where: { id: challenge.id } });
 }
 
 export interface CheckInResult {

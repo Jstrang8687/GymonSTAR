@@ -23,6 +23,7 @@ model User {
   templates     WorkoutTemplate[]
   authTokens    AuthToken[]
   pushSubscriptions PushSubscription[]
+  duelTrophies  DuelTrophy[]
 }
 
 // One row per browser/device the user enabled notifications on -- endpoint
@@ -258,4 +259,24 @@ model GymChallenge {
   winnerId             String?
   resolvedAt           DateTime?
   createdAt            DateTime           @default(now())
+}
+
+// Awarded to the winner of every resolved duel (throne or head-to-head) --
+// a permanent trophy-case entry, always rendered with the legendary holo
+// treatment regardless of the winner's real monSTAR tier. Never affects
+// MonSTAR.xp/level, so it can't feed back into who wins future duels.
+// Consumable as a one-time Squad Battle power boost (see squadBattleEngine)
+// -- usedAt marks that spend, but the row stays forever so the win itself
+// still shows in the gallery.
+model DuelTrophy {
+  id           String           @id @default(cuid())
+  userId       String
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  muscleType   MuscleType
+  kind         GymChallengeKind
+  opponentName String
+  wonAt        DateTime         @default(now())
+  usedAt       DateTime?
+
+  @@index([userId])
 }
