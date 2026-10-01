@@ -73,6 +73,12 @@ export default async function BattlePage() {
                 <p className="mt-1 text-center text-xs text-slate-500">
                   {d.status === "OPEN" ? formatCountdown(d.msRemaining) : d.won ? "You won!" : "You lost"}
                 </p>
+                {d.status === "OPEN" && (
+                  <p className="mt-2 text-center text-[11px] text-slate-500">
+                    Log real {d.muscleTypeLabel} workouts before the clock runs out — most {d.muscleTypeLabel} XP
+                    wins.
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -122,6 +128,10 @@ export default async function BattlePage() {
                     </div>
                     <p className="mt-1 text-center text-xs text-slate-500">
                       {formatCountdown(gym.challenge.msRemaining)}
+                    </p>
+                    <p className="mt-2 text-center text-[11px] text-slate-500">
+                      Log real {gym.challenge.muscleTypeLabel} workouts before the clock runs out — most{" "}
+                      {gym.challenge.muscleTypeLabel} XP wins the gym.
                     </p>
                   </div>
                 )}

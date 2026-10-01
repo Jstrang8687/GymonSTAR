@@ -20,7 +20,7 @@ async function notifyChallenged(
     sendChallengedEmail(defender.email, defender.name, challengerName, muscleTypeLabel, gymName),
     sendPushToUser(defenderId, {
       title: "You've been challenged!",
-      body: `${challengerName} challenged you to a ${muscleTypeLabel} duel${where}.`,
+      body: `${challengerName} challenged you to a ${muscleTypeLabel} duel${where}. Log ${muscleTypeLabel} workouts in the next 48h to win.`,
       url: "/battle",
     }),
   ]);
@@ -315,6 +315,47 @@ export async function startFreeformDuel(
   return {
     message: `Duel started with ${opponent.name}! 48 hours of ${MUSCLE_TYPE_META[muscleType].label} training decides it.`,
   };
+}
+
+export interface PendingChallenge {
+  id: string;
+  challengerName: string;
+  muscleType: MuscleType;
+  muscleTypeLabel: string;
+  /** Set only for a gym-throne duel; null for a head-to-head one. */
+  gymName: string | null;
+  msRemaining: number;
+}
+
+// Every OPEN duel this user is defending, freshly resolved if its window
+// already lapsed -- what the on-login "you've been challenged" popup reads
+// from so it only ever shows duels that genuinely still need a response.
+export async function pendingChallengesForDefender(userId: string): Promise<PendingChallenge[]> {
+  const raw = await prisma.gymChallenge.findMany({
+    where: { defenderId: userId, status: "OPEN" },
+    orderBy: { createdAt: "desc" },
+  });
+  if (raw.length === 0) return [];
+
+  const resolved = await Promise.all(raw.map((c) => resolveIfExpired(c)));
+  const stillOpen = resolved.filter((c) => c.status === "OPEN");
+
+  const results: PendingChallenge[] = [];
+  for (const c of stillOpen) {
+    const [challenger, gym] = await Promise.all([
+      prisma.user.findUnique({ where: { id: c.challengerId }, select: { name: true } }),
+      c.gymId ? prisma.gym.findUnique({ where: { id: c.gymId }, select: { name: true } }) : null,
+    ]);
+    results.push({
+      id: c.id,
+      challengerName: challenger?.name ?? "Someone",
+      muscleType: c.muscleType as MuscleType,
+      muscleTypeLabel: MUSCLE_TYPE_META[c.muscleType as MuscleType].label,
+      gymName: gym?.name ?? null,
+      msRemaining: Math.max(0, c.windowEnd.getTime() - Date.now()),
+    });
+  }
+  return results;
 }
 
 export interface MyDuelDisplay {

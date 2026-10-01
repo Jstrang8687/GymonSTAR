@@ -95,7 +95,8 @@ export async function sendChallengedEmail(
   const html = emailShell(
     "You've been challenged!",
     `<p>Hey ${name},</p>
-     <p><strong>${challengerName}</strong> just challenged you to a ${muscleTypeLabel} duel${where}. You have 48 hours to out-train them.</p>
+     <p><strong>${challengerName}</strong> just challenged you to a ${muscleTypeLabel} duel${where}.</p>
+     <p>Here's how it works: over the next <strong>48 hours</strong>, log real ${muscleTypeLabel} workouts in the app. Whoever earns more ${muscleTypeLabel} XP in that window wins${gymName ? ` and takes ${gymName}` : ""}. No action needed to accept -- the clock's already running.</p>
      ${button(`${APP_URL}/battle`, "See the duel")}`
   );
   await sendEmail(to, `${challengerName} challenged you to a duel`, html);

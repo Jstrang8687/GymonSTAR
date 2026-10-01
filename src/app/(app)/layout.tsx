@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { getProfile, isCurrentUserAdmin, getUserId } from "@/lib/session-helpers";
 import { prisma } from "@/lib/prisma";
+import { pendingChallengesForDefender } from "@/lib/gymDuel";
 import { Navbar } from "@/components/Navbar";
+import { ChallengePopup } from "@/components/ChallengePopup";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const [profile, isAdmin, userId] = await Promise.all([getProfile(), isCurrentUserAdmin(), getUserId()]);
-  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { emailVerified: true } });
+  const [user, pendingChallenges] = await Promise.all([
+    prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { emailVerified: true } }),
+    profile.onboarded ? pendingChallengesForDefender(userId) : Promise.resolve([]),
+  ]);
 
   return (
     <div className="min-h-screen">
@@ -19,6 +24,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
       )}
       <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+      {pendingChallenges.length > 0 && profile.coach && (
+        <ChallengePopup
+          challenges={pendingChallenges}
+          coach={{ name: profile.coach.name, icon: profile.coach.icon, title: profile.coach.title }}
+        />
+      )}
     </div>
   );
 }
