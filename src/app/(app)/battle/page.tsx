@@ -5,6 +5,8 @@ import { listGyms } from "./gyms/actions";
 import { CheckInButton } from "./gyms/CheckInButton";
 import { DuelSearch } from "./duels/DuelSearch";
 import { myDuels } from "./duels/actions";
+import { myTrophies } from "./trophies/actions";
+import { TrophyGallery } from "./trophies/TrophyGallery";
 
 function formatCountdown(ms: number): string {
   if (ms <= 0) return "closing...";
@@ -17,7 +19,7 @@ function formatCountdown(ms: number): string {
 
 export default async function BattlePage() {
   await requireOnboarded();
-  const [gyms, duels] = await Promise.all([listGyms(), myDuels()]);
+  const [gyms, duels, trophies] = await Promise.all([listGyms(), myDuels(), myTrophies()]);
 
   return (
     <div className="mx-auto max-w-lg space-y-8">
@@ -25,6 +27,17 @@ export default async function BattlePage() {
         <h1 className="text-2xl font-black text-white">Battle</h1>
         <p className="mt-1 text-sm text-slate-400">Three ways to throw down.</p>
       </div>
+
+      <section>
+        <p className="text-sm font-bold text-white">🏆 Trophy Case</p>
+        <p className="mt-1 text-xs text-slate-400">
+          Every duel win earns a trophy. Every 5th catches you a random muscle type you don&apos;t have yet.
+          Unused trophies can be spent for a one-time Squad Battle boost.
+        </p>
+        <div className="mt-3">
+          <TrophyGallery trophies={trophies} />
+        </div>
+      </section>
 
       <section className="rounded-2xl border border-amber-400/30 bg-amber-400/5 p-5">
         <p className="text-sm font-bold text-amber-300">🃏 Solo Card Battle</p>

@@ -27,6 +27,13 @@ import {
   playSwitchSound,
   playWinSound,
 } from "@/lib/battleSounds";
+import { spendTrophyForBoost } from "../trophies/actions";
+import type { TrophyDisplay } from "@/lib/duelTrophies";
+
+// A spent trophy boosts its matching fighter's power for this one match
+// only -- never written back to the real monster, so it can't inflate the
+// XP duels are actually scored on.
+const TROPHY_BOOST_MULTIPLIER = 1.3;
 
 const MAX_TEAM = 3;
 // How long each animated beat (lunge/shake/faint/pop-in) stays on screen
@@ -53,11 +60,13 @@ function FighterCard({
   side,
   effect,
   effectKey,
+  boosted = false,
 }: {
   fighter: Fighter;
   side: "player" | "opponent";
   effect: BattleEffect | null;
   effectKey: number;
+  boosted?: boolean;
 }) {
   const [imgFailed, setImgFailed] = useState(false);
   const showArt = fighter.card.artUrl && !imgFailed;
@@ -113,6 +122,11 @@ function FighterCard({
         <span className="absolute right-1.5 top-1.5 rounded bg-black/75 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-sky-300">
           {trait.name}
         </span>
+        {boosted && (
+          <span className="absolute left-1.5 top-7 rounded bg-amber-400 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wide text-slate-900 shadow">
+            🏆 Boosted
+          </span>
+        )}
 
         <div className="absolute inset-x-0 bottom-0 flex items-end gap-1.5 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-1.5 pt-8 pb-1.5">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-amber-200 bg-amber-500 text-xs font-black text-slate-900 shadow">
@@ -216,7 +230,7 @@ function SwitchPicker({
   );
 }
 
-export function SquadBattle({ cards }: { cards: BattleCard[] }) {
+export function SquadBattle({ cards, trophies }: { cards: BattleCard[]; trophies: TrophyDisplay[] }) {
   const [phase, setPhase] = useState<"select" | "battle" | "over">("select");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [battle, setBattle] = useState<BattleState | null>(null);
@@ -225,6 +239,10 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
   const [effect, setEffect] = useState<BattleEffect | null>(null);
   const [effectKey, setEffectKey] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [selectedTrophyId, setSelectedTrophyId] = useState<string | null>(null);
+  const [boostedCardId, setBoostedCardId] = useState<string | null>(null);
+  const [startingBattle, setStartingBattle] = useState(false);
+  const [trophyError, setTrophyError] = useState<string | null>(null);
 
   if (cards.length === 0) {
     return (
@@ -246,12 +264,38 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
     });
   }
 
-  function startBattle() {
-    const chosen = cards.filter((c) => selectedIds.includes(c.id));
-    if (chosen.length === 0) return;
-    const playerTeam = chosen.map(toFighter);
-    const avgPower = chosen.reduce((sum, c) => sum + c.power, 0) / chosen.length;
-    const opponentTeam = chosen.map(() => toFighter(generateOpponentCard(avgPower)));
+  const chosenCards = cards.filter((c) => selectedIds.includes(c.id));
+  const chosenTypes = new Set(chosenCards.map((c) => c.muscleType));
+  const eligibleTrophies = trophies.filter((t) => chosenTypes.has(t.muscleType));
+  const selectedTrophy = eligibleTrophies.find((t) => t.id === selectedTrophyId) ?? null;
+
+  async function startBattle() {
+    if (chosenCards.length === 0) return;
+    setTrophyError(null);
+
+    let boostedId: string | null = null;
+    let cardsForMatch = chosenCards;
+    if (selectedTrophy) {
+      setStartingBattle(true);
+      const result = await spendTrophyForBoost(selectedTrophy.id);
+      setStartingBattle(false);
+      if (!result.ok) {
+        setTrophyError(result.message);
+        return;
+      }
+      const boostTarget = chosenCards.find((c) => c.muscleType === result.muscleType);
+      if (boostTarget) {
+        boostedId = boostTarget.id;
+        cardsForMatch = chosenCards.map((c) =>
+          c.id === boostTarget.id ? { ...c, power: Math.round(c.power * TROPHY_BOOST_MULTIPLIER) } : c
+        );
+      }
+    }
+
+    const playerTeam = cardsForMatch.map(toFighter);
+    const avgPower = chosenCards.reduce((sum, c) => sum + c.power, 0) / chosenCards.length;
+    const opponentTeam = chosenCards.map(() => toFighter(generateOpponentCard(avgPower)));
+    setBoostedCardId(boostedId);
     setBattle({
       playerTeam,
       opponentTeam,
@@ -270,6 +314,9 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
     setOutcome(null);
     setChoosingSwitch(false);
     setEffect(null);
+    setSelectedTrophyId(null);
+    setBoostedCardId(null);
+    setTrophyError(null);
     setPhase("select");
   }
 
@@ -443,13 +490,55 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
             );
           })}
         </div>
+        {eligibleTrophies.length > 0 && (
+          <div className="mt-4 rounded-lg border border-white/10 bg-white/5 p-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              🏆 Use a trophy for a boost?
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedTrophyId(null)}
+                className={`rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition ${
+                  selectedTrophyId === null
+                    ? "border-amber-400 text-amber-300"
+                    : "border-white/10 text-slate-300 hover:border-white/30"
+                }`}
+              >
+                None
+              </button>
+              {eligibleTrophies.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setSelectedTrophyId(t.id)}
+                  className={`rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition ${
+                    selectedTrophyId === t.id
+                      ? "border-amber-400 text-amber-300"
+                      : "border-white/10 text-slate-300 hover:border-white/30"
+                  }`}
+                >
+                  {MUSCLE_TYPE_META[t.muscleType].icon} {t.muscleTypeLabel} trophy
+                </button>
+              ))}
+            </div>
+            {selectedTrophy && (
+              <p className="mt-2 text-[11px] text-slate-500">
+                Spends this trophy for a one-time +30% power boost to your {selectedTrophy.muscleTypeLabel} fighter
+                this match. It stays in your case, just marked used.
+              </p>
+            )}
+            {trophyError && <p className="mt-2 text-xs text-red-400">{trophyError}</p>}
+          </div>
+        )}
+
         <button
           type="button"
-          disabled={selectedIds.length === 0}
+          disabled={selectedIds.length === 0 || startingBattle}
           onClick={startBattle}
           className="mt-4 w-full rounded-lg bg-amber-400 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-amber-300 disabled:opacity-40"
         >
-          ⚔️ Start Battle
+          {startingBattle ? "Starting..." : "⚔️ Start Battle"}
         </button>
       </div>
     );
@@ -476,7 +565,13 @@ export function SquadBattle({ cards }: { cards: BattleCard[] }) {
       </div>
 
       <div>
-        <FighterCard fighter={battle.playerTeam[battle.activePlayer]} side="player" effect={effect} effectKey={effectKey} />
+        <FighterCard
+          fighter={battle.playerTeam[battle.activePlayer]}
+          side="player"
+          effect={effect}
+          effectKey={effectKey}
+          boosted={battle.playerTeam[battle.activePlayer].card.id === boostedCardId}
+        />
         <BenchRow team={battle.playerTeam} activeIndex={battle.activePlayer} />
       </div>
 
