@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { logWorkout, getPreviousExercise, type LogWorkoutResult } from "./actions";
 import { createTemplate } from "../settings/templates/actions";
@@ -36,6 +36,50 @@ function emptyRow(): ExerciseRow {
   return { key: nextKey++, name: "", category: "strength" };
 }
 
+// An in-progress workout survives leaving the page (back button, checking
+// another screen, a refresh) until it's saved. Keyed per user so a shared
+// device never shows one person's half-finished log to another account.
+const DRAFT_KEY_PREFIX = "gm_log_draft_v1_";
+
+interface LogDraft {
+  muscleTypes: MuscleType[];
+  exercises: ExerciseRow[];
+}
+
+function readDraft(userId: string): LogDraft | null {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY_PREFIX + userId);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as LogDraft;
+    if (!Array.isArray(parsed.muscleTypes) || !Array.isArray(parsed.exercises) || parsed.exercises.length === 0) {
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeDraft(userId: string, draft: LogDraft) {
+  try {
+    const isEmpty =
+      draft.muscleTypes.length === 0 &&
+      draft.exercises.every((row) => row.name.trim() === "" && row.setDetails === undefined);
+    if (isEmpty) localStorage.removeItem(DRAFT_KEY_PREFIX + userId);
+    else localStorage.setItem(DRAFT_KEY_PREFIX + userId, JSON.stringify(draft));
+  } catch {
+    // Best-effort only -- private mode / full storage just means no draft.
+  }
+}
+
+function clearDraft(userId: string) {
+  try {
+    localStorage.removeItem(DRAFT_KEY_PREFIX + userId);
+  } catch {
+    // ignore
+  }
+}
+
 function formatPrevSet(s: SetDetail | undefined): string {
   if (!s || (s.weight === undefined && s.reps === undefined)) return "—";
   if (s.weight !== undefined && s.reps !== undefined) return `${s.weight}×${s.reps}`;
@@ -60,9 +104,11 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 export function LogWorkoutForm({
+  userId,
   templates,
   customExercises,
 }: {
+  userId: string;
   templates: WorkoutTemplateData[];
   customExercises: LibraryExercise[];
 }) {
@@ -80,6 +126,26 @@ export function LogWorkoutForm({
   const [templateName, setTemplateName] = useState("");
   const [templateSaved, setTemplateSaved] = useState(false);
   const [templatePending, startTemplateTransition] = useTransition();
+  // Don't let the empty initial state overwrite a saved draft before it's
+  // been restored.
+  const draftRestored = useRef(false);
+
+  useEffect(() => {
+    Promise.resolve().then(() => {
+      const draft = readDraft(userId);
+      if (draft) {
+        nextKey = Math.max(nextKey, ...draft.exercises.map((row) => row.key)) + 1;
+        setMuscleTypes(draft.muscleTypes);
+        setExercises(draft.exercises);
+      }
+      draftRestored.current = true;
+    });
+  }, [userId]);
+
+  useEffect(() => {
+    if (!draftRestored.current) return;
+    writeDraft(userId, { muscleTypes, exercises });
+  }, [userId, muscleTypes, exercises]);
 
   function loadTemplate(template: WorkoutTemplateData) {
     setMuscleTypes(template.muscleTypes);
@@ -320,6 +386,7 @@ export function LogWorkoutForm({
           exercises: cleanExercises,
         });
         setResult(res);
+        clearDraft(userId);
         setMuscleTypes([]);
         setExercises([emptyRow()]);
         setSavingTemplate(false);
