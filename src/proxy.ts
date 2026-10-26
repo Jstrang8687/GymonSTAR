@@ -2,18 +2,30 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 
-const PUBLIC_ROUTES = ["/login", "/register"];
+// Reachable by anyone, signed in or not. The legal pages have to be readable
+// before an account exists (and by app-store reviewers), and the email-link
+// flows can be opened in either state -- a reset link by someone who can't
+// sign in, a verify link by someone who still has a session open.
+const OPEN_ROUTES = ["/privacy", "/terms", "/forgot-password", "/reset-password", "/verify-email"];
+
+// Only meaningful before signing in; signed-in users get sent on to the app.
+const GUEST_ONLY_ROUTES = ["/login", "/register"];
 
 export default auth((req: NextRequest & { auth: unknown }) => {
   const { pathname } = req.nextUrl;
-  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
   const isLoggedIn = Boolean(req.auth);
 
-  if (!isLoggedIn && !isPublicRoute) {
+  if (OPEN_ROUTES.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  const isGuestOnly = GUEST_ONLY_ROUTES.includes(pathname);
+
+  if (!isLoggedIn && !isGuestOnly) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  if (isLoggedIn && isPublicRoute) {
+  if (isLoggedIn && isGuestOnly) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 

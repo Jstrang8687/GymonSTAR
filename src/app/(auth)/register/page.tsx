@@ -60,6 +60,17 @@ export default function RegisterPage() {
           {pending ? "Creating account..." : "Sign Up"}
         </button>
       </form>
+      <p className="mt-3 text-center text-xs text-slate-500">
+        By signing up you agree to our{" "}
+        <Link href="/terms" className="underline hover:text-slate-300">
+          Terms
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="underline hover:text-slate-300">
+          Privacy Policy
+        </Link>
+        .
+      </p>
       <p className="mt-4 text-center text-sm text-slate-400">
         Already training?{" "}
         <Link href="/login" className="font-semibold text-amber-400 hover:underline">

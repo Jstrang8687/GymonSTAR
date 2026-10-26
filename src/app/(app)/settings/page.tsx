@@ -36,6 +36,15 @@ export default async function SettingsPage() {
         </Link>
       </section>
 
+      <section className="flex gap-4 text-sm">
+        <Link href="/privacy" className="text-slate-400 hover:text-white">
+          Privacy Policy
+        </Link>
+        <Link href="/terms" className="text-slate-400 hover:text-white">
+          Terms of Service
+        </Link>
+      </section>
+
       <section>
         <h2 className="mb-3 text-sm font-bold text-red-300">Danger zone</h2>
         <DeleteMyAccountForm email={user.email} />
