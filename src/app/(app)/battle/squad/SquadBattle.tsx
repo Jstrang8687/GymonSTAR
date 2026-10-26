@@ -268,6 +268,17 @@ export function SquadBattle({ cards, trophies }: { cards: BattleCard[]; trophies
   const chosenTypes = new Set(chosenCards.map((c) => c.muscleType));
   const eligibleTrophies = trophies.filter((t) => chosenTypes.has(t.muscleType));
   const selectedTrophy = eligibleTrophies.find((t) => t.id === selectedTrophyId) ?? null;
+  // One button per muscle type with a count, not one per trophy -- a few
+  // wins in the same type would otherwise stack up identical buttons.
+  const trophyGroups = Array.from(
+    eligibleTrophies.reduce((groups, t) => {
+      const existing = groups.get(t.muscleType);
+      if (existing) existing.count += 1;
+      else groups.set(t.muscleType, { muscleType: t.muscleType, first: t, count: 1 });
+      return groups;
+    }, new Map<string, { muscleType: (typeof eligibleTrophies)[number]["muscleType"]; first: TrophyDisplay; count: number }>())
+      .values()
+  );
 
   async function startBattle() {
     if (chosenCards.length === 0) return;
@@ -507,18 +518,19 @@ export function SquadBattle({ cards, trophies }: { cards: BattleCard[]; trophies
               >
                 None
               </button>
-              {eligibleTrophies.map((t) => (
+              {trophyGroups.map((group) => (
                 <button
-                  key={t.id}
+                  key={group.muscleType}
                   type="button"
-                  onClick={() => setSelectedTrophyId(t.id)}
+                  onClick={() => setSelectedTrophyId(group.first.id)}
                   className={`rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition ${
-                    selectedTrophyId === t.id
+                    selectedTrophy?.muscleType === group.muscleType
                       ? "border-amber-400 text-amber-300"
                       : "border-white/10 text-slate-300 hover:border-white/30"
                   }`}
                 >
-                  {MUSCLE_TYPE_META[t.muscleType].icon} {t.muscleTypeLabel} trophy
+                  {MUSCLE_TYPE_META[group.muscleType].icon} {group.first.muscleTypeLabel} trophy
+                  {group.count > 1 && ` ×${group.count}`}
                 </button>
               ))}
             </div>

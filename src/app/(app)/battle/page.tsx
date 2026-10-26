@@ -19,7 +19,11 @@ function formatCountdown(ms: number): string {
 
 export default async function BattlePage() {
   await requireOnboarded();
-  const [gyms, duels, trophies] = await Promise.all([listGyms(), myDuels(), myTrophies()]);
+  const [gyms, duels] = await Promise.all([listGyms(), myDuels()]);
+  // Read trophies only after the duel lists above have run -- reading a
+  // lapsed duel is what resolves it and awards the trophy, so fetching in
+  // parallel showed a stale gallery on the first visit after a win.
+  const trophies = await myTrophies();
 
   return (
     <div className="mx-auto max-w-lg space-y-8">
