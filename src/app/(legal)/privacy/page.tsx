@@ -60,9 +60,9 @@ export default function PrivacyPage() {
 
       <LegalSection title="What other trainers can see">
         <p>
-          Other trainers can find you by searching your name or email address, but the results show only your name.
-          They can challenge you to a duel, and they can see your name, the muscle type fought over, and the scores in
-          duels you share with them. Gym screens show the gym&apos;s name and its current champion&apos;s name. Your
+          Other trainers can find you by searching your name. They can challenge you to a duel, and they can see your
+          name, the muscle type fought over, and the scores in duels you share with them. You can report or block any
+          trainer from a duel or gym card, and manage blocked trainers in Settings. Gym screens show the gym&apos;s name and its current champion&apos;s name. Your
           email address, password, workouts, and proof uploads are not shown to other trainers.
         </p>
       </LegalSection>

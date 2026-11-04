@@ -4,10 +4,15 @@ import { getUserId } from "@/lib/session-helpers";
 import { DeleteMyAccountForm } from "./DeleteMyAccountForm";
 import { ResendVerificationButton } from "./ResendVerificationButton";
 import { NotificationsToggle } from "./NotificationsToggle";
+import { BlockedList } from "./BlockedList";
+import { listBlockedTrainers } from "@/lib/moderation";
 
 export default async function SettingsPage() {
   const userId = await getUserId();
-  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
+  const [user, blocked] = await Promise.all([
+    prisma.user.findUniqueOrThrow({ where: { id: userId } }),
+    listBlockedTrainers(userId),
+  ]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -21,6 +26,10 @@ export default async function SettingsPage() {
 
       <section>
         <NotificationsToggle />
+      </section>
+
+      <section>
+        <BlockedList blocked={blocked} />
       </section>
 
       <section>

@@ -7,6 +7,7 @@ import { DuelSearch } from "./duels/DuelSearch";
 import { myDuels } from "./duels/actions";
 import { myTrophies } from "./trophies/actions";
 import { TrophyGallery } from "./trophies/TrophyGallery";
+import { ReportBlockMenu } from "@/components/ReportBlockMenu";
 
 function formatCountdown(ms: number): string {
   if (ms <= 0) return "closing...";
@@ -18,7 +19,7 @@ function formatCountdown(ms: number): string {
 }
 
 export default async function BattlePage() {
-  await requireOnboarded();
+  const profile = await requireOnboarded();
   const [gyms, duels] = await Promise.all([listGyms(), myDuels()]);
   // Read trophies only after the duel lists above have run -- reading a
   // lapsed duel is what resolves it and awards the trophy, so fetching in
@@ -96,6 +97,9 @@ export default async function BattlePage() {
                     wins.
                   </p>
                 )}
+                <div className="mt-2 text-center">
+                  <ReportBlockMenu userId={d.opponentId} name={d.opponentName} />
+                </div>
               </div>
             ))}
           </div>
@@ -130,6 +134,9 @@ export default async function BattlePage() {
                 <p className="mt-1 text-sm text-amber-300">
                   👑 {gym.championName ?? "Unclaimed"}
                 </p>
+                {gym.championId && gym.championName && gym.championId !== profile.userId && (
+                  <ReportBlockMenu userId={gym.championId} name={gym.championName} />
+                )}
 
                 {gym.challenge && gym.challenge.status === "OPEN" && (
                   <div className="mt-3 rounded-lg border border-white/10 bg-slate-900/60 p-3">

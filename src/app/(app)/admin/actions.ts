@@ -10,6 +10,15 @@ import { deleteWorkoutProof as deleteProofFile } from "@/lib/proofStorage";
 import { sendAccountDeletedEmail } from "@/lib/email";
 import type { MuscleType } from "@/lib/muscleTypes";
 
+export async function adminResolveReport(reportId: string, outcome: "DISMISSED" | "ACTIONED"): Promise<void> {
+  await requireAdmin();
+  await prisma.userReport.update({
+    where: { id: reportId },
+    data: { status: outcome, resolvedAt: new Date() },
+  });
+  revalidatePath("/admin/reports");
+}
+
 export async function adminAdjustTrainerXp(userId: string, delta: number): Promise<void> {
   await requireAdmin();
   await applyTrainerXpDelta(userId, delta);

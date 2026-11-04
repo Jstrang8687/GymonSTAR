@@ -18,6 +18,12 @@ export default async function AdminPage() {
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-black text-white">Admin</h1>
         <Link
+          href="/admin/reports"
+          className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-red-300 hover:border-white/30"
+        >
+          🚩 Reports
+        </Link>
+        <Link
           href="/admin/gallery"
           className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-amber-300 hover:border-white/30"
         >

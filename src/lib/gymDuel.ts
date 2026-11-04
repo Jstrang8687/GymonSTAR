@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { MUSCLE_TYPES, MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
 import { sendChallengedEmail } from "@/lib/email";
 import { sendPushToUser } from "@/lib/push";
+import { blockedEitherWayIds, isBlockedEitherWay } from "@/lib/moderation";
 import type { Gym, GymChallenge } from "@prisma/client";
 
 // Every 5th duel win converts into catching a random muscle type the
@@ -219,6 +220,11 @@ export async function checkInAtGym(userId: string, lat: number, lng: number, nam
     return { status: "already-champion", message: `You already hold ${gym.name}.`, gymId: gym.id };
   }
 
+  // Deliberately vague -- it shouldn't tell the challenger who blocked whom.
+  if (await isBlockedEitherWay(userId, gym.championUserId)) {
+    throw new Error(`You can't challenge ${gym.name}'s champion.`);
+  }
+
   const existingOpen = await prisma.gymChallenge.findFirst({ where: { gymId: gym.id, status: "OPEN" } });
   if (existingOpen) {
     return {
@@ -274,16 +280,22 @@ export interface TrainerSearchResult {
   name: string;
 }
 
-// Name/email search for freeform duel opponents -- no gym or location
-// involved, so there's no roster to pick from otherwise. Email is only used
-// to match, never returned -- results show name alone.
+const MIN_SEARCH_LENGTH = 2;
+
+// Name-only search for freeform duel opponents -- no gym or location
+// involved, so there's no roster to pick from otherwise. Deliberately does
+// not match on email: letting anyone type an address to see whether it has
+// an account would leak who's registered. Anyone either side has blocked is
+// left out, and a one-letter query is refused so the box can't be used to
+// page through everybody.
 export async function searchTrainers(query: string, excludeUserId: string): Promise<TrainerSearchResult[]> {
   const q = query.trim();
-  if (!q) return [];
+  if (q.length < MIN_SEARCH_LENGTH) return [];
+  const hidden = await blockedEitherWayIds(excludeUserId);
   const users = await prisma.user.findMany({
     where: {
-      id: { not: excludeUserId },
-      OR: [{ name: { contains: q, mode: "insensitive" } }, { email: { contains: q, mode: "insensitive" } }],
+      id: { notIn: [excludeUserId, ...hidden] },
+      name: { contains: q, mode: "insensitive" },
     },
     select: { id: true, name: true },
     take: 8,
@@ -315,6 +327,9 @@ export async function startFreeformDuel(
 ): Promise<FreeformDuelResult> {
   if (challengerId === opponentId) {
     throw new Error("You can't duel yourself.");
+  }
+  if (await isBlockedEitherWay(challengerId, opponentId)) {
+    throw new Error("You can't challenge that trainer.");
   }
 
   const existingOpen = await prisma.gymChallenge.findFirst({
@@ -365,6 +380,7 @@ export async function startFreeformDuel(
 
 export interface PendingChallenge {
   id: string;
+  challengerId: string;
   challengerName: string;
   muscleType: MuscleType;
   muscleTypeLabel: string;
@@ -383,8 +399,13 @@ export async function pendingChallengesForDefender(userId: string): Promise<Pend
   });
   if (raw.length === 0) return [];
 
-  const resolved = await Promise.all(raw.map((c) => resolveIfExpired(c)));
-  const stillOpen = resolved.filter((c) => c.status === "OPEN");
+  const [resolved, hidden] = await Promise.all([
+    Promise.all(raw.map((c) => resolveIfExpired(c))),
+    blockedEitherWayIds(userId),
+  ]);
+  // A challenge from someone you've since blocked stays open (it still has
+  // to finish fairly), but it shouldn't keep popping up at you.
+  const stillOpen = resolved.filter((c) => c.status === "OPEN" && !hidden.has(c.challengerId));
 
   const results: PendingChallenge[] = [];
   for (const c of stillOpen) {
@@ -394,6 +415,7 @@ export async function pendingChallengesForDefender(userId: string): Promise<Pend
     ]);
     results.push({
       id: c.id,
+      challengerId: c.challengerId,
       challengerName: challenger?.name ?? "Someone",
       muscleType: c.muscleType as MuscleType,
       muscleTypeLabel: MUSCLE_TYPE_META[c.muscleType as MuscleType].label,
@@ -407,6 +429,7 @@ export async function pendingChallengesForDefender(userId: string): Promise<Pend
 export interface MyDuelDisplay {
   id: string;
   muscleTypeLabel: string;
+  opponentId: string;
   opponentName: string;
   isChallenger: boolean;
   myScore: number;
@@ -437,6 +460,7 @@ export async function listMyDuels(userId: string): Promise<MyDuelDisplay[]> {
     results.push({
       id: c.id,
       muscleTypeLabel: MUSCLE_TYPE_META[c.muscleType as MuscleType].label,
+      opponentId,
       opponentName: opponent?.name ?? "Unknown",
       isChallenger,
       myScore: isChallenger ? scores.challengerScore : scores.defenderScore,

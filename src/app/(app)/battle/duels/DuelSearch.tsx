@@ -6,7 +6,7 @@ import { search, sharedTypesWith, challenge } from "./actions";
 import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
 import type { TrainerSearchResult } from "@/lib/gymDuel";
 
-// Head-to-head duels aren't gym-gated -- find anyone by name or email and
+// Head-to-head duels aren't gym-gated -- find anyone by name and
 // challenge them directly, no check-in required.
 export function DuelSearch() {
   const router = useRouter();
@@ -67,7 +67,7 @@ export function DuelSearch() {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
       <p className="text-sm font-bold text-white">Challenge any trainer</p>
-      <p className="mt-1 text-xs text-slate-400">Search by name or email -- no gym or check-in needed.</p>
+      <p className="mt-1 text-xs text-slate-400">Search by name -- no gym or check-in needed.</p>
       <div className="relative mt-3">
         <input
           value={query}
@@ -75,7 +75,7 @@ export function DuelSearch() {
             setQuery(e.target.value);
             setOpponent(null);
           }}
-          placeholder="Search by name or email"
+          placeholder="Search by name"
           className="w-full rounded-lg border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-white outline-none focus:border-amber-400"
         />
         {results.length > 0 && (

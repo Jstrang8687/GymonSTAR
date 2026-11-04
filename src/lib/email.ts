@@ -1,5 +1,17 @@
 import "server-only";
 import { Resend } from "resend";
+import { LEGAL } from "@/lib/legal";
+
+// Names and report notes are typed by users, so anything that lands in an
+// email body has to be escaped or someone could inject markup into it.
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 // Best-effort by design: nothing in the app should ever fail because an
 // email couldn't be sent (missing/invalid API key during setup, Resend
@@ -91,15 +103,34 @@ export async function sendChallengedEmail(
   muscleTypeLabel: string,
   gymName: string | null
 ): Promise<void> {
-  const where = gymName ? ` for ${gymName}` : "";
+  const safeGym = gymName ? escapeHtml(gymName) : null;
+  const where = safeGym ? ` for ${safeGym}` : "";
   const html = emailShell(
     "You've been challenged!",
-    `<p>Hey ${name},</p>
-     <p><strong>${challengerName}</strong> just challenged you to a ${muscleTypeLabel} duel${where}.</p>
-     <p>Here's how it works: over the next <strong>48 hours</strong>, log real ${muscleTypeLabel} workouts in the app. Whoever earns more ${muscleTypeLabel} XP in that window wins${gymName ? ` and takes ${gymName}` : ""}. No action needed to accept -- the clock's already running.</p>
+    `<p>Hey ${escapeHtml(name)},</p>
+     <p><strong>${escapeHtml(challengerName)}</strong> just challenged you to a ${muscleTypeLabel} duel${where}.</p>
+     <p>Here's how it works: over the next <strong>48 hours</strong>, log real ${muscleTypeLabel} workouts in the app. Whoever earns more ${muscleTypeLabel} XP in that window wins${safeGym ? ` and takes ${safeGym}` : ""}. No action needed to accept -- the clock's already running.</p>
      ${button(`${APP_URL}/battle`, "See the duel")}`
   );
   await sendEmail(to, `${challengerName} challenged you to a duel`, html);
+}
+
+// Goes to the operator inbox, not to either trainer -- the report itself
+// lives in the admin Reports page; this is just the nudge to go look.
+export async function sendReportEmail(
+  reporterName: string,
+  reportedName: string,
+  reasonLabel: string,
+  note: string
+): Promise<void> {
+  const html = emailShell(
+    "New trainer report",
+    `<p><strong>${escapeHtml(reporterName)}</strong> reported <strong>${escapeHtml(reportedName)}</strong>.</p>
+     <p>Reason: ${escapeHtml(reasonLabel)}</p>
+     ${note ? `<p>Note: ${escapeHtml(note)}</p>` : ""}
+     ${button(`${APP_URL}/admin/reports`, "Review reports")}`
+  );
+  await sendEmail(LEGAL.contactEmail, `Report: ${reportedName}`, html);
 }
 
 export async function sendAccountDeletedEmail(to: string, name: string): Promise<void> {

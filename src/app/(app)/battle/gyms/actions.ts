@@ -25,6 +25,7 @@ export async function checkIn(lat: number, lng: number, name: string): Promise<C
 export interface GymDisplay {
   id: string;
   name: string;
+  championId: string | null;
   championName: string | null;
   championMuscleType: MuscleType | null;
   challenge: {
@@ -86,6 +87,7 @@ export async function listGyms(): Promise<GymDisplay[]> {
     results.push({
       id: freshGym.id,
       name: freshGym.name,
+      championId: freshGym.championUserId,
       championName: champion?.name ?? null,
       championMuscleType: (freshGym.championMuscleType as MuscleType) ?? null,
       challenge: challengeDisplay,

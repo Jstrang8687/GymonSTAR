@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { exercisesForType } from "@/lib/exerciseLibrary";
 import { MUSCLE_TYPE_META, type MuscleType } from "@/lib/muscleTypes";
 import { CoachAvatar } from "@/components/CoachAvatar";
+import { ReportBlockMenu } from "@/components/ReportBlockMenu";
 
 export interface PendingChallengeDto {
   id: string;
+  challengerId: string;
   challengerName: string;
   muscleType: MuscleType;
   muscleTypeLabel: string;
@@ -158,6 +160,9 @@ export function ChallengePopup({ challenges, coach }: { challenges: PendingChall
             </button>
           </div>
         )}
+        <div className="mt-3 text-center">
+          <ReportBlockMenu userId={current.challengerId} name={current.challengerName} />
+        </div>
       </div>
     </div>
   );

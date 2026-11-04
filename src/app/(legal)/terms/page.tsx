@@ -49,7 +49,8 @@ export default function TermsPage() {
         </LegalList>
         <p>
           We can remove content, undo results, suspend, or delete accounts that break these rules, with or without
-          notice. If someone is bothering you or you spot cheating, email {LEGAL.contactEmail}.
+          notice. If someone is bothering you or you spot cheating, use &ldquo;Report / block&rdquo; on their duel or
+          gym card, or email {LEGAL.contactEmail}.
         </p>
       </LegalSection>
 
